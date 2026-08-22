@@ -17,7 +17,7 @@ export default function HomePage() {
             Featured story
           </h2>
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <ArticleCard article={featured} size="large" />
+            <ArticleCard article={featured} size="large" priority />
             {secondary.length > 0 && (
               <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-1">
                 {secondary.map((a) => (

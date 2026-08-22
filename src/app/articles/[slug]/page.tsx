@@ -11,8 +11,8 @@ import { ShareBar } from "@/components/article/ShareBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_URL } from "@/lib/seo/constants";
-import Image from "next/image";
+import { SITE_URL, ARTICLE_FALLBACK_IMAGE } from "@/lib/seo/constants";
+import { ResponsiveImage } from "@/components/media/ResponsiveImage";
 
 export function generateStaticParams() {
   return getAllArticles().map((a) => ({ slug: a.slug }));
@@ -39,11 +39,13 @@ export async function generateMetadata({
     title: article.title,
     description: article.description,
     path: `/articles/${article.slug}`,
-    image: article.coverImage,
+    image: article.coverImage || ARTICLE_FALLBACK_IMAGE,
     type: "article",
     publishedTime: article.publishedAt.toISOString(),
     modifiedTime: (article.updatedAt ?? article.publishedAt).toISOString(),
-    ...(article.canonicalUrl && { path: article.canonicalUrl.replace(SITE_URL, "") }),
+    // If this piece was originally published elsewhere, canonicalUrl is
+    // that external URL, used as the canonical link as-is (see buildMetadata).
+    canonicalUrl: article.canonicalUrl,
   });
 }
 
@@ -89,12 +91,11 @@ export default async function ArticlePage({
       </div>
 
       <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-sm bg-line">
-        <Image
+        <ResponsiveImage
           src={article.coverImage}
           alt={article.coverImageAlt}
           fill
           priority
-          className="object-cover"
           sizes="(min-width: 768px) 768px, 100vw"
         />
       </div>

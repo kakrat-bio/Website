@@ -4,8 +4,9 @@ import { getAllAuthors, getAuthorById } from "@/lib/content/authors";
 import { getArticlesByAuthor } from "@/lib/content/articles";
 import { ArticleCard } from "@/components/article/ArticleCard";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { personJsonLd } from "@/lib/seo/json-ld";
+import { personJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { SITE_URL } from "@/lib/seo/constants";
 
 export function generateStaticParams() {
   return getAllAuthors().map((a) => ({ author: a.id }));
@@ -39,6 +40,12 @@ export default async function AuthorPage({
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
       <JsonLd data={personJsonLd(author)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", url: SITE_URL },
+          { name: author.name, url: `${SITE_URL}/authors/${author.id}` },
+        ])}
+      />
       <h1 className="font-display text-4xl text-ink">{author.name}</h1>
       {author.title && <p className="mt-1 text-ink-muted">{author.title}</p>}
       <p className="mt-4 max-w-xl text-ink-muted">{author.bio}</p>

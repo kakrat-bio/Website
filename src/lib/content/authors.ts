@@ -6,8 +6,9 @@ const AUTHORS_DIR = path.join(process.cwd(), "content", "authors");
 
 let cache: Author[] | null = null;
 
+/** Only cached in production — see the equivalent note in content/articles.ts. */
 export function getAllAuthors(): Author[] {
-  if (cache) return cache;
+  if (cache && process.env.NODE_ENV === "production") return cache;
 
   const files = fs.readdirSync(AUTHORS_DIR).filter((f) => f.endsWith(".json"));
   cache = files.map((file) => {

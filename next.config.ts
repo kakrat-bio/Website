@@ -7,12 +7,12 @@ const nextConfig: NextConfig = {
   output: "export",
   images: {
     // next/image's optimization API needs a server; static export has none.
-    // Article images are pre-sized at authoring time (see content/ conventions).
+    // This site doesn't use next/image at all — see
+    // src/components/media/ResponsiveImage.tsx and
+    // content/images-src/README.md for the actual (pre-generated,
+    // build-time) responsive image strategy. `unoptimized: true` is kept
+    // only as a safe default in case next/image is ever reintroduced.
     unoptimized: true,
-    // TEMP: seed content uses SVG placeholder covers. Remove once real
-    // raster cover art replaces them (see content/articles/README.md).
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
   },
   trailingSlash: false,
 };

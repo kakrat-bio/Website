@@ -25,7 +25,7 @@ export function SourcesNotes({
       {sourceNote && <p className="mt-3 text-sm text-ink-muted">{sourceNote}</p>}
 
       {references.length > 0 && (
-        <ol className="mt-4 space-y-3">
+        <ol className="mt-4 list-decimal space-y-3 pl-5 marker:text-ink-muted">
           {references.map((ref) => (
             <li key={ref.url} className="text-sm text-ink-muted">
               <a

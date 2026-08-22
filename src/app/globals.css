@@ -64,3 +64,18 @@ body {
   text-decoration-color: var(--color-accent);
   text-underline-offset: 3px;
 }
+
+/* Heading jump-links (rehype-autolink-headings, behavior: "append") —
+   deliberately understated so a heading doesn't read as a normal link. */
+.prose :is(h1, h2, h3, h4, h5, h6) .anchor-link {
+  text-decoration: none;
+}
+.prose .anchor-link-icon {
+  opacity: 0;
+  margin-left: 0.4em;
+  color: var(--color-ink-muted);
+}
+.prose :is(h1, h2, h3, h4, h5, h6):hover .anchor-link-icon,
+.prose .anchor-link:focus-visible .anchor-link-icon {
+  opacity: 1;
+}

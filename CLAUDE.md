@@ -35,12 +35,42 @@ MDX content, no database/backend/auth. Read this before extending it.
   `sourceNote`, or `editorialNote`. Don't force it to always render, and
   don't remove its conditional rendering to make science pieces "look more
   official" — the point is storytelling/philosophy pieces stay clean.
-- **Images:** `next/image` with `unoptimized: true` (no image server in
-  static export). Pre-size and compress images before adding them; there's
-  no runtime resizing.
+- **Images use `ResponsiveImage` (`src/components/media/ResponsiveImage.tsx`),
+  not `next/image`.** There's no image server in static export, so
+  `next/image` would never generate a real `srcset` regardless — it was
+  removed from the codebase entirely to avoid the false impression that
+  optimization is happening. Real editorial images go through the
+  pre-generated-variant pipeline: see `content/images-src/README.md` before
+  adding any raster image. `npm run build` runs
+  `scripts/check-image-sizes.mjs` first and **fails** on an oversized
+  source image — don't bypass or remove that check.
 - **Search is Pagefind**, generated as a post-build step
   (`npm run build` = `next build && pagefind --site out`). Don't add a
   hosted search backend for this.
+- **CSP (`public/_headers`) intentionally includes `'unsafe-inline'` and
+  `'wasm-unsafe-eval'` in `script-src`.** This was verified, not assumed —
+  see below. Don't "tighten" this back to a bare `script-src 'self'`
+  without re-verifying against a real build (`npm run build`, serve `out/`
+  with `npx wrangler pages dev out`, load a page in a real browser): doing
+  so silently breaks React hydration on every page and Pagefind search
+  specifically.
+  - `'unsafe-inline'`: Next.js inlines the RSC hydration payload as
+    `<script>` tags on every static-exported page, with content that
+    differs per page/build. Static export has no server to mint per-request
+    nonces, and hashing every page's unique inline payload in a single
+    global `_headers` file isn't maintainable. The risk this normally
+    guards against (attacker-controlled content reaching an inline
+    `<script>` at request time) doesn't apply here — all HTML is built
+    ahead of time from git-controlled content, not from live user input.
+  - `'wasm-unsafe-eval'`: Pagefind's search index runs as WebAssembly, which
+    `script-src 'self'` alone blocks (confirmed: search returned 0 results
+    and threw a `WebAssembly.instantiate` CSP error without this).
+    `'wasm-unsafe-eval'` is scoped to WASM compilation only — it does not
+    enable `eval()`/`Function()` the way `'unsafe-eval'` would.
+  - `img-src` is deliberately just `'self' data:`, not `https:` — nothing
+    in the codebase hotlinks external images. If an article genuinely needs
+    to embed an image from another domain, allowlist that specific domain
+    rather than reopening `https:` broadly.
 
 ## Future evolution (do not implement until asked)
 
@@ -63,8 +93,15 @@ premature abstractions for them, but don't block them either:
 
 ## Placeholders to swap before real launch
 
-- `public/og-default.svg`, `public/logo.svg`, `public/images/covers/*.svg`
-  are generated placeholders, not designed assets.
+- `public/og-default.png`, `public/og-article-fallback.png`, `public/logo.png`
+  are programmatically generated (`scripts/generate-brand-assets.mjs`), not
+  designed assets — real ones, correctly sized for OG/Twitter (1200×630) and
+  Organization logo (512×512), should replace them before launch.
+- `public/images/covers/*.svg` (the current article cover images) are
+  placeholders too. They work fine as-is (SVGs are resolution-independent,
+  so there's no responsive-variant concern for them specifically) — but
+  real cover photography should go through the pipeline in
+  `content/images-src/README.md`, not be dropped in as more SVGs.
 - `src/lib/seo/constants.ts` `SITE_URL` assumes `https://kakrat.com` — correct
   if that changes.
 

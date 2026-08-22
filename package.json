@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npx pagefind --site out",
+    "build": "node scripts/check-image-sizes.mjs && next build && npx pagefind --site out",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "optimize-images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
@@ -31,7 +33,9 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
     "pagefind": "^1.5.2",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.11"
   }
 }

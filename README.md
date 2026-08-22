@@ -24,14 +24,29 @@ This scaffolds `content/articles/<year>/<slug>.mdx` with `draft: true`. Fill
 in the body, flip `draft` to `false`, and open a PR. See
 `content/articles/README.md` for the frontmatter schema.
 
+Adding a real (non-placeholder) cover photo or in-article image? See
+`content/images-src/README.md` — there's no server-side image optimizer in
+static export, so responsive variants are pre-generated locally with
+`npm run optimize-images` and committed alongside the source image.
+
 ## Build
 
 ```
 npm run build
 ```
 
-Runs `next build` (static export to `out/`) followed by the Pagefind search
-indexer against that output.
+Runs `scripts/check-image-sizes.mjs` (fails the build on an oversized
+editorial image), then `next build` (static export to `out/`), then the
+Pagefind search indexer against that output.
+
+## Tests
+
+```
+npm run test
+```
+
+Runs the vitest suite — mainly regression coverage for the content schema
+(zod validation) and SEO metadata helpers (canonical URL handling).
 
 ## Deployment — Cloudflare Pages
 

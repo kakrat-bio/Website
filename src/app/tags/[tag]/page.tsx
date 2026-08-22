@@ -21,6 +21,11 @@ export async function generateMetadata({
   });
 }
 
+// No BreadcrumbList here, deliberately: tags are a flat, freeform set (see
+// tagSchema in src/types/content.ts), not a designed hierarchy the way
+// topics are — "Home > #some-tag" isn't a real navigational path an author
+// curated, so it wouldn't be meaningful structured data, just markup for
+// its own sake.
 export default async function TagPage({
   params,
 }: {

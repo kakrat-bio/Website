@@ -18,9 +18,15 @@ function walkMdxFiles(dir: string): string[] {
 
 let cache: Article[] | null = null;
 
-/** Loads and validates every article in content/articles. Cached per build. */
+/**
+ * Loads and validates every article in content/articles. Cached so repeated
+ * calls within one render/build don't re-read the filesystem — but only in
+ * production. In `next dev`, this module stays loaded across requests (it's
+ * not part of the page's module graph Next watches), so caching there would
+ * mean an edited .mdx file never shows up without restarting the dev server.
+ */
 export function getAllArticles(): Article[] {
-  if (cache) return cache;
+  if (cache && isProd) return cache;
 
   const files = walkMdxFiles(ARTICLES_DIR);
   const articles = files.map((filePath) => {
@@ -31,6 +37,17 @@ export function getAllArticles(): Article[] {
     if (!parsed.success) {
       throw new Error(
         `Invalid frontmatter in ${path.relative(process.cwd(), filePath)}:\n${parsed.error.message}`,
+      );
+    }
+
+    // Guards against a copy-pasted frontmatter block silently publishing at
+    // an unexpected URL: the filename (sans extension) must match `slug`.
+    const expectedSlug = path.basename(filePath, ".mdx");
+    if (parsed.data.slug !== expectedSlug) {
+      throw new Error(
+        `Slug mismatch in ${path.relative(process.cwd(), filePath)}: ` +
+          `frontmatter slug is "${parsed.data.slug}" but the filename implies "${expectedSlug}". ` +
+          "Rename the file or fix the slug so they agree.",
       );
     }
 

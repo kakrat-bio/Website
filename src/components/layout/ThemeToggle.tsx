@@ -21,9 +21,13 @@ export function ThemeToggle() {
     // (see layout.tsx) — can't be done during render since `document` isn't
     // available on the server, and can't be the useState initializer for
     // the same reason.
-    const current = document.documentElement.getAttribute("data-theme") as Theme | null;
+    const stored = document.documentElement.getAttribute("data-theme") as Theme | null;
+    // No explicit user choice yet: reflect the OS/browser preference
+    // (which is also what globals.css's `prefers-color-scheme` media query
+    // is already rendering) instead of defaulting to "light" regardless.
+    const systemPrefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(current ?? "light");
+    setTheme(stored ?? (systemPrefersDark ? "dark" : "light"));
   }, []);
 
   if (!theme) return <span className="w-9" aria-hidden />;

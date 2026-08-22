@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ALL_TOPICS } from "@/lib/content/topics";
+import { SITE_DESCRIPTION } from "@/lib/seo/constants";
 
 export function Footer() {
   return (
@@ -8,10 +9,7 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-3">
           <div>
             <p className="font-display text-lg text-ink">Kakrat</p>
-            <p className="mt-2 max-w-xs">
-              An independent publication on science, technology, and the ideas
-              behind them.
-            </p>
+            <p className="mt-2 max-w-xs">{SITE_DESCRIPTION}</p>
           </div>
           <nav aria-label="Topics">
             <p className="mb-2 font-medium text-ink">Topics</p>

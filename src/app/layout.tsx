@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo/constants";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo/constants";
 
 // next/font self-hosts these at build time: no request to Google Fonts at runtime.
 const fraunces = Fraunces({
@@ -25,7 +25,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   ...buildMetadata({ title: SITE_NAME, description: SITE_DESCRIPTION, path: "/" }),
   title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
-  metadataBase: new URL("https://kakrat.com"),
+  metadataBase: new URL(SITE_URL),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -34,12 +34,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Resolve theme before paint to avoid a light/dark flash. External file keeps CSP script-src strict (no 'unsafe-inline'). */}
         <Script src="/theme-init.js" strategy="beforeInteractive" />
+        {/*
+          Rendered directly (not via the metadata API's `alternates.types`):
+          Next merges route metadata shallowly, so any page's own
+          `alternates` (every article/topic/tag/author page sets one, for
+          its canonical URL) would silently replace this rather than merge
+          with it. A literal <link> here always renders, on every page.
+        */}
+        <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href={`${SITE_URL}/rss.xml`} />
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
       </head>
       <body className="font-sans antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-sm focus-visible:bg-ink focus-visible:px-4 focus-visible:py-2 focus-visible:text-paper"
+        >
+          Skip to content
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>

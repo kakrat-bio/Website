@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "./constants";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, ARTICLE_FALLBACK_IMAGE } from "./constants";
 import type { Article, Author } from "@/types/content";
 
 /**
@@ -15,8 +15,7 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    // TEMP placeholder — swap for a designed raster logo before launch.
-    logo: `${SITE_URL}/logo.svg`,
+    logo: `${SITE_URL}/logo.png`,
   };
 }
 
@@ -47,7 +46,7 @@ export function articleJsonLd(article: Article, authors: Author[]) {
     "@type": "Article",
     headline: article.title,
     description: article.description,
-    image: `${SITE_URL}${article.coverImage}`,
+    image: `${SITE_URL}${article.coverImage || ARTICLE_FALLBACK_IMAGE}`,
     datePublished: article.publishedAt.toISOString(),
     dateModified: (article.updatedAt ?? article.publishedAt).toISOString(),
     author: authors.map((a) => ({
@@ -58,7 +57,7 @@ export function articleJsonLd(article: Article, authors: Author[]) {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
