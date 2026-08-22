@@ -1,0 +1,43 @@
+---
+title: "The Quiet Return of De Novo Protein Design"
+slug: "the-quiet-return-of-de-novo-protein-design"
+description: "Deep learning has made it possible to design proteins that have never existed in nature. What that actually means, and what it doesn't, yet."
+publishedAt: "2026-02-03"
+authors: ["tanay-bhatt"]
+topic: "biotechnology"
+tags: ["protein-design", "machine-learning", "structural-biology"]
+coverImage: "/images/covers/biotechnology.svg"
+coverImageAlt: "Abstract illustration representing protein structure design"
+references:
+  - title: "De novo design of protein structure and function with RFdiffusion"
+    url: "https://www.nature.com/articles/s41586-023-06415-8"
+    publisher: "Nature"
+    note: "The RFdiffusion paper this piece leans on for what generative structure design can currently do."
+  - title: "Highly accurate protein structure prediction with AlphaFold"
+    url: "https://www.nature.com/articles/s41586-021-03819-2"
+    publisher: "Nature"
+    note: "Background on the prediction problem that made design tractable."
+sourceNote: "Claims about wet-lab validation rates are drawn from the cited papers' supplementary materials, not from unpublished or anecdotal sources."
+---
+
+For most of the history of biochemistry, a protein was something you found, not something you made. You could mutate one, trim it, fuse two together — but the deep grammar of how a chain of amino acids folds into a working machine stayed mostly opaque. That changed faster than most people outside the field noticed.
+
+## From prediction to design
+
+The shift didn't start with design at all. It started with prediction: given a sequence, what shape does it fold into. Once that problem was tractable, the inverse became conceivable — given a *shape you want*, what sequence would produce it.
+
+That inversion is what recent diffusion-based design tools attempt, and increasingly deliver on in the wet lab, not just in simulation.
+
+## What's actually new
+
+Three things changed almost simultaneously:
+
+1. Structure prediction stopped being a bottleneck.
+2. Generative models learned to propose novel backbones, not just tweak known ones.
+3. Labs started validating a meaningful fraction of computational designs experimentally — closing the loop between model and bench.
+
+None of this means arbitrary function is designable on demand. Binding a known target with a known pocket is very different from inventing a new catalytic mechanism from scratch. The honest framing is narrower than the headlines: we've gone from *almost no* de novo design working to *some* of it working, reliably enough to be useful.
+
+## What to watch next
+
+The interesting question isn't whether the models work — it's how the failure modes evolve as design targets get harder. That's a more useful signal than any single benchmark number.
