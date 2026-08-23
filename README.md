@@ -29,6 +29,29 @@ Adding a real (non-placeholder) cover photo or in-article image? See
 static export, so responsive variants are pre-generated locally with
 `npm run optimize-images` and committed alongside the source image.
 
+### Publish tool (`/publish`)
+
+A private, `noindex` page at `/publish` lets you create a new article (with
+an optional cover image) from a browser form instead of editing files
+directly — it POSTs to `functions/api/publish.ts`, a Cloudflare Pages
+Function that validates the submission with the same zod schema the site
+itself uses, then commits the MDX file (and image, if any) straight to
+`main` via the GitHub Contents API. New articles default to `draft: true`.
+
+This is the only server-side code in the project — everything else stays a
+static export, per `CLAUDE.md`.
+
+**Required setup** (Cloudflare Pages dashboard → your project → Settings →
+Environment variables, add as **secrets**, not plain variables):
+
+| Secret | Purpose |
+|---|---|
+| `GITHUB_TOKEN` | A fine-grained GitHub PAT scoped to **Contents: Read and write** on `kakrat-bio/Website` only. |
+| `PUBLISH_SECRET` | A password you choose. Enter it into the `/publish` form's "Publish secret" field each time — it's never stored client-side. |
+
+Without both secrets configured, the Function returns a 500 rather than
+silently failing open.
+
 ## Build
 
 ```

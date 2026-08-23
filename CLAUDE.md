@@ -7,11 +7,24 @@ MDX content, no database/backend/auth. Read this before extending it.
 
 ## Non-negotiables
 
-- **No server runtime for v1.** Don't add API routes, middleware, `cookies()`/
-  `headers()` reads at request time, or anything that requires a Node server —
-  `output: "export"` forbids it and the build will fail. If a feature
-  genuinely needs a backend (see "Future evolution" below), that's a
-  deliberate architecture change to discuss, not something to slip in.
+- **No server runtime for the Next app.** Don't add API routes, middleware,
+  `cookies()`/`headers()` reads at request time, or anything that requires a
+  Node server — `output: "export"` forbids it and the build will fail. The
+  one deliberate exception is `functions/api/publish.ts` (see below) — a
+  single, narrowly-scoped Cloudflare Pages Function, not a general-purpose
+  backend. Don't add more server-side code without discussing it first; it's
+  an exception, not a precedent.
+- **`functions/` is a separate runtime from the Next app** — Cloudflare
+  Workers, not Next.js, deployed alongside the static export but not part of
+  it. It's intentionally excluded from nothing special in `tsconfig.json`
+  (it type-checks fine using only DOM-lib globals: `Request`/`Response`/
+  `fetch`/`crypto`), but don't import Next-specific code into it, and don't
+  import server-only Node builtins Workers doesn't support. It exists to
+  power `/publish` (see README's "Publish tool" section for the two
+  required Cloudflare secrets, `GITHUB_TOKEN` and `PUBLISH_SECRET`) —
+  authenticated article creation that commits straight to `main` via the
+  GitHub Contents API. Don't add more routes here casually; each one is
+  server-side attack surface the rest of this site doesn't have.
 - **Content lives in `content/`, not in the database-that-doesn't-exist.**
   Articles are MDX files under `content/articles/<year>/`, authors are JSON
   under `content/authors/`. Frontmatter is validated by zod
@@ -77,10 +90,11 @@ MDX content, no database/backend/auth. Read this before extending it.
 The architecture is deliberately not closed off from these — don't add
 premature abstractions for them, but don't block them either:
 
-- **APIs / interactive features:** if added, prefer Cloudflare Pages
-  Functions (`/functions` directory) or a separate service, keeping the
-  static article pages untouched. Don't convert the whole site to SSR to
-  support one interactive feature.
+- **APIs / interactive features:** prefer Cloudflare Pages Functions
+  (`/functions` directory) or a separate service, keeping the static
+  article pages untouched — `functions/api/publish.ts` is the existing
+  example. Don't convert the whole site to SSR to support one interactive
+  feature.
 - **Interactive scientific visualizations:** should be isolated client
   components (e.g. an MDX component embedded in specific articles), not a
   site-wide rendering mode change.
