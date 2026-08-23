@@ -51,7 +51,8 @@ export const referenceSchema = z.object({
 export type Reference = z.infer<typeof referenceSchema>;
 
 export const authorSchema = z.object({
-  id: z.string(),
+  /** Used directly as the /authors/<id> URL segment — kebab-case, like slug/tags, so it's always a safe, clean URL. */
+  id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "author id must be kebab-case"),
   name: z.string(),
   title: z.string().optional(), // e.g. "Founder, Kakrat" / "Contributing Writer"
   bio: z.string(),

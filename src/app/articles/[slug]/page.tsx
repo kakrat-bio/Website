@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllArticles, getArticleBySlug, getRelatedArticles } from "@/lib/content/articles";
 import { getAuthorById } from "@/lib/content/authors";
@@ -103,6 +104,20 @@ export default async function ArticlePage({
       <article className="prose prose-lg mt-10 max-w-none font-sans">
         <ArticleContent source={article.content} />
       </article>
+
+      {article.tags.length > 0 && (
+        <nav aria-label="Tags" className="mt-8 flex flex-wrap gap-2">
+          {article.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/tags/${tag}`}
+              className="rounded-full border border-line px-3 py-1 text-xs text-ink-muted transition-colors hover:border-accent hover:text-ink"
+            >
+              #{tag}
+            </Link>
+          ))}
+        </nav>
+      )}
 
       <ShareBar url={url} title={article.title} />
 
