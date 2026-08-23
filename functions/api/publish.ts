@@ -4,7 +4,44 @@
 // code in the project, by design (see CLAUDE.md "Future evolution": Pages
 // Functions, not a rewrite to SSR, when an interactive feature genuinely
 // needs one).
-import { articleFrontmatterSchema, TOPICS } from "../../src/types/content";
+//
+// Deliberately self-contained: earlier versions imported the frontmatter
+// schema from `../../src/types/content`, reaching outside this directory.
+// Cloudflare's production Pages Functions bundler resolves that differently
+// than `wrangler pages dev` does locally, and every production request was
+// failing with a raw, uncatchable 502 regardless of payload — consistent
+// with the module itself failing to bundle/load rather than a runtime
+// error in our code (a real runtime error would have been caught by the
+// top-level try/catch below and returned as JSON, which never happened).
+// `zod` is a real npm package (not a cross-directory relative import), so
+// it's safe to import directly here; the frontmatter shape is duplicated
+// from `src/types/content.ts` — keep the two in sync if that schema
+// changes.
+import { z } from "zod";
+
+const TOPICS = [
+  "science",
+  "biotechnology",
+  "entrepreneurship",
+  "technology",
+  "storytelling",
+  "philosophy",
+  "ideas",
+] as const;
+
+const articleFrontmatterSchema = z.object({
+  title: z.string(),
+  slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "slug must be kebab-case"),
+  description: z.string().min(1, "description cannot be empty").max(200),
+  publishedAt: z.coerce.date(),
+  authors: z.array(z.string()).min(1),
+  topic: z.enum(TOPICS),
+  tags: z
+    .array(z.string().trim().min(1))
+    .default([])
+    .transform((tags) => Array.from(new Set(tags))),
+  draft: z.boolean().default(false),
+});
 
 type Env = {
   GITHUB_TOKEN: string;
