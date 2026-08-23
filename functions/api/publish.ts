@@ -1,9 +1,9 @@
 // Cloudflare Pages Function — not part of the static-exported Next app.
-// Lets an authenticated request create a new article (and optional cover
-// image) directly via the GitHub Contents API, committed to `main`. This
-// is the only server-side code in the project, by design (see CLAUDE.md
-// "Future evolution": Pages Functions, not a rewrite to SSR, when an
-// interactive feature genuinely needs one).
+// Lets an authenticated request create a new article directly via the
+// GitHub Contents API, committed to `main`. This is the only server-side
+// code in the project, by design (see CLAUDE.md "Future evolution": Pages
+// Functions, not a rewrite to SSR, when an interactive feature genuinely
+// needs one).
 import { articleFrontmatterSchema, TOPICS } from "../../src/types/content";
 
 type Env = {
@@ -19,7 +19,6 @@ type PagesContext = {
 const REPO_OWNER = "kakrat-bio";
 const REPO_NAME = "Website";
 const BRANCH = "main";
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB — matches scripts/check-image-sizes.mjs's hard limit.
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -50,6 +49,12 @@ function bytesToBase64(bytes: Uint8Array): string {
   }
   return btoa(binary);
 }
+
+// Note: cover image upload was removed from this Function — attaching an
+// image reliably triggered a raw platform 502 (an uncatchable Workers
+// resource-limit termination, not a normal exception), and cover images are
+// optional by design (articles fall back to a branded default). Set
+// coverImage/coverImageAlt by editing the MDX frontmatter directly instead.
 
 async function githubRequest(env: Env, path: string, init?: RequestInit): Promise<Response> {
   return fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}${path}`, {
@@ -129,8 +134,6 @@ async function handlePublish(context: PagesContext): Promise<Response> {
   const body = String(form.get("body") ?? "");
   const publishedAt = String(form.get("publishedAt") ?? "").trim();
   const draft = String(form.get("draft") ?? "true") === "true";
-  const coverImageAlt = String(form.get("coverImageAlt") ?? "").trim();
-  const image = form.get("image");
 
   let slug = String(form.get("slug") ?? "").trim();
   if (!slug) slug = slugify(title);
@@ -149,25 +152,6 @@ async function handlePublish(context: PagesContext): Promise<Response> {
     return json({ ok: false, error: `Invalid topic "${topic}".` }, 400);
   }
 
-  let coverImagePath: string | undefined;
-  let imageCommitPath: string | undefined;
-  let imageBase64: string | undefined;
-
-  if (image instanceof File && image.size > 0) {
-    if (image.size > MAX_IMAGE_BYTES) {
-      return json({ ok: false, error: `Image exceeds ${MAX_IMAGE_BYTES / 1024 / 1024}MB.` }, 400);
-    }
-    if (!coverImageAlt) {
-      return json({ ok: false, error: "coverImageAlt is required when uploading an image." }, 400);
-    }
-    const ext = (image.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const year = (publishedAt || new Date().toISOString()).slice(0, 4);
-    imageCommitPath = `public/images/uploads/${year}/${slug}/cover.${ext}`;
-    coverImagePath = `/images/uploads/${year}/${slug}/cover.${ext}`;
-    const bytes = new Uint8Array(await image.arrayBuffer());
-    imageBase64 = bytesToBase64(bytes);
-  }
-
   const year = (publishedAt || new Date().toISOString()).slice(0, 4);
   const articlePath = `content/articles/${year}/${slug}.mdx`;
 
@@ -182,8 +166,6 @@ async function handlePublish(context: PagesContext): Promise<Response> {
     authors,
     topic,
     tags,
-    coverImage: coverImagePath,
-    coverImageAlt: coverImagePath ? coverImageAlt : undefined,
     draft,
   };
   const parsed = articleFrontmatterSchema.safeParse(frontmatterCandidate);
@@ -207,24 +189,19 @@ async function handlePublish(context: PagesContext): Promise<Response> {
     `authors: [${parsed.data.authors.map(yamlString).join(", ")}]`,
     `topic: ${yamlString(parsed.data.topic)}`,
     `tags: [${parsed.data.tags.map(yamlString).join(", ")}]`,
-    ...(coverImagePath ? [`coverImage: ${yamlString(coverImagePath)}`] : []),
-    ...(coverImagePath ? [`coverImageAlt: ${yamlString(coverImageAlt)}`] : []),
     `draft: ${draft ? "true" : "false"}`,
     "---",
     "",
   ].join("\n");
 
   const mdxContent = frontmatterLines + body;
-  // UTF-8-safe base64 via TextEncoder + the same helper used for images,
-  // rather than the deprecated escape()/unescape() idiom — this content
-  // routinely contains non-ASCII text (e.g. accented characters, non-Latin
-  // scripts), and legacy globals aren't guaranteed across runtimes.
+  // UTF-8-safe base64 via TextEncoder rather than the deprecated
+  // escape()/unescape() idiom — this content routinely contains non-ASCII
+  // text (e.g. accented characters, non-Latin scripts), and legacy globals
+  // aren't guaranteed across runtimes.
   const mdxBase64 = bytesToBase64(new TextEncoder().encode(mdxContent));
 
   try {
-    if (imageCommitPath && imageBase64) {
-      await putFile(env, imageCommitPath, imageBase64, `Add cover image for "${title}"`);
-    }
     await putFile(env, articlePath, mdxBase64, `${draft ? "Add draft" : "Publish"}: ${title}`);
   } catch (err) {
     return json({ ok: false, error: err instanceof Error ? err.message : "Unknown error committing to GitHub." }, 502);

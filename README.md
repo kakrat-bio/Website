@@ -31,12 +31,18 @@ static export, so responsive variants are pre-generated locally with
 
 ### Publish tool (`/publish`)
 
-A private, `noindex` page at `/publish` lets you create a new article (with
-an optional cover image) from a browser form instead of editing files
-directly — it POSTs to `functions/api/publish.ts`, a Cloudflare Pages
-Function that validates the submission with the same zod schema the site
-itself uses, then commits the MDX file (and image, if any) straight to
-`main` via the GitHub Contents API. New articles default to `draft: true`.
+A private, `noindex` page at `/publish` lets you create a new article from a
+browser form instead of editing files directly — it POSTs to
+`functions/api/publish.ts`, a Cloudflare Pages Function that validates the
+submission with the same zod schema the site itself uses, then commits the
+MDX file straight to `main` via the GitHub Contents API. New articles
+default to `draft: true`.
+
+Cover images aren't supported through this form (uploading one reliably hit
+a Cloudflare Workers resource-limit termination) — articles without one fall
+back to a branded default image automatically. To set a real cover image,
+add `coverImage`/`coverImageAlt` to the MDX frontmatter directly, following
+`content/images-src/README.md`.
 
 This is the only server-side code in the project — everything else stays a
 static export, per `CLAUDE.md`.

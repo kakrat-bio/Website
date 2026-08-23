@@ -25,8 +25,6 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>(authors[0] ? [authors[0].id] : []);
   const [tags, setTags] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [coverImageAlt, setCoverImageAlt] = useState("");
   const [draft, setDraft] = useState(true);
   const [secret, setSecret] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -51,8 +49,6 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
     formData.set("tags", tags);
     formData.set("body", body);
     formData.set("draft", String(draft));
-    formData.set("coverImageAlt", coverImageAlt);
-    if (image) formData.set("image", image);
 
     try {
       const res = await fetch("/api/publish", {
@@ -224,33 +220,6 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
           onChange={(e) => setBody(e.target.value)}
           className="mt-1 w-full rounded-sm border border-line bg-surface px-3 py-2 font-mono text-sm"
         />
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label className="block text-sm font-medium text-ink" htmlFor="image">
-            Cover image (optional)
-          </label>
-          <input
-            id="image"
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files?.[0] ?? null)}
-            className="mt-1 w-full text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-ink" htmlFor="coverImageAlt">
-            Cover image alt text {image && <span className="text-accent">(required)</span>}
-          </label>
-          <input
-            id="coverImageAlt"
-            value={coverImageAlt}
-            onChange={(e) => setCoverImageAlt(e.target.value)}
-            required={Boolean(image)}
-            className="mt-1 w-full rounded-sm border border-line bg-surface px-3 py-2 text-sm"
-          />
-        </div>
       </div>
 
       <label className="flex items-center gap-2 text-sm text-ink-muted">
