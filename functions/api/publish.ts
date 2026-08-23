@@ -85,6 +85,23 @@ async function putFile(env: Env, path: string, base64Content: string, message: s
 }
 
 export async function onRequestPost(context: PagesContext): Promise<Response> {
+  // Top-level safety net: anything that throws unexpectedly below becomes a
+  // clean JSON error instead of an opaque platform 502, so a real bug is
+  // always diagnosable from the response itself.
+  try {
+    return await handlePublish(context);
+  } catch (err) {
+    return json(
+      {
+        ok: false,
+        error: `Unexpected server error: ${err instanceof Error ? `${err.name}: ${err.message}` : String(err)}`,
+      },
+      500,
+    );
+  }
+}
+
+async function handlePublish(context: PagesContext): Promise<Response> {
   const { request, env } = context;
 
   if (!env.PUBLISH_SECRET || !env.GITHUB_TOKEN) {
@@ -198,7 +215,11 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
   ].join("\n");
 
   const mdxContent = frontmatterLines + body;
-  const mdxBase64 = btoa(unescape(encodeURIComponent(mdxContent)));
+  // UTF-8-safe base64 via TextEncoder + the same helper used for images,
+  // rather than the deprecated escape()/unescape() idiom — this content
+  // routinely contains non-ASCII text (e.g. accented characters, non-Latin
+  // scripts), and legacy globals aren't guaranteed across runtimes.
+  const mdxBase64 = bytesToBase64(new TextEncoder().encode(mdxContent));
 
   try {
     if (imageCommitPath && imageBase64) {
