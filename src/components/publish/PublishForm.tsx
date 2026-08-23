@@ -60,10 +60,29 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
         headers: { Authorization: `Bearer ${secret}` },
         body: formData,
       });
-      const data = (await res.json()) as Result;
+
+      let data: Result;
+      try {
+        data = (await res.json()) as Result;
+      } catch {
+        // Server responded, but not with JSON — show the raw status so the
+        // real cause is visible instead of a generic message.
+        setResult({
+          ok: false,
+          error: `Server returned ${res.status} ${res.statusText} (not JSON) — the request reached the server but got an unexpected response.`,
+        });
+        return;
+      }
       setResult(data);
-    } catch {
-      setResult({ ok: false, error: "Request failed — check your connection and try again." });
+    } catch (err) {
+      // fetch() itself rejected — this is a browser/network-level failure,
+      // the request never reached the server at all. Surface the real
+      // error so it's actionable instead of a generic message.
+      const detail = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+      setResult({
+        ok: false,
+        error: `Could not reach the server (${detail}). This usually means the browser blocked or failed to send the request before it left your device.`,
+      });
     } finally {
       setSubmitting(false);
     }
