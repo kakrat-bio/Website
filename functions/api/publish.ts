@@ -56,6 +56,10 @@ type PagesContext = {
 const REPO_OWNER = "kakrat-bio";
 const REPO_NAME = "Website";
 const BRANCH = "main";
+// (Deploy marker — an earlier deployment of a stale commit got redeployed
+// on top of the real fixes via a dashboard "Retry deployment" click, which
+// rebuilds that same old commit rather than pulling latest. This push
+// exists purely to force a fresh, unambiguously-latest deployment.)
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
