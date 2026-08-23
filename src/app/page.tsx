@@ -11,6 +11,9 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
+      <h1 className="mb-10 font-display text-3xl text-ink md:text-4xl">
+        Science, technology, and the ideas shaping what&apos;s next.
+      </h1>
       {featured && (
         <section aria-labelledby="featured-heading">
           <h2 id="featured-heading" className="sr-only">

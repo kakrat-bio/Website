@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { PagefindSearch } from "@/components/search/PagefindSearch";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Search",
-  description: "Search Kakrat's archive.",
-  path: "/search",
-});
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: "Search",
+    description: "Search Kakrat's archive.",
+    path: "/search",
+  }),
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function SearchPage() {
   return (
