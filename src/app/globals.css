@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --color-paper: #fbfaf8;
+  --color-ink: #17181a;
+  --color-ink-muted: #55585e;
+  --color-line: #e7e4de;
+  --color-accent: #a8402c;
+  --color-surface: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #121213;
+  --color-ink: #ede9e3;
+  --color-ink-muted: #a3a6ad;
+  --color-line: #2b2b2d;
+  --color-accent: #e17a5f;
+  --color-surface: #18181a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #121213;
+    --color-ink: #ede9e3;
+    --color-ink-muted: #a3a6ad;
+    --color-line: #2b2b2d;
+    --color-accent: #e17a5f;
+    --color-surface: #18181a;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-line: var(--color-line);
+  --color-accent: var(--color-accent);
+  --color-surface: var(--color-surface);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.prose {
+  --tw-prose-body: var(--color-ink);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-links: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-bullets: var(--color-ink-muted);
+  --tw-prose-counters: var(--color-ink-muted);
+  --tw-prose-captions: var(--color-ink-muted);
+  --tw-prose-code: var(--color-ink);
+}
+
+.prose a {
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+
+/* Heading jump-links (rehype-autolink-headings, behavior: "append") —
+   deliberately understated so a heading doesn't read as a normal link. */
+.prose :is(h1, h2, h3, h4, h5, h6) .anchor-link {
+  text-decoration: none;
+}
+.prose .anchor-link-icon {
+  opacity: 0;
+  margin-left: 0.4em;
+  color: var(--color-ink-muted);
+}
+.prose :is(h1, h2, h3, h4, h5, h6):hover .anchor-link-icon,
+.prose .anchor-link:focus-visible .anchor-link-icon {
+  opacity: 1;
+}
