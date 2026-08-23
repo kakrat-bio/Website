@@ -12,7 +12,7 @@ import { ShareBar } from "@/components/article/ShareBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_URL, ARTICLE_FALLBACK_IMAGE } from "@/lib/seo/constants";
+import { SITE_URL, ARTICLE_FALLBACK_IMAGE, SITE_NAME } from "@/lib/seo/constants";
 import { ResponsiveImage } from "@/components/media/ResponsiveImage";
 
 export function generateStaticParams() {
@@ -93,8 +93,8 @@ export default async function ArticlePage({
 
       <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-sm bg-line">
         <ResponsiveImage
-          src={article.coverImage}
-          alt={article.coverImageAlt}
+          src={article.coverImage || ARTICLE_FALLBACK_IMAGE}
+          alt={article.coverImageAlt || SITE_NAME}
           fill
           priority
           sizes="(min-width: 768px) 768px, 100vw"

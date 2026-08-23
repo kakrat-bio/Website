@@ -45,4 +45,12 @@ describe("articleFrontmatterSchema", () => {
     });
     expect(result.success).toBe(true);
   });
+
+  it("accepts an article with no cover image at all, rather than requiring a placeholder", () => {
+    const { coverImage, coverImageAlt, ...withoutCover } = baseFrontmatter;
+    void coverImage;
+    void coverImageAlt;
+    const result = articleFrontmatterSchema.safeParse(withoutCover);
+    expect(result.success).toBe(true);
+  });
 });

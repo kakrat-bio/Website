@@ -4,6 +4,7 @@ import type { Article } from "@/types/content";
 import { TOPIC_META } from "@/lib/content/topics";
 import { getAuthorById } from "@/lib/content/authors";
 import { formatDate } from "@/lib/utils/format";
+import { ARTICLE_FALLBACK_IMAGE, SITE_NAME } from "@/lib/seo/constants";
 
 export function ArticleCard({
   article,
@@ -23,8 +24,8 @@ export function ArticleCard({
       <Link href={`/articles/${article.slug}`} className="block">
         <div className={`relative overflow-hidden rounded-sm bg-line ${size === "large" ? "aspect-[16/9]" : "aspect-[4/3]"}`}>
           <ResponsiveImage
-            src={article.coverImage}
-            alt={article.coverImageAlt}
+            src={article.coverImage || ARTICLE_FALLBACK_IMAGE}
+            alt={article.coverImageAlt || SITE_NAME}
             fill
             priority={priority}
             className="transition-transform duration-300 group-hover:scale-[1.02]"

@@ -82,8 +82,15 @@ export const articleFrontmatterSchema = z.object({
     .array(tagSchema)
     .default([])
     .transform((tags) => Array.from(new Set(tags))),
-  coverImage: z.string(),
-  coverImageAlt: z.string().min(1, "coverImageAlt cannot be empty — write real alt text"),
+  /**
+   * Both optional, and paired: a real cover image needs real alt text, but
+   * a piece can also have no cover image at all (rather than a stock/fake
+   * photo picked just to fill the slot) — it falls back to the site's
+   * branded OG card image at render time. See ResponsiveImage usage in
+   * ArticleCard/article page and ARTICLE_FALLBACK_IMAGE.
+   */
+  coverImage: z.string().optional(),
+  coverImageAlt: z.string().min(1, "coverImageAlt cannot be empty — write real alt text").optional(),
   draft: z.boolean().default(false),
   /** Set when this piece was originally published elsewhere. */
   canonicalUrl: z.url().optional(),
