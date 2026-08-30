@@ -6,7 +6,7 @@ const baseFrontmatter = {
   slug: "test-article",
   description: "A test article.",
   publishedAt: "2026-01-01",
-  authors: ["tanay-bhatt"],
+  authors: ["kakratian"],
   topic: "culture-ideas" as const,
   coverImage: "/images/covers/science.svg",
   coverImageAlt: "A test cover image",

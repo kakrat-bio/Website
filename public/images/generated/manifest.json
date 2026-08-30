@@ -1,4 +1,48 @@
 {
+  "2026/indian-biotech-startup-circus/cover": {
+    "key": "2026/indian-biotech-startup-circus/cover",
+    "width": 1672,
+    "height": 941,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/indian-biotech-startup-circus/cover/fallback.jpg"
+  },
+  "2026/indian-biotech-startup-circus/ecosystem": {
+    "key": "2026/indian-biotech-startup-circus/ecosystem",
+    "width": 1536,
+    "height": 1024,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/ecosystem/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/ecosystem/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/indian-biotech-startup-circus/ecosystem/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/indian-biotech-startup-circus/ecosystem/fallback.jpg"
+  },
   "2026/kakrat-the-ancient-gujarati-word/cover": {
     "key": "2026/kakrat-the-ancient-gujarati-word/cover",
     "width": 643,

@@ -43,7 +43,7 @@ title: "${title}"
 slug: "${slug}"
 description: ""
 publishedAt: "${today}"
-authors: ["tanay-bhatt"]
+authors: ["kakratian"]
 topic: "${topic}"
 tags: []
 draft: true
