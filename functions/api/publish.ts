@@ -220,6 +220,7 @@ async function commitFiles(env: Env, files: CommitFile[], message: string): Prom
 }
 
 type ImageManifestEntry = {
+  key: string;
   width: number;
   height: number;
   variants: { width: number; path: string }[];
@@ -345,6 +346,7 @@ async function validateCoverUpload(
       key,
       files,
       entry: {
+        key,
         width: metadata.width,
         height: metadata.height,
         variants: expectedWidths.map((width) => ({

@@ -1,0 +1,14 @@
+{
+  "2026/kakrat-the-ancient-gujarati-word/cover": {
+    "key": "2026/kakrat-the-ancient-gujarati-word/cover",
+    "width": 643,
+    "height": 360,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/480.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/fallback.jpg"
+  }
+}
