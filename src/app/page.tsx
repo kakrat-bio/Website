@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
       <h1 className="mb-10 font-display text-3xl text-ink md:text-4xl">
-        Science, technology, and the ideas shaping what&apos;s next.
+        Science, innovation, and the ideas shaping how we live.
       </h1>
       {featured && (
         <section aria-labelledby="featured-heading">
@@ -47,7 +47,7 @@ export default function HomePage() {
 
       <section className="mt-20 border-t border-line pt-12" aria-labelledby="topics-heading">
         <h2 id="topics-heading" className="font-display text-2xl text-ink">
-          Explore by topic
+          Explore our pillars
         </h2>
         <div className="mt-6 flex flex-wrap gap-3">
           {ALL_TOPICS.map((topic) => (

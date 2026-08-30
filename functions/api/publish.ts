@@ -20,13 +20,9 @@
 import { z } from "zod";
 
 const TOPICS = [
-  "science",
-  "biotechnology",
-  "entrepreneurship",
-  "technology",
-  "storytelling",
-  "philosophy",
-  "ideas",
+  "science-technology",
+  "business-innovation",
+  "culture-ideas",
 ] as const;
 
 const articleFrontmatterSchema = z.object({

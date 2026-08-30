@@ -8,40 +8,20 @@ export type TopicMeta = {
 
 /** Static editorial config for the fixed topic taxonomy. */
 export const TOPIC_META: Record<Topic, TopicMeta> = {
-  science: {
-    slug: "science",
-    label: "Science",
-    description: "Reporting and essays on discovery, research, and the natural world.",
+  "science-technology": {
+    slug: "science-technology",
+    label: "Science & Technology",
+    description: "Discovery, biotechnology, engineering, and the technologies reshaping the world.",
   },
-  biotechnology: {
-    slug: "biotechnology",
-    label: "Biotechnology",
-    description: "The science and business of engineering biology.",
+  "business-innovation": {
+    slug: "business-innovation",
+    label: "Business & Innovation",
+    description: "Entrepreneurship, strategy, companies, and how new ideas become real.",
   },
-  entrepreneurship: {
-    slug: "entrepreneurship",
-    label: "Entrepreneurship",
-    description: "Building companies, and the ideas behind them.",
-  },
-  technology: {
-    slug: "technology",
-    label: "Technology",
-    description: "How technology is built, and what it changes.",
-  },
-  storytelling: {
-    slug: "storytelling",
-    label: "Storytelling",
-    description: "Narrative nonfiction, fiction, and the craft of telling a story.",
-  },
-  philosophy: {
-    slug: "philosophy",
-    label: "Philosophy",
-    description: "Ideas about how to think, live, and reason.",
-  },
-  ideas: {
-    slug: "ideas",
-    label: "Ideas",
-    description: "Essays that don't fit neatly anywhere else.",
+  "culture-ideas": {
+    slug: "culture-ideas",
+    label: "Culture & Ideas",
+    description: "Philosophy, storytelling, language, culture, and the ideas behind how we live.",
   },
 };
 

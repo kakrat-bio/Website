@@ -2,9 +2,9 @@ import type { Reference } from "@/types/content";
 
 /**
  * Editorial credibility block. Renders nothing if the article carries none
- * of references/editorialNote/sourceNote — a storytelling or philosophy
- * piece simply won't show this section, so sourcing transparency doesn't
- * force an academic-paper look onto content that isn't reporting.
+ * of references/editorialNote/sourceNote — a story or philosophical essay
+ * simply won't show this section, so sourcing transparency doesn't force an
+ * academic-paper look onto content that isn't reporting.
  */
 export function SourcesNotes({
   references,

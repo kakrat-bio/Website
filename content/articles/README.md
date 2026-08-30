@@ -11,7 +11,7 @@ description: "150-200 char summary for meta description / cards."
 publishedAt: "2026-01-01"
 updatedAt: "2026-01-05"                        # optional, only if substantively edited post-publish
 authors: ["author-id"]                         # one or more, matching content/authors/<id>.json
-topic: "science"                               # one of the fixed topics — see src/lib/content/topics.ts
+topic: "science-technology"                    # one of the three fixed pillars — see src/lib/content/topics.ts
 tags: ["tag-one", "tag-two"]
 coverImage: "/images/covers/example.svg"
 coverImageAlt: "Description of the cover image"
@@ -20,8 +20,8 @@ canonicalUrl: "https://example.com/original"   # optional, only for cross-posted
 
 # Editorial credibility layer — all optional. Populate what fits the piece;
 # a storytelling/philosophy essay can omit all three and no "Sources &
-# notes" section will render. A science/biotech piece should populate
-# `references` at minimum.
+# notes" section will render. A reported science/biotech piece should
+# populate `references` at minimum.
 references:
   - title: "Cited paper or article title"
     url: "https://..."

@@ -1,8 +1,8 @@
 # Kakrat
 
 The source for [kakrat.com](https://kakrat.com) — an independent publication
-on science, biotechnology, entrepreneurship, technology, storytelling,
-philosophy, and ideas.
+organized around three editorial pillars: Science & Technology, Business &
+Innovation, and Culture & Ideas.
 
 Static site: Next.js (App Router, static export) + TypeScript + Tailwind CSS
 + MDX content, no database or backend.

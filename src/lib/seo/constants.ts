@@ -1,6 +1,6 @@
 export const SITE_NAME = "Kakrat";
 export const SITE_DESCRIPTION =
-  "An independent publication on science, biotechnology, entrepreneurship, technology, storytelling, philosophy, and ideas.";
+  "An independent publication on science and technology, business and innovation, culture and ideas.";
 /** Update if the domain or protocol ever changes — everything (sitemap, RSS, JSON-LD, canonical URLs) reads from here. */
 export const SITE_URL = "https://kakrat.com";
 /** Site-wide default social share image (1200x630). Regenerate with `node scripts/generate-brand-assets.mjs`. */

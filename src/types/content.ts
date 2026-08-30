@@ -5,13 +5,9 @@ import { z } from "zod";
  * is an editorial decision — update this enum *and* src/lib/content/topics.ts.
  */
 export const TOPICS = [
-  "science",
-  "biotechnology",
-  "entrepreneurship",
-  "technology",
-  "storytelling",
-  "philosophy",
-  "ideas",
+  "science-technology",
+  "business-innovation",
+  "culture-ideas",
 ] as const;
 
 export const topicSchema = z.enum(TOPICS);
@@ -67,7 +63,8 @@ export type Author = z.infer<typeof authorSchema>;
  * Editorial credibility layer: every field here is optional except the
  * dates. A storytelling or philosophy essay can carry none of
  * references/editorialNote/sourceNote and simply won't render a sourcing
- * block. A science/biotech piece is expected to populate `references`.
+ * block. A reported science or biotechnology piece is expected to populate
+ * `references`.
  */
 export const articleFrontmatterSchema = z.object({
   title: z.string(),

@@ -12,7 +12,7 @@ function request(mutate?: (form: FormData) => void): Request {
   form.set("title", "Diagnostic draft");
   form.set("slug", "diagnostic-draft");
   form.set("description", "A diagnostic draft used to verify publish errors.");
-  form.set("topic", "technology");
+  form.set("topic", "science-technology");
   form.set("authors", "kakratian");
   form.set("tags", "diagnostics");
   form.set("body", "A short diagnostic body.");

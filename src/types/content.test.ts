@@ -7,7 +7,7 @@ const baseFrontmatter = {
   description: "A test article.",
   publishedAt: "2026-01-01",
   authors: ["tanay-bhatt"],
-  topic: "ideas" as const,
+  topic: "culture-ideas" as const,
   coverImage: "/images/covers/science.svg",
   coverImageAlt: "A test cover image",
 };

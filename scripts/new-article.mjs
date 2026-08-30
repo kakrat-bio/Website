@@ -4,12 +4,19 @@ import fs from "node:fs";
 import path from "node:path";
 
 const [title, topic] = process.argv.slice(2);
+const TOPICS = ["science-technology", "business-innovation", "culture-ideas"];
 
 if (!title || !topic) {
   console.error('Usage: node scripts/new-article.mjs "Article Title" <topic>');
   console.error(
-    "Topics: science, biotechnology, entrepreneurship, technology, storytelling, philosophy, ideas",
+    "Topics: science-technology, business-innovation, culture-ideas",
   );
+  process.exit(1);
+}
+
+if (!TOPICS.includes(topic)) {
+  console.error(`Invalid topic: ${topic}`);
+  console.error(`Topics: ${TOPICS.join(", ")}`);
   process.exit(1);
 }
 
@@ -39,8 +46,6 @@ publishedAt: "${today}"
 authors: ["tanay-bhatt"]
 topic: "${topic}"
 tags: []
-coverImage: "/images/covers/${topic}.svg"
-coverImageAlt: ""
 draft: true
 ---
 

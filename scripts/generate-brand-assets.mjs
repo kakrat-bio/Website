@@ -29,7 +29,7 @@ function logoSvg() {
 }
 
 const assets = [
-  { svg: ogSvg({ label: "Science · Biotechnology · Ideas" }), out: "og-default.png" },
+  { svg: ogSvg({ label: "Science &amp; Technology · Business &amp; Innovation · Culture &amp; Ideas" }), out: "og-default.png" },
   { svg: ogSvg({ label: "An independent publication" }), out: "og-article-fallback.png" },
   { svg: logoSvg(), out: "logo.png", size: 512 },
 ];
