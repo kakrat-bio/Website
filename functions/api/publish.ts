@@ -110,9 +110,39 @@ async function githubRequest(env: Env, path: string, init?: RequestInit): Promis
   });
 }
 
+async function githubError(res: Response, operation: string): Promise<Error> {
+  let message = res.statusText || "Request failed";
+  try {
+    const body: unknown = await res.json();
+    if (
+      typeof body === "object" &&
+      body !== null &&
+      "message" in body &&
+      typeof body.message === "string"
+    ) {
+      message = body.message;
+    }
+  } catch {
+    // GitHub normally returns a small JSON error object. Status and statusText
+    // still provide a useful, non-sensitive fallback if that ever changes.
+  }
+
+  console.error(
+    JSON.stringify({
+      message: "GitHub API request failed",
+      operation,
+      status: res.status,
+      requestId: res.headers.get("x-github-request-id"),
+    }),
+  );
+  return new Error(`GitHub API error ${operation}: ${res.status} ${message}`);
+}
+
 async function fileExists(env: Env, path: string): Promise<boolean> {
   const res = await githubRequest(env, `/contents/${path}?ref=${BRANCH}`);
-  return res.status === 200;
+  if (res.status === 200) return true;
+  if (res.status === 404) return false;
+  throw await githubError(res, `checking ${path}`);
 }
 
 async function putFile(env: Env, path: string, base64Content: string, message: string): Promise<void> {
@@ -125,8 +155,7 @@ async function putFile(env: Env, path: string, base64Content: string, message: s
     }),
   });
   if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`GitHub API error creating ${path}: ${res.status} ${body}`);
+    throw await githubError(res, `creating ${path}`);
   }
 }
 
@@ -245,7 +274,10 @@ async function handlePublish(context: PagesContext): Promise<Response> {
   try {
     await putFile(env, articlePath, mdxBase64, `${draft ? "Add draft" : "Publish"}: ${title}`);
   } catch (err) {
-    return json({ ok: false, error: err instanceof Error ? err.message : "Unknown error committing to GitHub." }, 502);
+    // A 502 response from a Pages Function is rendered by Cloudflare as an
+    // opaque edge error, hiding our JSON body from the publish form. This is
+    // an application-level GitHub failure, so return JSON 500 instead.
+    return json({ ok: false, error: err instanceof Error ? err.message : "Unknown error committing to GitHub." }, 500);
   }
 
   return json({
