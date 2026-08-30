@@ -54,5 +54,29 @@
       }
     ],
     "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/fallback.jpg"
+  },
+  "2026/the-unread-diary/cover": {
+    "key": "2026/the-unread-diary/cover",
+    "width": 1672,
+    "height": 941,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-unread-diary/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-unread-diary/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-unread-diary/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/the-unread-diary/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-unread-diary/cover/fallback.jpg"
   }
 }
