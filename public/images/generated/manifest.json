@@ -55,6 +55,30 @@
     ],
     "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/fallback.jpg"
   },
+  "2026/the-quiet-return-of-de-novo-protein-design/cover": {
+    "key": "2026/the-quiet-return-of-de-novo-protein-design/cover",
+    "width": 2400,
+    "height": 1600,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-quiet-return-of-de-novo-protein-design/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-quiet-return-of-de-novo-protein-design/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-quiet-return-of-de-novo-protein-design/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/the-quiet-return-of-de-novo-protein-design/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-quiet-return-of-de-novo-protein-design/cover/fallback.jpg"
+  },
   "2026/the-unread-diary/cover": {
     "key": "2026/the-unread-diary/cover",
     "width": 1672,
@@ -78,5 +102,29 @@
       }
     ],
     "fallback": "/images/generated/2026/the-unread-diary/cover/fallback.jpg"
+  },
+  "2026/what-startups-get-wrong-about-moats/cover": {
+    "key": "2026/what-startups-get-wrong-about-moats/cover",
+    "width": 2400,
+    "height": 1350,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/what-startups-get-wrong-about-moats/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/what-startups-get-wrong-about-moats/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/what-startups-get-wrong-about-moats/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/what-startups-get-wrong-about-moats/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/what-startups-get-wrong-about-moats/cover/fallback.jpg"
   }
 }
