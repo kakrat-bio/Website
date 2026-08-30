@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Author } from "@/types/content";
 import type { TopicMeta } from "@/lib/content/topics";
+import { prepareCoverImage } from "@/components/publish/prepare-cover-image";
 
 function slugify(input: string): string {
   return input
@@ -25,6 +26,8 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
   const [selectedAuthors, setSelectedAuthors] = useState<string[]>(authors[0] ? [authors[0].id] : []);
   const [tags, setTags] = useState("");
   const [body, setBody] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [coverImageAlt, setCoverImageAlt] = useState("");
   const [draft, setDraft] = useState(true);
   const [secret, setSecret] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -49,6 +52,24 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
     formData.set("tags", tags);
     formData.set("body", body);
     formData.set("draft", String(draft));
+
+    if (image) {
+      try {
+        const prepared = await prepareCoverImage(image);
+        formData.set("coverImageAlt", coverImageAlt);
+        formData.set("imageSource", prepared.source);
+        for (const variant of prepared.variants) formData.append("imageVariant", variant);
+        formData.set("imageFallback", prepared.fallback);
+        formData.set("imageMetadata", JSON.stringify(prepared.metadata));
+      } catch (err) {
+        setResult({
+          ok: false,
+          error: `Image preparation failed: ${err instanceof Error ? err.message : String(err)}`,
+        });
+        setSubmitting(false);
+        return;
+      }
+    }
 
     try {
       const res = await fetch("/api/publish", {
@@ -220,6 +241,36 @@ export function PublishForm({ authors, topics }: { authors: Author[]; topics: To
           onChange={(e) => setBody(e.target.value)}
           className="mt-1 w-full rounded-sm border border-line bg-surface px-3 py-2 font-mono text-sm"
         />
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label className="block text-sm font-medium text-ink" htmlFor="image">
+            Cover image (optional)
+          </label>
+          <input
+            id="image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+            className="mt-1 w-full text-sm"
+          />
+          <p className="mt-1 text-xs text-ink-muted">JPG, PNG, or WebP; maximum 5MB and 4000px per edge.</p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-ink" htmlFor="coverImageAlt">
+            Cover image alt text {image && <span className="text-accent">(required)</span>}
+          </label>
+          <input
+            id="coverImageAlt"
+            value={coverImageAlt}
+            onChange={(e) => setCoverImageAlt(e.target.value)}
+            required={Boolean(image)}
+            disabled={!image}
+            placeholder="Describe the image for readers using screen readers"
+            className="mt-1 w-full rounded-sm border border-line bg-surface px-3 py-2 text-sm disabled:opacity-50"
+          />
+        </div>
       </div>
 
       <label className="flex items-center gap-2 text-sm text-ink-muted">

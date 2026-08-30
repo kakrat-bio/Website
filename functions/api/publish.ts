@@ -40,6 +40,8 @@ const articleFrontmatterSchema = z.object({
     .array(z.string().trim().min(1))
     .default([])
     .transform((tags) => Array.from(new Set(tags))),
+  coverImage: z.string().optional(),
+  coverImageAlt: z.string().min(1).optional(),
   draft: z.boolean().default(false),
 });
 
@@ -56,6 +58,11 @@ type PagesContext = {
 const REPO_OWNER = "kakrat-bio";
 const REPO_NAME = "Website";
 const BRANCH = "main";
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const MAX_IMAGE_DIMENSION = 4000;
+const MAX_TOTAL_IMAGE_BYTES = 20 * 1024 * 1024;
+const VARIANT_WIDTHS = [480, 768, 1200, 1600] as const;
+const IMAGE_MANIFEST_PATH = "public/images/generated/manifest.json";
 // (Deploy marker — an earlier deployment of a stale commit got redeployed
 // on top of the real fixes via a dashboard "Retry deployment" click, which
 // rebuilds that same old commit rather than pulling latest. This push
@@ -91,11 +98,11 @@ function bytesToBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-// Note: cover image upload was removed from this Function — attaching an
-// image reliably triggered a raw platform 502 (an uncatchable Workers
-// resource-limit termination, not a normal exception), and cover images are
-// optional by design (articles fall back to a branded default). Set
-// coverImage/coverImageAlt by editing the MDX frontmatter directly instead.
+function base64ToString(value: string): string {
+  const binary = atob(value.replace(/\s/g, ""));
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
 
 async function githubRequest(env: Env, path: string, init?: RequestInit): Promise<Response> {
   return fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}${path}`, {
@@ -138,6 +145,11 @@ async function githubError(res: Response, operation: string): Promise<Error> {
   return new Error(`GitHub API error ${operation}: ${res.status} ${message}`);
 }
 
+async function githubJson<T>(res: Response, operation: string): Promise<T> {
+  if (!res.ok) throw await githubError(res, operation);
+  return (await res.json()) as T;
+}
+
 async function fileExists(env: Env, path: string): Promise<boolean> {
   const res = await githubRequest(env, `/contents/${path}?ref=${BRANCH}`);
   if (res.status === 200) return true;
@@ -157,6 +169,201 @@ async function putFile(env: Env, path: string, base64Content: string, message: s
   if (!res.ok) {
     throw await githubError(res, `creating ${path}`);
   }
+}
+
+type CommitFile = { path: string; content: string };
+
+/** Commits every file through GitHub's Git Data API in one atomic commit. */
+async function commitFiles(env: Env, files: CommitFile[], message: string): Promise<void> {
+  const ref = await githubJson<{ object: { sha: string } }>(
+    await githubRequest(env, `/git/ref/heads/${BRANCH}`),
+    `reading ${BRANCH} ref`,
+  );
+  const parent = await githubJson<{ tree: { sha: string } }>(
+    await githubRequest(env, `/git/commits/${ref.object.sha}`),
+    `reading ${BRANCH} commit`,
+  );
+
+  const tree: { path: string; mode: "100644"; type: "blob"; sha: string }[] = [];
+  for (const file of files) {
+    const blob = await githubJson<{ sha: string }>(
+      await githubRequest(env, "/git/blobs", {
+        method: "POST",
+        body: JSON.stringify({ content: file.content, encoding: "base64" }),
+      }),
+      `creating blob for ${file.path}`,
+    );
+    tree.push({ path: file.path, mode: "100644", type: "blob", sha: blob.sha });
+  }
+
+  const nextTree = await githubJson<{ sha: string }>(
+    await githubRequest(env, "/git/trees", {
+      method: "POST",
+      body: JSON.stringify({ base_tree: parent.tree.sha, tree }),
+    }),
+    "creating publish tree",
+  );
+  const commit = await githubJson<{ sha: string }>(
+    await githubRequest(env, "/git/commits", {
+      method: "POST",
+      body: JSON.stringify({ message, tree: nextTree.sha, parents: [ref.object.sha] }),
+    }),
+    "creating publish commit",
+  );
+  await githubJson(
+    await githubRequest(env, `/git/refs/heads/${BRANCH}`, {
+      method: "PATCH",
+      body: JSON.stringify({ sha: commit.sha, force: false }),
+    }),
+    `updating ${BRANCH}`,
+  );
+}
+
+type ImageManifestEntry = {
+  width: number;
+  height: number;
+  variants: { width: number; path: string }[];
+  fallback: string;
+};
+
+type CoverUpload = {
+  key: string;
+  entry: ImageManifestEntry;
+  files: CommitFile[];
+};
+
+type ImageMetadata = {
+  width: number;
+  height: number;
+  sourceExt: "jpg" | "png" | "webp";
+  variantWidths: number[];
+  fallbackExt: "jpg" | "png";
+};
+
+function expectedVariantWidths(sourceWidth: number): number[] {
+  return VARIANT_WIDTHS.map((width) => Math.min(width, sourceWidth)).filter(
+    (width, index, widths) => widths.indexOf(width) === index,
+  );
+}
+
+async function validateCoverUpload(
+  form: FormData,
+  year: string,
+  slug: string,
+  alt: string,
+): Promise<{ ok: true; upload: CoverUpload | null } | { ok: false; error: string }> {
+  const source = form.get("imageSource");
+  const variants = form.getAll("imageVariant");
+  const fallback = form.get("imageFallback");
+  const metadataRaw = String(form.get("imageMetadata") ?? "").trim();
+  const hasUpload = source instanceof File || variants.length > 0 || fallback instanceof File || Boolean(metadataRaw);
+  if (!hasUpload) return { ok: true, upload: null };
+
+  if (!(source instanceof File) || !(fallback instanceof File) || !metadataRaw || variants.length === 0) {
+    return { ok: false, error: "The cover image upload is incomplete. Select the image again." };
+  }
+  if (!alt) return { ok: false, error: "Cover image alt text is required." };
+  if (source.size <= 0 || source.size > MAX_IMAGE_BYTES) {
+    return { ok: false, error: "The source image must be between 1 byte and 5MB." };
+  }
+
+  let metadata: ImageMetadata;
+  try {
+    metadata = JSON.parse(metadataRaw) as ImageMetadata;
+  } catch {
+    return { ok: false, error: "The cover image metadata is invalid." };
+  }
+  if (
+    !Number.isInteger(metadata.width) ||
+    !Number.isInteger(metadata.height) ||
+    metadata.width < 1 ||
+    metadata.height < 1 ||
+    Math.max(metadata.width, metadata.height) > MAX_IMAGE_DIMENSION
+  ) {
+    return { ok: false, error: "The cover image dimensions are invalid or exceed 4000px." };
+  }
+
+  const sourceMime = { jpg: "image/jpeg", png: "image/png", webp: "image/webp" }[metadata.sourceExt];
+  const fallbackMime = { jpg: "image/jpeg", png: "image/png" }[metadata.fallbackExt];
+  if (!sourceMime || source.type !== sourceMime || !fallbackMime || fallback.type !== fallbackMime) {
+    return { ok: false, error: "The cover image file types do not match their metadata." };
+  }
+
+  const expectedWidths = expectedVariantWidths(metadata.width);
+  if (
+    !Array.isArray(metadata.variantWidths) ||
+    metadata.variantWidths.length !== expectedWidths.length ||
+    metadata.variantWidths.some((width, index) => width !== expectedWidths[index])
+  ) {
+    return { ok: false, error: "The responsive cover image widths are invalid." };
+  }
+
+  const variantFiles = variants.filter((value): value is File => value instanceof File);
+  if (variantFiles.length !== variants.length || variantFiles.length !== expectedWidths.length) {
+    return { ok: false, error: "The responsive cover image files are incomplete." };
+  }
+  const variantsByName = new Map(variantFiles.map((file) => [file.name, file]));
+  const orderedVariants: File[] = [];
+  for (const width of expectedWidths) {
+    const file = variantsByName.get(`${width}.webp`);
+    if (!file || file.type !== "image/webp") {
+      return { ok: false, error: `The ${width}px WebP cover image is missing.` };
+    }
+    orderedVariants.push(file);
+  }
+
+  const allOutputs = [...orderedVariants, fallback];
+  if (allOutputs.some((file) => file.size <= 0 || file.size > MAX_IMAGE_BYTES)) {
+    return { ok: false, error: "A generated cover image file is empty or exceeds 5MB." };
+  }
+  const totalBytes = source.size + allOutputs.reduce((sum, file) => sum + file.size, 0);
+  if (totalBytes > MAX_TOTAL_IMAGE_BYTES) {
+    return { ok: false, error: "The prepared cover image files exceed the 20MB upload limit." };
+  }
+
+  const key = `${year}/${slug}/cover`;
+  const files: CommitFile[] = [
+    {
+      path: `content/images-src/${key}.${metadata.sourceExt}`,
+      content: bytesToBase64(new Uint8Array(await source.arrayBuffer())),
+    },
+  ];
+  for (let index = 0; index < expectedWidths.length; index += 1) {
+    files.push({
+      path: `public/images/generated/${key}/${expectedWidths[index]}.webp`,
+      content: bytesToBase64(new Uint8Array(await orderedVariants[index].arrayBuffer())),
+    });
+  }
+  files.push({
+    path: `public/images/generated/${key}/fallback.${metadata.fallbackExt}`,
+    content: bytesToBase64(new Uint8Array(await fallback.arrayBuffer())),
+  });
+
+  return {
+    ok: true,
+    upload: {
+      key,
+      files,
+      entry: {
+        width: metadata.width,
+        height: metadata.height,
+        variants: expectedWidths.map((width) => ({
+          width,
+          path: `/images/generated/${key}/${width}.webp`,
+        })),
+        fallback: `/images/generated/${key}/fallback.${metadata.fallbackExt}`,
+      },
+    },
+  };
+}
+
+async function readImageManifest(env: Env): Promise<Record<string, ImageManifestEntry>> {
+  const file = await githubJson<{ content: string; encoding: string }>(
+    await githubRequest(env, `/contents/${IMAGE_MANIFEST_PATH}?ref=${BRANCH}`),
+    `reading ${IMAGE_MANIFEST_PATH}`,
+  );
+  if (file.encoding !== "base64") throw new Error("GitHub returned the image manifest in an unsupported encoding.");
+  return JSON.parse(base64ToString(file.content)) as Record<string, ImageManifestEntry>;
 }
 
 export async function onRequestPost(context: PagesContext): Promise<Response> {
@@ -204,6 +411,7 @@ async function handlePublish(context: PagesContext): Promise<Response> {
   const body = String(form.get("body") ?? "");
   const publishedAt = String(form.get("publishedAt") ?? "").trim();
   const draft = String(form.get("draft") ?? "true") === "true";
+  const coverImageAlt = String(form.get("coverImageAlt") ?? "").trim();
 
   let slug = String(form.get("slug") ?? "").trim();
   if (!slug) slug = slugify(title);
@@ -224,6 +432,9 @@ async function handlePublish(context: PagesContext): Promise<Response> {
 
   const year = (publishedAt || new Date().toISOString()).slice(0, 4);
   const articlePath = `content/articles/${year}/${slug}.mdx`;
+  const coverResult = await validateCoverUpload(form, year, slug, coverImageAlt);
+  if (!coverResult.ok) return json({ ok: false, error: coverResult.error }, 400);
+  const coverUpload = coverResult.upload;
 
   // Validate the assembled frontmatter with the exact same schema the site
   // itself enforces at build time, so nothing reaches GitHub that would
@@ -236,6 +447,8 @@ async function handlePublish(context: PagesContext): Promise<Response> {
     authors,
     topic,
     tags,
+    coverImage: coverUpload?.key,
+    coverImageAlt: coverUpload ? coverImageAlt : undefined,
     draft,
   };
   const parsed = articleFrontmatterSchema.safeParse(frontmatterCandidate);
@@ -259,6 +472,8 @@ async function handlePublish(context: PagesContext): Promise<Response> {
     `authors: [${parsed.data.authors.map(yamlString).join(", ")}]`,
     `topic: ${yamlString(parsed.data.topic)}`,
     `tags: [${parsed.data.tags.map(yamlString).join(", ")}]`,
+    ...(coverUpload ? [`coverImage: ${yamlString(coverUpload.key)}`] : []),
+    ...(coverUpload ? [`coverImageAlt: ${yamlString(coverImageAlt)}`] : []),
     `draft: ${draft ? "true" : "false"}`,
     "---",
     "",
@@ -272,7 +487,25 @@ async function handlePublish(context: PagesContext): Promise<Response> {
   const mdxBase64 = bytesToBase64(new TextEncoder().encode(mdxContent));
 
   try {
-    await putFile(env, articlePath, mdxBase64, `${draft ? "Add draft" : "Publish"}: ${title}`);
+    const commitMessage = `${draft ? "Add draft" : "Publish"}: ${title}`;
+    if (coverUpload) {
+      const manifest = await readImageManifest(env);
+      manifest[coverUpload.key] = coverUpload.entry;
+      await commitFiles(
+        env,
+        [
+          ...coverUpload.files,
+          {
+            path: IMAGE_MANIFEST_PATH,
+            content: bytesToBase64(new TextEncoder().encode(`${JSON.stringify(manifest, null, 2)}\n`)),
+          },
+          { path: articlePath, content: mdxBase64 },
+        ],
+        commitMessage,
+      );
+    } else {
+      await putFile(env, articlePath, mdxBase64, commitMessage);
+    }
   } catch (err) {
     // A 502 response from a Pages Function is rendered by Cloudflare as an
     // opaque edge error, hiding our JSON body from the publish form. This is
