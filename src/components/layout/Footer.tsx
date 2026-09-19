@@ -27,6 +27,9 @@ export function Footer() {
             <p className="mb-2 font-medium text-ink">More</p>
             <ul className="space-y-1.5">
               <li>
+                <Link href="/articles" className="hover:text-ink">Archive</Link>
+              </li>
+              <li>
                 <Link href="/about" className="hover:text-ink">About</Link>
               </li>
               <li>
