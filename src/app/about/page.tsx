@@ -3,7 +3,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { SITE_URL } from "@/lib/seo/constants";
+import { CONTACT_EMAIL, SITE_URL } from "@/lib/seo/constants";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
@@ -89,6 +89,14 @@ export default function AboutPage() {
           There’s no newsletter and no tracking of any kind. If you want to know
           when something new goes up, use the{" "}
           <Link href="/rss.xml">RSS feed</Link>.
+        </p>
+
+        <h2>Getting in touch</h2>
+        <p>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Corrections,
+          arguments, and tips are all welcome. Corrections especially. If
+          something here is wrong, I’d rather hear it from you than leave it
+          standing.
         </p>
       </div>
     </div>
