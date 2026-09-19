@@ -45,12 +45,24 @@
   },
   "2026/kakrat-the-ancient-gujarati-word/cover": {
     "key": "2026/kakrat-the-ancient-gujarati-word/cover",
-    "width": 643,
-    "height": 360,
+    "width": 1675,
+    "height": 939,
     "variants": [
       {
         "width": 480,
         "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/1600.webp"
       }
     ],
     "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/fallback.jpg"
