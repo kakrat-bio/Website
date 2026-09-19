@@ -43,29 +43,29 @@
     ],
     "fallback": "/images/generated/2026/indian-biotech-startup-circus/ecosystem/fallback.jpg"
   },
-  "2026/kakrat-the-ancient-gujarati-word/cover": {
-    "key": "2026/kakrat-the-ancient-gujarati-word/cover",
+  "2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows": {
+    "key": "2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows",
     "width": 1675,
     "height": 939,
     "variants": [
       {
         "width": 480,
-        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/480.webp"
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/480.webp"
       },
       {
         "width": 768,
-        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/768.webp"
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/768.webp"
       },
       {
         "width": 1200,
-        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/1200.webp"
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/1200.webp"
       },
       {
         "width": 1600,
-        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/1600.webp"
+        "path": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/1600.webp"
       }
     ],
-    "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover/fallback.jpg"
+    "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/fallback.png"
   },
   "2026/the-quiet-return-of-de-novo-protein-design/cover": {
     "key": "2026/the-quiet-return-of-de-novo-protein-design/cover",
