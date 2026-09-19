@@ -23,7 +23,7 @@ export default function HomePage() {
         </h1>
         <p className="mt-5 max-w-xl text-lg text-ink-muted">
           An independent publication on science and technology, business and innovation,
-          culture and ideas &mdash; written for the parts of the noise worth listening to.
+          culture and ideas. Written for the parts of the noise worth listening to.
         </p>
         <p className="mt-4 text-sm">
           <Link

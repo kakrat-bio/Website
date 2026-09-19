@@ -1,6 +1,6 @@
 export const SITE_NAME = "Kakrat";
 export const SITE_DESCRIPTION =
-  "Independent essays and reporting on science, business, and culture — named for the Gujarati word for a racket of crows, each sure it's the one making sense.";
+  "Independent essays and reporting on science, business, and culture. Named for the Gujarati word for a racket of crows, each one sure it is the one making sense.";
 /** Update if the domain or protocol ever changes — everything (sitemap, RSS, JSON-LD, canonical URLs) reads from here. */
 export const SITE_URL = "https://kakrat.com";
 /** Site-wide default social share image (1200x630). Regenerate with `node scripts/generate-brand-assets.mjs`. */

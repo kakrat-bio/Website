@@ -21,57 +21,65 @@ references:
   - title: "One-shot design of functional protein binders with BindCraft"
     url: "https://doi.org/10.1038/s41586-025-09429-6"
     publisher: "Nature (Pacesa et al., 2025)"
-    note: "Source of the 10–100% experimental success range, and of the birch-allergen, Cas9 and AAV-retargeting results described here."
+    note: "Source of the 10 to 100 per cent experimental success range, and of the birch allergen, Cas9 and AAV retargeting results described here."
   - title: "The past, present and future of de novo protein design"
     url: "https://doi.org/10.1038/s41586-026-10328-7"
     publisher: "Nature (Yang et al., 2026)"
-    note: "Review from the Baker lab; source of the 'not how to design, but what to design' framing and of the remaining challenges around catalysis and switches."
+    note: "Review from the Baker lab. Source of the 'not how to design, but what to design' framing and of the remaining challenges around catalysis and switches."
 sourceNote: "Claims about wet-lab validation rates are drawn from the cited papers, not from unpublished or anecdotal sources. Where this piece characterises the mood of a field rather than a result, that is editorial commentary and reads like it."
-editorialNote: "Published February 2026 as a short note and expanded in September 2026, with the Nature review from April 2026 added as a source. The argument did not change; the evidence for it got better."
+editorialNote: "Published February 2026 as a short note and expanded in September 2026, with the Nature review from April 2026 added as a source. The argument did not change. The evidence for it got better."
 ---
 
-For most of the history of biochemistry, a protein was something you found, not something you made. You could mutate one, trim it, fuse two together, express it in a bacterium and hope. But the deep grammar — how a chain of amino acids folds itself into a working machine in the time it takes to read this clause — stayed mostly opaque. You worked with what evolution had already written, the way a film editor works with footage someone else shot.
+Almost everything your body does, it does with proteins. Haemoglobin carries oxygen around in your blood. Enzymes in your saliva start breaking down the starch in a piece of bread before you have finished chewing it. Antibodies recognise a virus and stick to it. Proteins are the working parts of biology, and there are tens of thousands of different ones in you right now, each doing a specific job.
 
-That changed faster than most people outside the field noticed, and it changed in a peculiar way: quietly, in a field that had spent thirty years being told it was about to change and wasn't.
+Each one is a chain of small chemical units strung together in a particular order, like beads on a thread. Left alone in water, that thread folds itself up into a specific three-dimensional shape, and the shape is the whole point. A protein works because of the shape it settles into. Fold it wrongly and it does nothing, or it does harm.
+
+Here is the part that was hard. For most of the history of biology, we could only use proteins that evolution had already written. You could find one, copy it, cut bits off it, join two together and hope. What you could not do was sit down with a job in mind, design a brand new protein to do that job, and have it work. Nobody could read the folding rules well enough to write in that language.
+
+That has changed. Not completely, and not in the way most headlines suggest, but genuinely, and the rest of this piece is about how much, how reliably, and where it still falls over.
 
 ## From prediction to design
 
-The shift didn't start with design at all. It started with prediction: given a sequence, what shape does it fold into. That problem had been a punchline — a standing biennial competition where good entries were wrong in interesting ways — until it wasn't. Once prediction was tractable, the inverse became conceivable. Given a *shape you want*, what sequence would produce it.
+The shift did not start with design at all. It started with prediction: given the order of the beads on the thread, what shape does it fold into?
 
-That inversion is what generative design tools attempt, and increasingly deliver on at the bench rather than only in simulation. The current toolkit is roughly: a diffusion model proposes a backbone — the folded shape, without deciding which amino acids occupy it — and a second model designs a sequence likely to fold into that backbone. A structure predictor then acts as the referee, checking whether the proposed sequence would in fact produce the shape that was asked for. Three models, arranged in a loop, each covering for the others' failures.
+That problem had been a running joke in the field for thirty years. There was a competition held every two years in which the good entries were wrong in interesting ways. Then it stopped being a joke. Once prediction worked, the reverse question became askable. Given a *shape you want*, what order of beads would produce it?
 
-The important thing about that loop is not that it is clever. It is that it is *free*. These tools are open-source and run on hardware a mid-sized lab already owns, which means the people exploring the design space are no longer only the four labs in the world with a decade of structural-biology tradition behind them.
+That inversion is what current design tools attempt, and increasingly deliver on at the bench rather than only in simulation. The modern toolkit works in three steps. A generative model proposes a backbone, meaning the folded shape itself, without yet deciding which chemical units sit at each position. A second model then designs a sequence likely to fold into that backbone. A structure predictor acts as referee, checking whether the proposed sequence would in fact produce the shape that was asked for. Three models in a loop, each covering for the others' failures.
+
+The important thing about that loop is not that it is clever. It is that it is free. These tools are open source and run on hardware a mid-sized lab already owns, which means the people exploring the design space are no longer only the handful of labs with a decade of structural biology tradition behind them.
 
 ## What "it works" actually means
 
 Here is where most coverage goes wrong, in both directions.
 
-The breathless version says proteins are now designable on demand. The dismissive version notes that most designs fail and concludes nothing has happened. Both are avoiding the actual number, which is more interesting than either.
+The breathless version says proteins are now designable on demand. The dismissive version notes that plenty of designs fail and concludes nothing has happened. Both are avoiding the actual number, which is more interesting than either.
 
-BindCraft, a binder-design pipeline published in *Nature* in 2025, reports experimental success rates of **10 to 100 per cent**.
+BindCraft, a binder design pipeline published in *Nature* in 2025, reports experimental success rates of **10 to 100 per cent**.
 
-Sit with that range for a second, because the range *is* the finding. A tenfold spread is not a measurement problem or authorial hedging; it is the shape of the field. On a well-behaved target with an obvious pocket, you can now design binders essentially at will, one design giving one binder, without high-throughput screening or rounds of experimental optimisation. On a difficult target, you are back to throwing a lot of candidates at the wall. Which target is which is not always predictable in advance.
+Sit with that range for a second, because the range is the finding. A tenfold spread is not a measurement problem or authorial hedging. It is the shape of the field. On a well-behaved target with an obvious pocket to grab onto, you can now design binders more or less at will, one design giving one binder, with no high-throughput screening and no rounds of experimental tinkering. On a difficult target you are back to throwing a lot of candidates at the wall. Which target is which is not always predictable in advance.
 
-And "binder" is doing real work in that sentence. Designing a protein that sticks tightly and specifically to a chosen surface is a genuinely different problem from inventing a new catalytic mechanism from scratch. The first is now, on a good day, routine engineering. The second is not.
+And "binder" is doing real work in that sentence. A binder is a protein designed to stick tightly and specifically to a chosen surface, which is a genuinely different problem from inventing a new chemical reaction from scratch. The first is now, on a good day, routine engineering. The second is not.
 
 ## The results that are hard to be cynical about
 
-Even discounting appropriately, some of what came out of that work is difficult to wave away. Designed binders that reduce IgE binding to birch allergen in samples from actual patients. Binders that modulate the gene-editing activity of Cas9 — that is, a designed protein used as a dial on another protein's behaviour. Binders that redirect adeno-associated virus capsids toward particular cell-surface receptors, which is the unglamorous, load-bearing problem in gene delivery.
+Even discounting appropriately, some of what came out of that work is difficult to wave away.
 
-None of those are demonstrations that a molecule folded correctly. They are demonstrations that a molecule that has never existed did a specific job in a messy biological context, which is a much higher bar and the only one that matters.
+Designed binders that reduce IgE binding to birch allergen in samples from actual patients, which is the first step toward doing something about an allergy rather than describing it. Binders that turn the gene-editing activity of Cas9 up or down, meaning a designed protein used as a dial on another protein's behaviour. Binders that redirect the shells of adeno-associated viruses toward particular cell types, which is the unglamorous, load-bearing problem in gene delivery: getting the therapy into the cells you meant and not the ones you did not.
+
+None of those are demonstrations that a molecule folded correctly. They are demonstrations that a molecule which has never existed did a specific job in a messy biological setting, which is a much higher bar and the only one that matters.
 
 ## The honest ceiling
 
-A 2026 review from David Baker's lab puts the current state about as plainly as a review ever does: the long-standing challenges of designing new protein structures, assemblies and binders are *close to being solved*, and the key questions in those areas are now "not how to design, but what to design."
+A 2026 review from David Baker's lab puts the current state about as plainly as a review ever does. The long-standing challenges of designing new protein structures, assemblies and binders are *close to being solved*, and the key questions in those areas are now "not how to design, but what to design."
 
-That is a remarkable sentence, and it is also carefully bounded. What remains genuinely hard, by the same authors' account: catalysts for reactions with high energy barriers, and — more fundamentally — switches and nanomachines that integrate binding, conformational change and catalysis in one molecule. Which is to say: the things real proteins mostly are. Haemoglobin does not simply bind oxygen; it changes shape when it does, and that change is the entire point.
+That is a remarkable sentence, and it is also carefully bounded. What remains genuinely hard, by the same authors' account, is catalysts for reactions with high energy barriers, and, more fundamentally, switches and nanomachines that combine binding, movement and chemistry in a single molecule. Which is to say: the things real proteins mostly are. Haemoglobin does not simply hold oxygen. It changes shape when it picks some up, and that change is what lets it collect oxygen in your lungs and release it in your legs. Designing a molecule that holds still is one problem. Designing one that moves on cue is another.
 
-So the field has learned to design nouns, and is still working on verbs.
+So the field has learned to design nouns and is still working on verbs.
 
 ## What to watch next
 
-Not benchmark numbers. The useful signal is how the failure modes evolve as targets get harder — whether difficulty turns out to be a smooth gradient the methods will grind through, or a wall with something categorical on the other side.
+Not benchmark numbers. The useful signal is how the failure modes evolve as targets get harder, and whether difficulty turns out to be a smooth gradient the methods will grind through or a wall with something categorical on the other side.
 
-The other thing worth watching is what happens to the phrase "what to design," now that answering it no longer requires a decade of specialist training. For thirty years, the bottleneck in protein engineering was capability, and imagination was cheap because it was unusable. That ratio has inverted. A tool that is free, open and mostly works hands the interesting constraint back to whoever can think of something worth building.
+The other thing worth watching is what happens to the phrase "what to design," now that answering it no longer requires a decade of specialist training. For thirty years the bottleneck in protein engineering was capability, and imagination was cheap because it was unusable. That ratio has inverted. A tool that is free, open and mostly works hands the interesting constraint back to whoever can think of something worth building.
 
-Historically, biology has not been short of those people. It has been short of ways to let them try.
+Biology has never been short of those people. It has been short of ways to let them try.
