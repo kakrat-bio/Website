@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ALL_TOPICS } from "@/lib/content/topics";
-import { SITE_DESCRIPTION } from "@/lib/seo/constants";
+import { CONTACT_EMAIL, SITE_DESCRIPTION } from "@/lib/seo/constants";
 
 export function Footer() {
   return (
@@ -37,6 +37,9 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/search" className="hover:text-ink">Search</Link>
+              </li>
+              <li>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-ink">Contact</a>
               </li>
             </ul>
           </nav>
