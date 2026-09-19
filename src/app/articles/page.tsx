@@ -13,7 +13,7 @@ import type { Article } from "@/types/content";
 export const metadata: Metadata = buildMetadata({
   title: "Archive",
   description:
-    "Everything published on Kakrat, newest first — essays and reporting on science and technology, business and innovation, culture and ideas.",
+    "Everything published on Kakrat, newest first. Essays and reporting on science and technology, business and innovation, culture and ideas.",
   path: "/articles",
 });
 
