@@ -11,17 +11,21 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
-      <section className="mb-12 max-w-3xl" aria-labelledby="masthead-heading">
+      <section
+        className="mb-10 border-b border-line pb-10"
+        aria-labelledby="masthead-heading"
+      >
+        <div className="max-w-3xl">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
-          Kakrat <span className="normal-case tracking-normal text-ink-muted">· Gujarati, n.</span>
+          Kakrat <span className="normal-case tracking-normal text-ink-muted">· n.</span>
         </p>
         <h1
           id="masthead-heading"
-          className="mt-3 font-display text-3xl leading-tight text-ink md:text-5xl"
+          className="mt-3 font-display text-2xl italic leading-snug text-ink md:text-4xl"
         >
           The racket of many crows, each certain it is the one making sense.
         </h1>
-        <p className="mt-5 max-w-xl text-lg text-ink-muted">
+        <p className="mt-4 max-w-xl text-base text-ink-muted md:text-lg">
           An independent publication on science and technology, business and innovation,
           culture and ideas. Written for the parts of the noise worth listening to.
         </p>
@@ -33,11 +37,15 @@ export default function HomePage() {
             Where the name comes from &rarr;
           </Link>
         </p>
+        </div>
       </section>
       {featured && (
         <section aria-labelledby="featured-heading">
-          <h2 id="featured-heading" className="sr-only">
-            Featured story
+          <h2
+            id="featured-heading"
+            className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-ink-muted"
+          >
+            Latest stories
           </h2>
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <ArticleCard article={featured} size="large" priority />

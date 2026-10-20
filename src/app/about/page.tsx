@@ -8,7 +8,7 @@ import { CONTACT_EMAIL, SITE_URL } from "@/lib/seo/constants";
 export const metadata: Metadata = buildMetadata({
   title: "About",
   description:
-    "Kakrat is a Gujarati word for the cawing of crows, several at once, each certain it is the one making sense. It is also the name of this publication.",
+    "Kakrat is an old word for the cawing of crows, several at once, each certain it is the one making sense. It is also the name of this publication.",
   path: "/about",
 });
 
@@ -24,7 +24,7 @@ export default function AboutPage() {
       <h1 className="font-display text-4xl text-ink">About Kakrat</h1>
       <div className="prose prose-lg mt-8 max-w-none font-sans">
         <p>
-          <strong>Kakrat</strong> is a Gujarati word for the cawing of crows. Not
+          <strong>Kakrat</strong> is an old word for the cawing of crows. Not
           one crow. Several, all at once, each one convinced it is making the most
           important point in the history of birds. Some elders say{" "}
           <em>kaklat</em> instead.
