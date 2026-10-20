@@ -1,6 +1,6 @@
 export const SITE_NAME = "Kakrat";
 export const SITE_DESCRIPTION =
-  "Independent essays and reporting on science, business, and culture. Named for the Gujarati word for a racket of crows, each one sure it is the one making sense.";
+  "Independent essays and reporting on science, business, and culture. Named for an old word for a racket of crows, each one sure it is the one making sense.";
 /** Public contact address. Cloudflare Email Routing forwards it to a private inbox, so this is the only address that ever appears on the site. */
 export const CONTACT_EMAIL = "mail@kakrat.com";
 /** Update if the domain or protocol ever changes — everything (sitemap, RSS, JSON-LD, canonical URLs) reads from here. */
