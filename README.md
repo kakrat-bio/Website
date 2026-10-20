@@ -106,3 +106,4 @@ Security headers and asset caching are defined in `public/_headers`
 
 See `CLAUDE.md` for the content model, directory conventions, and
 guardrails for extending the site safely.
+
