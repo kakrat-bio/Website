@@ -1,14 +1,14 @@
 import { createRequire } from "node:module";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { onRequestGet, onRequestPost } from "./index";
+import { onRequestGet, onRequestPost } from "../functions/api/comments/index";
 // node:sqlite (Node 22+) has no types in @types/node 20, so load it untyped.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const { DatabaseSync } = createRequire(import.meta.url)("node:sqlite") as any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DatabaseSync = any;
 
-import { onRequestGet as adminGet, onRequestPost as adminPost } from "./admin";
+import { onRequestGet as adminGet, onRequestPost as adminPost } from "../functions/api/comments/admin";
 
 const SCHEMA = `
 CREATE TABLE comments (
