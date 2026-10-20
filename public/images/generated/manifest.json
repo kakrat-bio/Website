@@ -67,6 +67,22 @@
     ],
     "fallback": "/images/generated/2026/kakrat-the-ancient-gujarati-word/cover-banyan-crows/fallback.png"
   },
+  "2026/left-right-and-the-great-indian-confusion/cover": {
+    "key": "2026/left-right-and-the-great-indian-confusion/cover",
+    "width": 960,
+    "height": 603,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/left-right-and-the-great-indian-confusion/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/left-right-and-the-great-indian-confusion/cover/768.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/left-right-and-the-great-indian-confusion/cover/fallback.jpg"
+  },
   "2026/the-quiet-return-of-de-novo-protein-design/cover": {
     "key": "2026/the-quiet-return-of-de-novo-protein-design/cover",
     "width": 2400,
