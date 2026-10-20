@@ -106,3 +106,22 @@ Security headers and asset caching are defined in `public/_headers`
 
 See `CLAUDE.md` for the content model, directory conventions, and
 guardrails for extending the site safely.
+
+### Comments (`/api/comments`, `/admin/comments`)
+
+Each article has a comments section (`src/components/comments/Comments.tsx`).
+Readers give a name or pseudonym, an optional email (never shown publicly)
+and their comment; one level of replies is allowed. Every submission is
+stored as **pending** in the D1 database `kakrat-comments` (bound as
+`COMMENTS_DB` in `wrangler.toml`) and appears only after approval at
+`/admin/comments`, a `noindex` page protected by `COMMENTS_ADMIN_SECRET`
+(falls back to `PUBLISH_SECRET` when unset). Spam protection: a hidden
+honeypot field and a per-IP rate limit (5 per 10 minutes; IPs are stored
+only as salted hashes).
+
+Optional email alerts for new comments use [Resend](https://resend.com):
+add `RESEND_API_KEY` and `COMMENTS_NOTIFY_EMAIL` (and optionally
+`COMMENTS_FROM_EMAIL`, a sender on a domain verified in Resend) as Pages
+secrets. Without them, comments still work; you just check the admin page.
+
+Schema: `migrations/comments/0001_init.sql`.
