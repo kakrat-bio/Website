@@ -6,6 +6,7 @@ import { getAuthorById } from "@/lib/content/authors";
 import { TOPIC_META } from "@/lib/content/topics";
 import { ArticleContent } from "@/lib/mdx/compile";
 import { AuthorByline } from "@/components/article/AuthorByline";
+import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 import { ShareBar } from "@/components/article/ShareBar";
@@ -126,6 +127,8 @@ export default async function ArticlePage({
         editorialNote={article.editorialNote}
         sourceNote={article.sourceNote}
       />
+
+      <Comments slug={article.slug} />
 
       <RelatedArticles articles={related} />
     </div>
