@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration for kakrat.com.
+# Once this file exists, Pages reads bindings from it (secrets such as
+# GITHUB_TOKEN / PUBLISH_SECRET stay in the dashboard).
+name = "kakrat"
+pages_build_output_dir = "out"
+compatibility_date = "2025-10-01"
+
+# Comments (functions/api/comments). Schema: migrations/comments/0001_init.sql
+[[d1_databases]]
+binding = "COMMENTS_DB"
+database_name = "kakrat-comments"
+database_id = "446d126d-2af6-4238-812b-796278f00780"

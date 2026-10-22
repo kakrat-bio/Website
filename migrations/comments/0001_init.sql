@@ -1,4 +1,4 @@
--- Applied to the D1 database "kakrat-comments" on 2026-10-20.
+-- Applied to the D1 database "kakrat-comments" (446d126d-…) on 2026-10-22.
 CREATE TABLE IF NOT EXISTS comments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   slug TEXT NOT NULL,
