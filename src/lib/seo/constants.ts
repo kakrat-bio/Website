@@ -9,3 +9,5 @@ export const SITE_URL = "https://kakrat.com";
 export const DEFAULT_OG_IMAGE = "/og-default.png";
 /** Used for an article that (defensively) has no coverImage — schema requires one, so this mainly guards against future schema changes. */
 export const ARTICLE_FALLBACK_IMAGE = "/og-article-fallback.png";
+/** Newsletter provider's form endpoint (Buttondown embed, account "kakrat"). */
+export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-subscribe/kakrat";

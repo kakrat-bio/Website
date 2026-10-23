@@ -80,6 +80,11 @@ MDX content, no database/backend/auth. Read this before extending it.
     and threw a `WebAssembly.instantiate` CSP error without this).
     `'wasm-unsafe-eval'` is scoped to WASM compilation only — it does not
     enable `eval()`/`Function()` the way `'unsafe-eval'` would.
+  - `https://static.cloudflareinsights.com` (script-src) and
+    `https://cloudflareinsights.com` (connect-src) allow Cloudflare Web
+    Analytics, which Cloudflare injects automatically at the edge.
+  - `form-action` allows `https://buttondown.com` for the newsletter
+    sign-up form (`NewsletterSignup`), which posts straight to Buttondown.
   - `img-src` is deliberately just `'self' data:`, not `https:` — nothing
     in the codebase hotlinks external images. If an article genuinely needs
     to embed an image from another domain, allowlist that specific domain
