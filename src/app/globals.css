@@ -79,3 +79,9 @@ body {
 .prose .anchor-link:focus-visible .anchor-link-icon {
   opacity: 1;
 }
+
+/* Numbered reference citations (Nature style) — muted so they do not interrupt reading. */
+.prose sup {
+  color: var(--color-ink-muted);
+  font-size: 0.7em;
+}
