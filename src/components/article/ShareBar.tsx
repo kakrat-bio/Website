@@ -8,6 +8,15 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   return (
     <div className="mt-8 flex items-center gap-4 text-sm text-ink-muted">
       <span>Share:</span>
+      {/* wa.me opens the WhatsApp app on phones and WhatsApp Web on desktop, with the message prefilled. */}
+      <a
+        href={`https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-ink"
+      >
+        WhatsApp
+      </a>
       <a
         href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
         target="_blank"
