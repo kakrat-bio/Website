@@ -44,9 +44,10 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <p className="mt-10 border-t border-line pt-6">
-          &copy; {new Date().getFullYear()} Kakrat. All rights reserved.
-        </p>
+        <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 sm:flex-row sm:items-baseline sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Kakrat. All rights reserved.</p>
+          <p className="text-xs">Inspired and designed by humans, assisted by AI.</p>
+        </div>
       </div>
     </footer>
   );
