@@ -83,6 +83,26 @@
     ],
     "fallback": "/images/generated/2026/left-right-and-the-great-indian-confusion/cover/fallback.jpg"
   },
+  "2026/the-hallmarks-of-ageing/cover": {
+    "key": "2026/the-hallmarks-of-ageing/cover",
+    "width": 1536,
+    "height": 1024,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-hallmarks-of-ageing/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-hallmarks-of-ageing/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-hallmarks-of-ageing/cover/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-hallmarks-of-ageing/cover/fallback.jpg"
+  },
   "2026/the-quiet-return-of-de-novo-protein-design/cover": {
     "key": "2026/the-quiet-return-of-de-novo-protein-design/cover",
     "width": 2400,

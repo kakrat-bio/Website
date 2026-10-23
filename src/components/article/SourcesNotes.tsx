@@ -1,5 +1,39 @@
 import type { Reference } from "@/types/content";
 
+/** Above this many references, the list renders collapsed and in a smaller type size. */
+const COLLAPSE_AFTER = 8;
+
+function ReferenceList({ references, compact = false }: { references: Reference[]; compact?: boolean }) {
+  return (
+    <ol
+      className={
+        compact
+          ? "mt-3 list-decimal space-y-1.5 pl-5 text-xs leading-relaxed marker:text-ink-muted"
+          : "mt-4 list-decimal space-y-3 pl-5 marker:text-ink-muted"
+      }
+    >
+      {references.map((ref, i) => (
+        <li key={ref.url} id={`ref-${i + 1}`} className={compact ? "text-ink-muted" : "text-sm text-ink-muted"}>
+          <a
+            href={ref.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={
+              compact
+                ? "text-ink-muted underline decoration-line underline-offset-2 hover:text-accent"
+                : "text-ink underline decoration-accent underline-offset-2 hover:text-accent"
+            }
+          >
+            {ref.title}
+          </a>
+          {ref.publisher && <span> — {ref.publisher}</span>}
+          {ref.note && <p className="mt-0.5">{ref.note}</p>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 /**
  * Editorial credibility block. Renders nothing if the article carries none
  * of references/editorialNote/sourceNote — a story or philosophical essay
@@ -24,24 +58,21 @@ export function SourcesNotes({
 
       {sourceNote && <p className="mt-3 text-sm text-ink-muted">{sourceNote}</p>}
 
-      {references.length > 0 && (
-        <ol className="mt-4 list-decimal space-y-3 pl-5 marker:text-ink-muted">
-          {references.map((ref) => (
-            <li key={ref.url} className="text-sm text-ink-muted">
-              <a
-                href={ref.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-ink underline decoration-accent underline-offset-2 hover:text-accent"
-              >
-                {ref.title}
-              </a>
-              {ref.publisher && <span> — {ref.publisher}</span>}
-              {ref.note && <p className="mt-0.5">{ref.note}</p>}
-            </li>
-          ))}
-        </ol>
-      )}
+      {references.length > 0 &&
+        (references.length > COLLAPSE_AFTER ? (
+          // Long, paper-style bibliographies (numbered superscript citations
+          // in the body) stay collapsed so they don't dominate the end of a
+          // long essay; readers who want them open the list.
+          <details className="group mt-4">
+            <summary className="cursor-pointer text-sm text-ink-muted underline decoration-accent underline-offset-2 hover:text-ink">
+              <span className="group-open:hidden">Show {references.length} references</span>
+              <span className="hidden group-open:inline">Hide references</span>
+            </summary>
+            <ReferenceList references={references} compact />
+          </details>
+        ) : (
+          <ReferenceList references={references} />
+        ))}
 
       {editorialNote && (
         <p className="mt-4 text-sm italic text-ink-muted">{editorialNote}</p>
