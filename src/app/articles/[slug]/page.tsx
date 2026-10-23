@@ -10,6 +10,7 @@ import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 import { ShareBar } from "@/components/article/ShareBar";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -122,6 +123,8 @@ export default async function ArticlePage({
       )}
 
       <ShareBar url={url} title={article.title} />
+
+      <NewsletterSignup />
 
       <SourcesNotes
         references={article.references}
