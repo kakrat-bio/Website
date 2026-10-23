@@ -13,6 +13,7 @@ import { ShareBar } from "@/components/article/ShareBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { shareImageUrl } from "@/lib/seo/share-image";
 import { SITE_URL, ARTICLE_FALLBACK_IMAGE, SITE_NAME } from "@/lib/seo/constants";
 import { ResponsiveImage } from "@/components/media/ResponsiveImage";
 
@@ -41,7 +42,7 @@ export async function generateMetadata({
     title: article.title,
     description: article.description,
     path: `/articles/${article.slug}`,
-    image: article.coverImage || ARTICLE_FALLBACK_IMAGE,
+    image: shareImageUrl(article.coverImage),
     type: "article",
     publishedTime: article.publishedAt.toISOString(),
     modifiedTime: (article.updatedAt ?? article.publishedAt).toISOString(),

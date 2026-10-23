@@ -1,4 +1,5 @@
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, ARTICLE_FALLBACK_IMAGE } from "./constants";
+import { shareImageUrl } from "./share-image";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "./constants";
 import type { Article, Author } from "@/types/content";
 
 /**
@@ -46,7 +47,7 @@ export function articleJsonLd(article: Article, authors: Author[]) {
     "@type": "Article",
     headline: article.title,
     description: article.description,
-    image: `${SITE_URL}${article.coverImage || ARTICLE_FALLBACK_IMAGE}`,
+    image: shareImageUrl(article.coverImage),
     datePublished: article.publishedAt.toISOString(),
     dateModified: (article.updatedAt ?? article.publishedAt).toISOString(),
     author: authors.map((a) => ({
