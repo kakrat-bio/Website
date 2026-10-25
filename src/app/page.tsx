@@ -76,7 +76,7 @@ export default function HomePage() {
 
       <NewsletterSignup
         heading="Get new pieces by email"
-        blurb="One short email whenever something new goes up. Not often, and you can unsubscribe anytime."
+        blurb="One short email whenever something new goes up. Not often. Your email is never shared, and you can unsubscribe anytime."
         className="mt-20 max-w-3xl"
       />
 

@@ -23,7 +23,7 @@ type NewsletterSignupProps = {
  */
 export function NewsletterSignup({
   heading = "Get the next essay by email",
-  blurb = "One short email when a new piece is published. No spam, and you can unsubscribe anytime.",
+  blurb = "One short email when a new piece is published. No spam, your email is never shared, and you can unsubscribe anytime.",
   className = "mt-12",
 }: NewsletterSignupProps) {
   return (
