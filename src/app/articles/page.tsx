@@ -9,6 +9,7 @@ import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { SITE_URL } from "@/lib/seo/constants";
 import type { Article } from "@/types/content";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export const metadata: Metadata = buildMetadata({
   title: "Archive",
@@ -91,6 +92,7 @@ export default function ArchivePage() {
           </section>
         ))
       )}
+      <NewsletterSignup className="mt-16 max-w-2xl" />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { personJsonLd, breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { SITE_URL } from "@/lib/seo/constants";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export function generateStaticParams() {
   return getAllAuthors().map((a) => ({ author: a.id }));
@@ -55,6 +56,7 @@ export default async function AuthorPage({
           <ArticleCard key={a.slug} article={a} />
         ))}
       </div>
+      <NewsletterSignup className="mt-16 max-w-2xl" />
     </div>
   );
 }

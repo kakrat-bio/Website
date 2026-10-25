@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllArticles } from "@/lib/content/articles";
 import { ALL_TOPICS } from "@/lib/content/topics";
 import { ArticleCard } from "@/components/article/ArticleCard";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export default function HomePage() {
   const articles = getAllArticles();
@@ -72,6 +73,12 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      <NewsletterSignup
+        heading="Get new pieces by email"
+        blurb="One short email whenever something new goes up. Not often, and you can unsubscribe anytime."
+        className="mt-20 max-w-3xl"
+      />
 
       <section className="mt-20 border-t border-line pt-12" aria-labelledby="topics-heading">
         <h2 id="topics-heading" className="font-display text-2xl text-ink">
