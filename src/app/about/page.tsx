@@ -42,10 +42,11 @@ export default function AboutPage() {
 
         <h2>What this is</h2>
         <p>
-          One person writing. No staff, no newsroom, no editorial board. Pieces go
-          up when they’re finished, which is sometimes twice in a month and
-          sometimes not for a season. I’d rather say that than claim a schedule I
-          don’t keep.
+          There’s no big staff or editorial board here, at least not yet. If
+          you’d like to write a piece as a guest,{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`}>get in touch</a>. Pieces go up
+          when they’re finished, which is sometimes twice in a month and
+          sometimes not for a season. So there’s no schedule, yet.
         </p>
         <p>
           The writing falls into three areas. Science and technology, mostly
@@ -55,14 +56,17 @@ export default function AboutPage() {
           story.
         </p>
 
-        <h2>What I’m trying to do</h2>
+        <h2>What’s the aim?</h2>
         <p>
-          Most science writing arrives in one of two registers. Either every
-          result is a revolution, or the hedging is thick enough that you finish a
-          piece unsure whether anything happened. Business writing has the same
-          problem. I’m after the register in between, where you can say that
-          something is genuinely remarkable and that most of the coverage of it is
-          nonsense, in the same paragraph.
+          Does there have to be just one? Here’s one, anyway.
+        </p>
+        <p>
+          Most science writing lands in one of two camps. Either every result is
+          a revolution, or the hedging is so thick that you finish a piece unsure
+          whether anything happened. Business writing has the same problem. Can
+          we do something in between, where you can say that something is
+          genuinely remarkable and that most of the coverage of it is nonsense,
+          in the same paragraph?
         </p>
         <p>
           I also think being funny about a serious subject is a way of taking it
@@ -94,15 +98,10 @@ export default function AboutPage() {
           is not often. If you prefer a feed reader, there’s an{" "}
           <Link href="/rss.xml">RSS feed</Link>.
         </p>
-        <p>
-          The site counts visits with Cloudflare’s cookie-free analytics, so I can
-          tell whether anyone is reading. No ads, no trackers following you
-          around, and your email is never shared.
-        </p>
       </div>
       <NewsletterSignup
         heading="Get new pieces by email"
-        blurb="One short email when something new is published. Unsubscribe anytime."
+        blurb="One short email when something new is published. Your email is never shared, and you can unsubscribe anytime."
         className="mt-8"
       />
       <div className="prose prose-lg mt-12 max-w-none font-sans">
