@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllTags, getArticlesByTag } from "@/lib/content/articles";
 import { ArticleCard } from "@/components/article/ArticleCard";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export function generateStaticParams() {
   return getAllTags().map((tag) => ({ tag }));
@@ -43,6 +44,7 @@ export default async function TagPage({
           <ArticleCard key={a.slug} article={a} />
         ))}
       </div>
+      <NewsletterSignup className="mt-16 max-w-2xl" />
     </div>
   );
 }

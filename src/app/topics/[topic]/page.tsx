@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { SITE_URL } from "@/lib/seo/constants";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export function generateStaticParams() {
   return ALL_TOPICS.map((t) => ({ topic: t.slug }));
@@ -57,6 +58,7 @@ export default async function TopicPage({
           ))}
         </div>
       )}
+      <NewsletterSignup className="mt-16 max-w-2xl" />
     </div>
   );
 }

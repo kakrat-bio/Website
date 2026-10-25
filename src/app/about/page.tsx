@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/seo/constants";
+import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
@@ -86,10 +87,25 @@ export default function AboutPage() {
           The <Link href="/articles">archive</Link> has everything by date. The
           three topic pages sort it by subject.{" "}
           <Link href="/search">Search</Link> covers the full text of every piece.
-          There’s no newsletter and no tracking of any kind. If you want to know
-          when something new goes up, use the{" "}
+        </p>
+        <p>
+          If you want to know when something new goes up, the simplest way is the
+          newsletter below: one short email per new piece, which, as noted above,
+          is not often. If you prefer a feed reader, there’s an{" "}
           <Link href="/rss.xml">RSS feed</Link>.
         </p>
+        <p>
+          The site counts visits with Cloudflare’s cookie-free analytics, so I can
+          tell whether anyone is reading. No ads, no trackers following you
+          around, and your email is never shared.
+        </p>
+      </div>
+      <NewsletterSignup
+        heading="Get new pieces by email"
+        blurb="One short email when something new is published. Unsubscribe anytime."
+        className="mt-8"
+      />
+      <div className="prose prose-lg mt-12 max-w-none font-sans">
 
         <h2>Getting in touch</h2>
         <p>
