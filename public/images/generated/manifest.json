@@ -170,5 +170,29 @@
       }
     ],
     "fallback": "/images/generated/2026/the-unread-diary/cover/fallback.jpg"
+  },
+  "site/about-crow": {
+    "key": "site/about-crow",
+    "width": 2400,
+    "height": 1200,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/site/about-crow/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/site/about-crow/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/site/about-crow/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/site/about-crow/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/site/about-crow/fallback.jpg"
   }
 }

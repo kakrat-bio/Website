@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/seo/constants";
+import { ResponsiveImage } from "@/components/media/ResponsiveImage";
 import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 
 export const metadata: Metadata = buildMetadata({
@@ -23,6 +24,18 @@ export default function AboutPage() {
         ])}
       />
       <h1 className="font-display text-4xl text-ink">About Kakrat</h1>
+      <figure className="relative mt-8 overflow-hidden rounded-sm bg-[#0a0a0a]">
+        <ResponsiveImage
+          src="site/about-crow"
+          alt="Illustration of a crow on a rock, beak open mid-caw, against a black background"
+          sizes="(min-width: 768px) 672px, 100vw"
+          priority
+          className="h-auto w-full"
+        />
+        <figcaption className="absolute inset-y-0 right-0 hidden w-1/2 items-center px-8 font-display text-2xl italic leading-snug text-[#f3efe6] sm:flex">
+          The racket begins.
+        </figcaption>
+      </figure>
       <div className="prose prose-lg mt-8 max-w-none font-sans">
         <p>
           <strong>Kakrat</strong> is an old word for the cawing of crows. Not
