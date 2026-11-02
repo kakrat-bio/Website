@@ -26,6 +26,16 @@ export const metadata: Metadata = {
   ...buildMetadata({ title: SITE_NAME, description: SITE_DESCRIPTION, path: "/" }),
   title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
   metadataBase: new URL(SITE_URL),
+  // Lets Google show large thumbnails and full-length snippets in Search,
+  // Discover and News surfaces (small previews are the default otherwise).
+  // Pages that set their own `robots` (admin, publish, search) override this.
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

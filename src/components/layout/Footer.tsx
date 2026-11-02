@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ALL_TOPICS } from "@/lib/content/topics";
-import { CONTACT_EMAIL, SITE_DESCRIPTION } from "@/lib/seo/constants";
+import { CONTACT_EMAIL, SITE_DESCRIPTION, SOCIAL_LINKS } from "@/lib/seo/constants";
 
 export function Footer() {
   return (
@@ -44,6 +44,13 @@ export function Footer() {
               <li>
                 <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-ink">Contact</a>
               </li>
+              {SOCIAL_LINKS.map((s) => (
+                <li key={s.url}>
+                  <a href={s.url} rel="me noopener" target="_blank" className="hover:text-ink">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

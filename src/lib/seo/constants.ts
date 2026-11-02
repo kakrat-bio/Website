@@ -11,3 +11,13 @@ export const DEFAULT_OG_IMAGE = "/og-default.png";
 export const ARTICLE_FALLBACK_IMAGE = "/og-article-fallback.png";
 /** Newsletter provider's form endpoint (Buttondown embed, account "kakrat"). */
 export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-subscribe/kakrat";
+/**
+ * Kakrat's official social profiles, emitted as Organization `sameAs` so
+ * search engines can connect the site to its accounts. Add new ones here
+ * (full https URLs, no tracking parameters) as they go live. Also shown in the footer.
+ */
+export const SOCIAL_LINKS: { label: string; url: string }[] = [
+  { label: "X", url: "https://x.com/kakratian" },
+  { label: "Instagram", url: "https://www.instagram.com/kakratian" },
+];
+export const SOCIAL_PROFILES: string[] = SOCIAL_LINKS.map((s) => s.url);

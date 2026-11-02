@@ -1,17 +1,10 @@
 import { getAllArticles } from "@/lib/content/articles";
 import { getAuthorById } from "@/lib/content/authors";
+import { TOPIC_META } from "@/lib/content/topics";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/seo/constants";
+import { escapeXml } from "@/lib/utils/xml";
 
 export const dynamic = "force-static";
-
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
 
 export function GET() {
   const articles = getAllArticles().slice(0, 30);
@@ -26,6 +19,9 @@ export function GET() {
       <link>${url}</link>
       <guid>${url}</guid>
       <description>${escapeXml(a.description)}</description>
+      <category>${escapeXml(TOPIC_META[a.topic].label)}</category>${a.tags
+        .map((t) => `\n      <category>${escapeXml(t)}</category>`)
+        .join("")}
       ${author ? `<dc:creator>${escapeXml(author.name)}</dc:creator>` : ""}
       <pubDate>${a.publishedAt.toUTCString()}</pubDate>
     </item>`;
@@ -43,7 +39,7 @@ export function GET() {
     <link>${SITE_URL}</link>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
     <description>${escapeXml(SITE_DESCRIPTION)}</description>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>${lastBuildDate.toUTCString()}</lastBuildDate>${items}
   </channel>
 </rss>`;
