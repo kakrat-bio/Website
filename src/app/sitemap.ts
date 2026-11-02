@@ -8,6 +8,10 @@ export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const articles = getAllArticles();
+  // The home page and article index change whenever a piece is published,
+  // so their lastModified is the newest article's date (not build time,
+  // which would claim a change on every deploy).
+  const latest = articles[0] ? (articles[0].updatedAt ?? articles[0].publishedAt) : undefined;
 
   // Slugs/tags/author ids are already constrained to a safe kebab-case
   // charset by their zod schemas (see src/types/content.ts), so this is
@@ -40,8 +44,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   return [
-    { url: SITE_URL, changeFrequency: "daily", priority: 1 },
-    { url: `${SITE_URL}/articles`, changeFrequency: "weekly", priority: 0.7 },
+    { url: SITE_URL, lastModified: latest, changeFrequency: "daily", priority: 1 },
+    { url: `${SITE_URL}/articles`, lastModified: latest, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.3 },
     ...articleUrls,
     ...topicUrls,

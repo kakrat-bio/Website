@@ -1,5 +1,6 @@
 import { shareImageUrl } from "./share-image";
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "./constants";
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, CONTACT_EMAIL, SOCIAL_PROFILES } from "./constants";
+import { TOPIC_META } from "@/lib/content/topics";
 import type { Article, Author } from "@/types/content";
 
 /**
@@ -13,10 +14,13 @@ import type { Article, Author } from "@/types/content";
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "NewsMediaOrganization",
+    "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
+    email: CONTACT_EMAIL,
+    ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
 
@@ -41,13 +45,23 @@ export function personJsonLd(author: Author) {
   };
 }
 
+/**
+ * `NewsArticle` (a Google-documented Article subtype) rather than plain
+ * `Article`: it's the type Google's news surfaces key on, and it's accurate
+ * for a dated, bylined editorial publication. `articleSection`, `keywords`
+ * and `inLanguage` help news and AI-answer systems classify the piece.
+ */
 export function articleJsonLd(article: Article, authors: Author[]) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "NewsArticle",
     headline: article.title,
     description: article.description,
-    image: shareImageUrl(article.coverImage),
+    image: [shareImageUrl(article.coverImage)],
+    articleSection: TOPIC_META[article.topic].label,
+    ...(article.tags.length ? { keywords: article.tags.join(", ") } : {}),
+    inLanguage: "en",
+    isAccessibleForFree: true,
     datePublished: article.publishedAt.toISOString(),
     dateModified: (article.updatedAt ?? article.publishedAt).toISOString(),
     author: authors.map((a) => ({
@@ -56,8 +70,10 @@ export function articleJsonLd(article: Article, authors: Author[]) {
       url: `${SITE_URL}/authors/${a.id}`,
     })),
     publisher: {
-      "@type": "Organization",
+      "@type": "NewsMediaOrganization",
+      "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
+      url: SITE_URL,
       logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
     mainEntityOfPage: {

@@ -11,3 +11,9 @@ export const DEFAULT_OG_IMAGE = "/og-default.png";
 export const ARTICLE_FALLBACK_IMAGE = "/og-article-fallback.png";
 /** Newsletter provider's form endpoint (Buttondown embed, account "kakrat"). */
 export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-subscribe/kakrat";
+/**
+ * Kakrat's official social profiles, emitted as Organization `sameAs` so
+ * search engines can connect the site to its accounts. Add new ones here
+ * (full https URLs) as they go live.
+ */
+export const SOCIAL_PROFILES: string[] = ["https://x.com/kakratian"];
