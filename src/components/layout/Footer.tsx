@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { ALL_TOPICS } from "@/lib/content/topics";
-import { CONTACT_EMAIL, SITE_DESCRIPTION, SOCIAL_LINKS } from "@/lib/seo/constants";
+import { CONTACT_EMAIL, SITE_DESCRIPTION } from "@/lib/seo/constants";
+import { SocialFollow } from "@/components/social/SocialFollow";
 
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-line">
       <div className="mx-auto max-w-6xl px-6 py-12 text-sm text-ink-muted">
-        <div className="grid gap-8 sm:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-lg text-ink">Kakrat</p>
             <p className="mt-2 max-w-xs">{SITE_DESCRIPTION}</p>
@@ -44,14 +45,11 @@ export function Footer() {
               <li>
                 <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-ink">Contact</a>
               </li>
-              {SOCIAL_LINKS.map((s) => (
-                <li key={s.url}>
-                  <a href={s.url} rel="me noopener" target="_blank" className="hover:text-ink">
-                    {s.label}
-                  </a>
-                </li>
-              ))}
             </ul>
+          </nav>
+          <nav aria-label="Follow">
+            <p className="mb-2 font-medium text-ink">Follow</p>
+            <SocialFollow variant="list" />
           </nav>
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 sm:flex-row sm:items-baseline sm:justify-between">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ALL_TOPICS } from "@/lib/content/topics";
 import { ThemeToggle } from "./ThemeToggle";
 import { MobileNav } from "./MobileNav";
+import { SocialFollow } from "@/components/social/SocialFollow";
 
 export function Header() {
   return (
@@ -25,7 +26,8 @@ export function Header() {
             ))}
           </ul>
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
+          <SocialFollow variant="compact" />
           <Link
             href="/search"
             className="hidden text-sm text-ink-muted hover:text-ink md:inline"

@@ -1,4 +1,5 @@
 import { NEWSLETTER_FORM_ACTION } from "@/lib/seo/constants";
+import { SocialFollow } from "@/components/social/SocialFollow";
 
 type NewsletterSignupProps = {
   /** Heading above the form. Defaults to the article-page wording. */
@@ -62,6 +63,10 @@ export function NewsletterSignup({
           Subscribe
         </button>
       </form>
+      <div className="mt-6 border-t border-line pt-5">
+        <p className="text-sm font-medium text-ink">Or follow Kakrat</p>
+        <SocialFollow variant="buttons" className="mt-3" />
+      </div>
     </section>
   );
 }

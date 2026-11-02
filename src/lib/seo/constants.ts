@@ -14,10 +14,10 @@ export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-s
 /**
  * Kakrat's official social profiles, emitted as Organization `sameAs` so
  * search engines can connect the site to its accounts. Add new ones here
- * (full https URLs, no tracking parameters) as they go live. Also shown in the footer.
+ * (full https URLs, no tracking parameters) as they go live. Shown in the header, the newsletter box and the footer (SocialFollow).
  */
-export const SOCIAL_LINKS: { label: string; url: string }[] = [
-  { label: "X", url: "https://x.com/kakratian" },
-  { label: "Instagram", url: "https://www.instagram.com/kakratian" },
+export const SOCIAL_LINKS: { label: string; handle: string; url: string }[] = [
+  { label: "Instagram", handle: "@kakratian", url: "https://www.instagram.com/kakratian" },
+  { label: "X", handle: "@kakratian", url: "https://x.com/kakratian" },
 ];
 export const SOCIAL_PROFILES: string[] = SOCIAL_LINKS.map((s) => s.url);
