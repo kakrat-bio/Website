@@ -50,6 +50,24 @@ export default async function AuthorPage({
       <h1 className="font-display text-4xl text-ink">{author.name}</h1>
       {author.title && <p className="mt-1 text-ink-muted">{author.title}</p>}
       <p className="mt-4 max-w-xl text-ink-muted">{author.bio}</p>
+      {(author.website || author.sameAs.length > 0) && (
+        <ul aria-label={`${author.name} elsewhere`} className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {[author.website, ...author.sameAs]
+            .filter((u): u is string => Boolean(u))
+            .map((u) => (
+              <li key={u}>
+                <a
+                  href={u}
+                  target="_blank"
+                  rel="me noopener"
+                  className="text-ink underline decoration-accent underline-offset-2 hover:text-accent"
+                >
+                  {new URL(u).hostname.replace(/^www\./, "")}
+                </a>
+              </li>
+            ))}
+        </ul>
+      )}
 
       <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((a) => (

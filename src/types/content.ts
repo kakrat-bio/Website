@@ -97,6 +97,31 @@ export const articleFrontmatterSchema = z.object({
   editorialNote: z.string().optional(),
   /** Short note on sourcing philosophy, distinct from a formal reference list. */
   sourceNote: z.string().optional(),
+  /**
+   * Factual corrections made after publication, shown in a visible
+   * "Correction" box at the end of the article (see /editorial-standards).
+   * Each entry should also bump `updatedAt` to at least its date — the
+   * build enforces this, so a correction is never silently backdated.
+   */
+  corrections: z
+    .array(
+      z.object({
+        date: z.coerce.date(),
+        text: z.string().min(1, "correction text cannot be empty"),
+      }),
+    )
+    .default([]),
+}).superRefine((a, ctx) => {
+  for (const c of a.corrections) {
+    if (!a.updatedAt || a.updatedAt.getTime() < c.date.getTime()) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["updatedAt"],
+        message: "an article with a correction needs updatedAt on or after the correction's date",
+      });
+      return;
+    }
+  }
 });
 export type ArticleFrontmatter = z.infer<typeof articleFrontmatterSchema>;
 

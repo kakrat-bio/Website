@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, lastModified: latest, changeFrequency: "daily", priority: 1 },
     { url: `${SITE_URL}/articles`, lastModified: latest, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${SITE_URL}/editorial-standards`, changeFrequency: "yearly", priority: 0.3 },
     ...articleUrls,
     ...topicUrls,
     ...tagUrls,

@@ -98,6 +98,11 @@ export default function AboutPage() {
           If a piece invents a statistic for comic effect, it says so in the same
           sentence. That rule has no exceptions.
         </p>
+        <p>
+          The full set of rules, including how corrections and AI tools are
+          handled, is on the{" "}
+          <Link href="/editorial-standards">editorial standards</Link> page.
+        </p>
 
         <h2>Reading along</h2>
         <p>

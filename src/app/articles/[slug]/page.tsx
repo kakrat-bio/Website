@@ -8,6 +8,8 @@ import { ArticleContent } from "@/lib/mdx/compile";
 import { AuthorByline } from "@/components/article/AuthorByline";
 import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
+import { Corrections } from "@/components/article/Corrections";
+import { AuthorBio } from "@/components/article/AuthorBio";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 import { ShareBar } from "@/components/article/ShareBar";
 import { NewsletterSignup } from "@/components/article/NewsletterSignup";
@@ -108,6 +110,8 @@ export default async function ArticlePage({
         <ArticleContent source={article.content} />
       </article>
 
+      <Corrections corrections={article.corrections} />
+
       {article.tags.length > 0 && (
         <nav aria-label="Tags" className="mt-8 flex flex-wrap gap-2">
           {article.tags.map((tag) => (
@@ -123,6 +127,8 @@ export default async function ArticlePage({
       )}
 
       <ShareBar url={url} title={article.title} />
+
+      <AuthorBio authors={authors} />
 
       <NewsletterSignup />
 

@@ -53,4 +53,27 @@ describe("articleFrontmatterSchema", () => {
     const result = articleFrontmatterSchema.safeParse(withoutCover);
     expect(result.success).toBe(true);
   });
+
+  it("accepts a correction when updatedAt is on or after it", () => {
+    const result = articleFrontmatterSchema.safeParse({
+      ...baseFrontmatter,
+      updatedAt: "2026-02-01",
+      corrections: [{ date: "2026-02-01", text: "An earlier version misstated the year." }],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a correction without a matching updatedAt", () => {
+    const missing = articleFrontmatterSchema.safeParse({
+      ...baseFrontmatter,
+      corrections: [{ date: "2026-02-01", text: "Fixed a date." }],
+    });
+    const stale = articleFrontmatterSchema.safeParse({
+      ...baseFrontmatter,
+      updatedAt: "2026-01-15",
+      corrections: [{ date: "2026-02-01", text: "Fixed a date." }],
+    });
+    expect(missing.success).toBe(false);
+    expect(stale.success).toBe(false);
+  });
 });
