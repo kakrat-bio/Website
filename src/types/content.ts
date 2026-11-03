@@ -99,7 +99,8 @@ export const articleFrontmatterSchema = z.object({
   sourceNote: z.string().optional(),
   /**
    * Factual corrections made after publication, shown in a visible
-   * "Correction" box at the end of the article (see /editorial-standards).
+   * "Correction" box at the end of the article. Only appears when added here
+   * on purpose: ordinary edits and typo fixes never show it.
    * Each entry should also bump `updatedAt` to at least its date — the
    * build enforces this, so a correction is never silently backdated.
    */

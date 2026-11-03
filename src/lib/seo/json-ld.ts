@@ -20,7 +20,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     email: CONTACT_EMAIL,
-    publishingPrinciples: `${SITE_URL}/editorial-standards`,
+    publishingPrinciples: `${SITE_URL}/about`,
     ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }

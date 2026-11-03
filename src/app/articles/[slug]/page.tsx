@@ -9,7 +9,6 @@ import { AuthorByline } from "@/components/article/AuthorByline";
 import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
 import { Corrections } from "@/components/article/Corrections";
-import { AuthorBio } from "@/components/article/AuthorBio";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 import { ShareBar } from "@/components/article/ShareBar";
 import { NewsletterSignup } from "@/components/article/NewsletterSignup";
@@ -127,8 +126,6 @@ export default async function ArticlePage({
       )}
 
       <ShareBar url={url} title={article.title} />
-
-      <AuthorBio authors={authors} />
 
       <NewsletterSignup />
 

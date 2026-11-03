@@ -34,9 +34,6 @@ export function Footer() {
                 <Link href="/about" className="hover:text-ink">About</Link>
               </li>
               <li>
-                <Link href="/editorial-standards" className="hover:text-ink">Editorial standards</Link>
-              </li>
-              <li>
                 <Link href="/about#subscribe" className="hover:text-ink">Subscribe</Link>
               </li>
               <li>
@@ -59,7 +56,7 @@ export function Footer() {
           <p>&copy; {new Date().getFullYear()} Kakrat. All rights reserved.</p>
           <p className="text-xs">
             Inspired and designed by humans,{" "}
-            <Link href="/editorial-standards#ai" className="underline underline-offset-2 hover:text-ink">
+            <Link href="/about#ai" className="underline underline-offset-2 hover:text-ink">
               assisted by AI
             </Link>
             .

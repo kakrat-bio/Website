@@ -27,7 +27,7 @@ export function Corrections({ corrections }: { corrections: { date: Date; text: 
         ))}
       </ul>
       <p className="mt-3 text-xs">
-        How corrections work: <Link href="/editorial-standards#corrections" className="underline underline-offset-2 hover:text-ink">editorial standards</Link>.
+        How corrections work: <Link href="/about#corrections" className="underline underline-offset-2 hover:text-ink">About Kakrat</Link>.
       </p>
     </aside>
   );

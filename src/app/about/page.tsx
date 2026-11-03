@@ -98,10 +98,16 @@ export default function AboutPage() {
           If a piece invents a statistic for comic effect, it says so in the same
           sentence. That rule has no exceptions.
         </p>
-        <p>
-          The full set of rules, including how corrections and AI tools are
-          handled, is on the{" "}
-          <Link href="/editorial-standards">editorial standards</Link> page.
+        <p id="ai" className="scroll-mt-24">
+          The pieces are written by people. AI tools help with editing, with
+          checking facts and references against their sources, with some
+          illustrations, and with building this site. A person reads and
+          approves every word before it goes up, and AI never invents quotes or
+          sources.
+        </p>
+        <p id="corrections" className="scroll-mt-24">
+          When a piece gets a fact wrong, it gets fixed, and a dated correction
+          note at the end says what changed. Typos just get fixed.
         </p>
 
         <h2>Reading along</h2>
