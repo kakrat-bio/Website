@@ -8,6 +8,7 @@ import { ArticleContent } from "@/lib/mdx/compile";
 import { AuthorByline } from "@/components/article/AuthorByline";
 import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
+import { Corrections } from "@/components/article/Corrections";
 import { RelatedArticles } from "@/components/article/RelatedArticles";
 import { ShareBar } from "@/components/article/ShareBar";
 import { NewsletterSignup } from "@/components/article/NewsletterSignup";
@@ -107,6 +108,8 @@ export default async function ArticlePage({
       <article className="prose prose-lg mt-10 max-w-none font-sans">
         <ArticleContent source={article.content} />
       </article>
+
+      <Corrections corrections={article.corrections} />
 
       {article.tags.length > 0 && (
         <nav aria-label="Tags" className="mt-8 flex flex-wrap gap-2">

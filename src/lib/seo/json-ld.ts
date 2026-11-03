@@ -20,6 +20,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     email: CONTACT_EMAIL,
+    publishingPrinciples: `${SITE_URL}/about`,
     ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
@@ -41,7 +42,10 @@ export function personJsonLd(author: Author) {
     name: author.name,
     description: author.bio,
     url: `${SITE_URL}/authors/${author.id}`,
-    ...(author.sameAs.length ? { sameAs: author.sameAs } : {}),
+    ...(author.title ? { jobTitle: author.title } : {}),
+    ...(author.sameAs.length || author.website
+      ? { sameAs: [...(author.website ? [author.website] : []), ...author.sameAs] }
+      : {}),
   };
 }
 

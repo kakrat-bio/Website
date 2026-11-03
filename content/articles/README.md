@@ -28,7 +28,14 @@ references:
     publisher: "Journal or outlet name"
     note: "One line on why this is cited / what it supports."
 sourceNote: "A short note on sourcing approach for this piece."
-editorialNote: "Corrections, provenance, or other editorial context."
+editorialNote: "Provenance or other editorial context."
+
+# Factual corrections after publication. Shown in a visible "Correction"
+# box; also set updatedAt to the correction date or later (the build
+# enforces this). Only for factual errors; typo fixes need nothing.
+corrections:
+  - date: "2026-02-01"
+    text: "An earlier version said X. It is Y."
 ---
 ```
 

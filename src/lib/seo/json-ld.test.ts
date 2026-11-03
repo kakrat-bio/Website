@@ -13,6 +13,7 @@ const article = {
   tags: ["india", "satire"],
   draft: false,
   references: [],
+  corrections: [],
   content: "",
   readingTimeMinutes: 1,
   filePath: "x.mdx",
