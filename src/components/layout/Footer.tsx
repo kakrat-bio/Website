@@ -34,6 +34,9 @@ export function Footer() {
                 <Link href="/about" className="hover:text-ink">About</Link>
               </li>
               <li>
+                <Link href="/write-for-kakrat" className="hover:text-ink">Write for Kakrat</Link>
+              </li>
+              <li>
                 <Link href="/about#subscribe" className="hover:text-ink">Subscribe</Link>
               </li>
               <li>
