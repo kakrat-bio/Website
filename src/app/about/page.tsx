@@ -56,8 +56,8 @@ export default function AboutPage() {
         <h2>What this is</h2>
         <p>
           There’s no big staff or editorial board here, at least not yet. If
-          you’d like to write a piece as a guest,{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`}>get in touch</a>. Pieces go up
+          you’d like to write a piece as a guest, see{" "}
+          <Link href="/write-for-kakrat">how to pitch</Link>. Pieces go up
           when they’re finished, which is sometimes twice in a month and
           sometimes not for a season. So there’s no schedule, yet.
         </p>
