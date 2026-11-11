@@ -22,9 +22,11 @@ const inter = Inter({
   display: "swap",
 });
 
+const HOME_TITLE = `${SITE_NAME}: Essays on science, business and culture`;
+
 export const metadata: Metadata = {
-  ...buildMetadata({ title: SITE_NAME, description: SITE_DESCRIPTION, path: "/" }),
-  title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
+  ...buildMetadata({ title: HOME_TITLE, description: SITE_DESCRIPTION, path: "/" }),
+  title: { default: HOME_TITLE, template: `%s — ${SITE_NAME}` },
   metadataBase: new URL(SITE_URL),
   // Lets Google show large thumbnails and full-length snippets in Search,
   // Discover and News surfaces (small previews are the default otherwise).

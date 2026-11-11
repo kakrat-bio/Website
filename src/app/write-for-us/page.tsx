@@ -6,10 +6,10 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { CONTACT_EMAIL, SITE_URL } from "@/lib/seo/constants";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Write for Kakrat",
+  title: "Write for us",
   description:
     "Kakrat publishes guest writers on science and technology, business and innovation, and culture and ideas. Send a short outline. If we pick it, you write the piece, and you get ₹2,000 and a Kakrat T-shirt.",
-  path: "/write-for-kakrat",
+  path: "/write-for-us",
 });
 
 const PITCH_SUBJECT = "Pitch for Kakrat: [working title]";
@@ -35,13 +35,13 @@ const PITCH_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   PITCH_SUBJECT,
 )}&body=${encodeURIComponent(PITCH_BODY)}`;
 
-export default function WriteForKakratPage() {
+export default function WriteForUsPage() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-14">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", url: SITE_URL },
-          { name: "Write for Kakrat", url: `${SITE_URL}/write-for-kakrat` },
+          { name: "Write for us", url: `${SITE_URL}/write-for-us` },
         ])}
       />
       <h1 className="font-display text-4xl text-ink">Write for Kakrat</h1>
