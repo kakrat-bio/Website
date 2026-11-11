@@ -11,6 +11,10 @@
 //   RESEND_API_KEY         Resend API key, for new-comment emails           — optional
 //   COMMENTS_NOTIFY_EMAIL  where new-comment emails go                       — optional
 //   COMMENTS_FROM_EMAIL    verified sender, e.g. "Kakrat <comments@kakrat.com>" — optional
+//   COMMENTS_WEBHOOK_TOKEN shared secret for the Google Apps Script alert     — optional
+//                          (kakratkosh's "Kakrat subscribers" script emails the
+//                          owner for each new comment; preferred over Resend)
+//   COMMENTS_WEBHOOK_URL   overrides DEFAULT_WEBHOOK_URL below               — optional
 
 export type D1Result<T> = { results: T[] };
 export type D1Statement = {
@@ -27,7 +31,14 @@ type Env = {
   RESEND_API_KEY?: string;
   COMMENTS_NOTIFY_EMAIL?: string;
   COMMENTS_FROM_EMAIL?: string;
+  COMMENTS_WEBHOOK_TOKEN?: string;
+  COMMENTS_WEBHOOK_URL?: string;
 };
+
+// Google Apps Script web app (account kakratkosh) that emails a new-comment alert.
+// Only acts when the request carries COMMENTS_WEBHOOK_TOKEN.
+const DEFAULT_WEBHOOK_URL =
+  "https://script.google.com/macros/s/AKfycbybscPtWujVIva3bs5W5eymVH9Zb9OHlD_GGi-4HnpIbELacgqiph5JSmvQZ00i4XVP/exec";
 
 type PagesContext = {
   request: Request;
@@ -78,7 +89,30 @@ async function articleExists(env: Env, origin: string, slug: string): Promise<bo
   }
 }
 
+async function notifyWebhook(env: Env, comment: { slug: string; name: string; body: string; isReply: boolean }) {
+  try {
+    const res = await fetch(env.COMMENTS_WEBHOOK_URL || DEFAULT_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        type: "comment",
+        token: env.COMMENTS_WEBHOOK_TOKEN ?? "",
+        slug: comment.slug,
+        name: comment.name,
+        body: comment.body,
+        isReply: String(comment.isReply),
+      }).toString(),
+      // Apps Script answers with a redirect after running; no need to follow it.
+      redirect: "manual",
+    });
+    if (res.status >= 400) console.error(JSON.stringify({ message: "comment webhook failed", status: res.status }));
+  } catch (error) {
+    console.error(JSON.stringify({ message: "comment webhook error", error: String(error) }));
+  }
+}
+
 async function notify(env: Env, comment: { slug: string; name: string; body: string; isReply: boolean }, origin: string) {
+  if (env.COMMENTS_WEBHOOK_TOKEN) return notifyWebhook(env, comment);
   if (!env.RESEND_API_KEY || !env.COMMENTS_NOTIFY_EMAIL) return;
   const from = env.COMMENTS_FROM_EMAIL || "Kakrat <comments@kakrat.com>";
   const html = `
