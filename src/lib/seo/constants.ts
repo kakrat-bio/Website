@@ -10,6 +10,8 @@ export const DEFAULT_OG_IMAGE = "/og-default.png";
 /** Used for an article that (defensively) has no coverImage — schema requires one, so this mainly guards against future schema changes. */
 export const ARTICLE_FALLBACK_IMAGE = "/og-article-fallback.png";
 /** Newsletter provider's form endpoint (Buttondown embed, account "kakrat"). */
+/** Google Apps Script web app that copies each sign-up into the "Kakrat subscribers" Google Sheet (account kakratkosh). */
+export const SIGNUP_SHEET_URL = "https://script.google.com/macros/s/AKfycbybscPtWujVIva3bs5W5eymVH9Zb9OHlD_GGi-4HnpIbELacgqiph5JSmvQZ00i4XVP/exec";
 export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-subscribe/kakrat";
 /**
  * Kakrat's official social profiles, emitted as Organization `sameAs` so
