@@ -85,6 +85,12 @@ MDX content, no database/backend/auth. Read this before extending it.
     Analytics, which Cloudflare injects automatically at the edge.
   - `form-action` allows `https://buttondown.com` for the newsletter
     sign-up form (`NewsletterSignup`), which posts straight to Buttondown.
+  - `https://script.google.com` (connect-src) lets `SignupForm` send a
+    copy of each sign-up (first name, email, page) to the "Kakrat
+    subscribers" Google Sheet via an Apps Script web app
+    (`SIGNUP_SHEET_URL`). It's a fire-and-forget `sendBeacon`; Apps Script
+    runs `doPost` before its redirect, so the redirect being blocked
+    doesn't matter.
   - `img-src` is deliberately just `'self' data:`, not `https:` — nothing
     in the codebase hotlinks external images. If an article genuinely needs
     to embed an image from another domain, allowlist that specific domain
