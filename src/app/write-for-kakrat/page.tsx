@@ -23,7 +23,8 @@ const PITCH_BODY = [
   "",
   "Why me (one or two lines on what I know first-hand about this topic):",
   "",
-  "Links to my profile and 1-2 samples of my writing (optional):",
+  "Profile link (REQUIRED: LinkedIn, a staff or institution page, a personal site, or a byline on another publication):",
+  "1-2 samples of my writing (optional):",
   "My newsletter or social handles, if you want to tag me (optional):",
   "",
   "[ ] This is my own work and has not been published elsewhere.",
@@ -69,7 +70,7 @@ export default function WriteForKakratPage() {
         <ol>
           <li>
             <strong>Pitch.</strong> Send a 150-word outline, the heading it fits
-            under, and one line about you. The{" "}
+            under, one line about you, and a link to your profile. The{" "}
             <a href="#pitch">pitch checklist below</a> lists what to include.
           </li>
           <li>
@@ -147,9 +148,13 @@ export default function WriteForKakratPage() {
           </li>
           <li>One or two lines on what you know first-hand about the topic.</li>
           <li>
-            Optional: links to your profile and one or two samples of your
-            writing, and your newsletter or social handles if you want us to tag
-            you.
+            <strong>A link to your profile</strong> that shows who you are:
+            LinkedIn, a staff or institution page, a personal site, or a byline
+            on another publication. We check it before we select a pitch.
+          </li>
+          <li>
+            Optional: one or two samples of your writing, and your newsletter or
+            social handles if you want us to tag you.
           </li>
           <li>
             Confirm that it is your own work, not published elsewhere, and that
@@ -316,6 +321,15 @@ export default function WriteForKakratPage() {
               <td>
                 You can ask us to take the article down or correct it. We will
                 do so within 7 days.
+              </td>
+            </tr>
+            <tr>
+              <td>Checks</td>
+              <td>
+                We check the profile link you send. Where your piece relies on
+                professional credentials, we may ask you to confirm them. We may
+                also ask for a short call before we select your pitch, and we
+                check your sources before we publish.
               </td>
             </tr>
             <tr>
