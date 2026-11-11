@@ -57,13 +57,7 @@ export function Footer() {
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t border-line pt-6 sm:flex-row sm:items-baseline sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Kakrat. All rights reserved.</p>
-          <p className="text-xs">
-            Inspired and designed by humans,{" "}
-            <Link href="/about#ai" className="underline underline-offset-2 hover:text-ink">
-              assisted by AI
-            </Link>
-            .
-          </p>
+          <p className="text-xs">Inspired and designed by humans, assisted by AI.</p>
         </div>
       </div>
     </footer>
