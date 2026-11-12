@@ -21,5 +21,6 @@ export const NEWSLETTER_FORM_ACTION = "https://buttondown.com/api/emails/embed-s
 export const SOCIAL_LINKS: { label: string; handle: string; url: string }[] = [
   { label: "Instagram", handle: "@kakratian", url: "https://www.instagram.com/kakratian" },
   { label: "X", handle: "@kakratian", url: "https://x.com/kakratian" },
+  { label: "LinkedIn", handle: "Kakrat", url: "https://www.linkedin.com/company/kakrat" },
 ];
 export const SOCIAL_PROFILES: string[] = SOCIAL_LINKS.map((s) => s.url);

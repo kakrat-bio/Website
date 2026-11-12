@@ -13,7 +13,7 @@ type SocialFollowProps = {
 };
 
 /**
- * Kakrat's social accounts (Instagram, X), from SOCIAL_LINKS in
+ * Kakrat's social accounts (Instagram, X, LinkedIn), from SOCIAL_LINKS in
  * src/lib/seo/constants.ts — add a network there and it appears everywhere
  * this component is used. Text labels rather than brand logos: they read
  * clearly at any size and need no third-party artwork.
