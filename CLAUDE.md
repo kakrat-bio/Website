@@ -116,6 +116,17 @@ premature abstractions for them, but don't block them either:
   explicitly requested; would be the first genuine reason to introduce a
   backend.
 
+## Operations and programmes (read before related changes)
+
+- `docs/OPERATIONS.md` — accounts, newsletter, comment alerts, Apps Script,
+  Search Console, trademark. Read before touching subscribers, comments,
+  notifications, Google, Cloudflare or publishing.
+- `docs/GUEST-WRITERS.md` — the guest-writer programme behind `/write-for-us`:
+  the offer, pitch rules, selection rubric, writer checks, sensitive-topic
+  rules, email templates, pilot plan and open decisions. Read before changing
+  that page or replying to a pitch. Keep applicants' personal details out of it
+  (the repo is public).
+
 ## Placeholders to swap before real launch
 
 - `public/og-default.png`, `public/og-article-fallback.png`, `public/logo.png`
