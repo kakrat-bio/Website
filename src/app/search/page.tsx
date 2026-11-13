@@ -20,6 +20,9 @@ export default function SearchPage() {
       {/* eslint-disable-next-line @next/next/no-css-tags */}
       <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
       <h1 className="font-display text-4xl text-ink">Search</h1>
+      <p className="mt-2 font-display italic text-ink-muted">
+        Looking for one caw in the racket.
+      </p>
       <div className="mt-8">
         <PagefindSearch />
       </div>
