@@ -4,7 +4,7 @@ export type TopicMeta = {
   slug: Topic;
   label: string;
   description: string;
-  /** One wry line shown under the heading on the topic page. Not used for metadata. */
+  /** One wry line shown as the lead under the heading on the topic page. Not used for metadata. */
   tagline: string;
 };
 
@@ -14,19 +14,19 @@ export const TOPIC_META: Record<Topic, TopicMeta> = {
     slug: "science-technology",
     label: "Science & Technology",
     description: "Discovery, biotechnology, engineering, and the technologies reshaping the world.",
-    tagline: "What the paper says, minus the press release.",
+    tagline: "The breakthrough, the fine print, and the mouse it actually worked in.",
   },
   "business-innovation": {
     slug: "business-innovation",
     label: "Business & Innovation",
     description: "Entrepreneurship, strategy, companies, and how new ideas become real.",
-    tagline: "What happens after the pitch deck.",
+    tagline: "Where a good idea meets a pitch deck, a regulator and a bank balance.",
   },
   "culture-ideas": {
     slug: "culture-ideas",
     label: "Culture & Ideas",
     description: "Philosophy, storytelling, language, culture, and the ideas behind how we live.",
-    tagline: "Arguments, mostly at the dinner table.",
+    tagline: "Language, family, politics and other arguments nobody wins.",
   },
 };
 

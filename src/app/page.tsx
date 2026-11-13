@@ -26,9 +26,6 @@ export default function HomePage() {
         >
           The racket of many crows, each certain it is the one making sense.
         </h1>
-        <p className="mt-3 text-sm italic text-ink-muted">
-          Usage: &ldquo;The panel discussion was pure kakrat.&rdquo;
-        </p>
         <p className="mt-4 max-w-xl text-base text-ink-muted md:text-lg">
           An independent publication on science and technology, business and innovation,
           culture and ideas. Written for the parts of the noise worth listening to.
