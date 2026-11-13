@@ -27,7 +27,10 @@ export function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-3 md:gap-4">
-          <SocialFollow variant="compact" />
+          {/* Wide screens: social links sit inline with the controls. */}
+          <div className="hidden lg:block">
+            <SocialFollow variant="compact" />
+          </div>
           <Link
             href="/search"
             className="hidden text-sm text-ink-muted hover:text-ink md:inline"
@@ -38,6 +41,11 @@ export function Header() {
           <ThemeToggle />
           <MobileNav />
         </div>
+      </div>
+      {/* Narrower screens: social links get their own row under the logo, so
+          they don't crowd the wordmark, theme toggle and menu. */}
+      <div className="mx-auto max-w-6xl px-6 pb-4 lg:hidden">
+        <SocialFollow variant="compact" />
       </div>
     </header>
   );

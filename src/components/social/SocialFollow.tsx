@@ -21,7 +21,7 @@ type SocialFollowProps = {
 export function SocialFollow({ variant, className }: SocialFollowProps) {
   if (variant === "compact") {
     return (
-      <ul aria-label="Follow Kakrat" className={clsx("flex items-center gap-1.5", className)}>
+      <ul aria-label="Follow Kakrat" className={clsx("flex flex-wrap items-center gap-2", className)}>
         {SOCIAL_LINKS.map((s) => (
           <li key={s.url}>
             <a
@@ -29,7 +29,7 @@ export function SocialFollow({ variant, className }: SocialFollowProps) {
               target="_blank"
               rel="me noopener"
               aria-label={`Follow Kakrat on ${s.label}`}
-              className="block rounded-full border border-line px-2.5 py-1 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+              className="block rounded-full border border-line px-3 py-1 font-sans text-xs tracking-wide text-ink-muted transition-colors hover:border-accent hover:text-accent"
             >
               {s.label}
             </a>
