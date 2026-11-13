@@ -44,6 +44,14 @@ export default function WriteForUsPage() {
           { name: "Write for us", url: `${SITE_URL}/write-for-us` },
         ])}
       />
+      <p
+        role="note"
+        className="mb-8 rounded-sm border-l-4 border-accent bg-surface px-4 py-3 text-sm text-ink"
+      >
+        We are getting a lot of exciting articles and applications right now.
+        Do keep sending them, and spread the word. Just expect a little delay
+        in our reply.
+      </p>
       <h1 className="font-display text-4xl text-ink">Write for Kakrat</h1>
       <div className="prose prose-lg mt-8 max-w-none font-sans">
         <p>
