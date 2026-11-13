@@ -31,7 +31,7 @@ There is no other list to keep in step.
 | GitHub | Repo `kakrat-bio/Website`, with push access. In a Claude session, add the repo with push access first. |
 | Metricool connector | Brand label `kakratian`, blog id `7648804`, timezone `Asia/Kolkata`. Call `getBrandSettings` to confirm before posting. |
 | Networks in Metricool | Instagram only. Metricool's free plan does not include X or LinkedIn. Never try to post to a network that `getBrandSettings` does not list. |
-| Buffer (X and LinkedIn) | The owner uses Buffer for X and LinkedIn. Agents reach it through the Zapier connector (app "Buffer"), once the owner has connected his Buffer account in Zapier. Until then, X and LinkedIn posts are prepared in the captions file and the owner schedules them in Buffer himself. |
+| Buffer (X and LinkedIn) | The owner uses Buffer for X and LinkedIn and will add a Buffer connector later. Do not route this through Zapier. Until a Buffer connector is listed among your tools, X and LinkedIn posts are prepared in the captions file and the owner schedules them in Buffer himself. |
 | Node | `npm ci`, `npm run test`, `npm run build`, `npm run optimize-images`. |
 | Rules | `CLAUDE.md` (technical), `content/articles/README.md` (article format), `docs/OPERATIONS.md`, and the Kakrat playbook (brand, voice, checklist, who may do what). |
 
@@ -131,11 +131,11 @@ Run once each morning, India time. A small model can do this.
    - Instagram: type `POST` (several images make a carousel).
    - X (`twitter`): one post, never split into a thread.
    - LinkedIn: type `post`.
-4. X and LinkedIn go through Buffer, not Metricool. If the Zapier connector
-   lists a Buffer action for adding a post to the queue, use it with the text
-   from the captions file and the same times. If it does not, skip them and
-   say in the report that the owner needs to schedule X and LinkedIn in
-   Buffer.
+4. X and LinkedIn go through Buffer, not Metricool. If a Buffer connector is
+   among your tools, schedule them there with the text and times from the
+   captions file. If it is not, skip them and say in the report that the
+   owner needs to schedule X and LinkedIn in Buffer. Do not use Zapier for
+   this.
 5. If Metricool returns an error, do not edit the text to make it fit. Report
    the error to the owner.
 
