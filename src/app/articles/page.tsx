@@ -47,6 +47,9 @@ export default function ArchivePage() {
         Everything published so far, newest first.{" "}
         {articles.length === 1 ? "One piece" : `${articles.length} pieces`} to date.
       </p>
+      <p className="mt-1 font-display italic text-ink-muted">
+        Sorted by date, not by importance. We couldn&rsquo;t agree on importance.
+      </p>
 
       {years.length === 0 ? (
         <p className="mt-10 text-ink-muted">Nothing published yet.</p>

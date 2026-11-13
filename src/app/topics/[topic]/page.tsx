@@ -47,7 +47,10 @@ export default async function TopicPage({
         ])}
       />
       <h1 className="font-display text-4xl text-ink">{topic.label}</h1>
-      <p className="mt-2 max-w-xl text-ink-muted">{topic.description}</p>
+      <p className="mt-5 max-w-2xl border-l-4 border-accent pl-4 font-display text-xl italic leading-snug text-ink md:text-2xl">
+        {topic.tagline}
+      </p>
+      <p className="mt-4 max-w-xl text-sm text-ink-muted">{topic.description}</p>
 
       {articles.length === 0 ? (
         <p className="mt-10 text-ink-muted">No articles published in this topic yet.</p>

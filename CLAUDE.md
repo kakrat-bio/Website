@@ -127,6 +127,11 @@ premature abstractions for them, but don't block them either:
   that page or replying to a pitch. Keep applicants' personal details out of it
   (the repo is public).
 
+- `docs/PUBLISHING-RUNBOOK.md` — how articles and their social posts are
+  queued as pull requests titled `Publish YYYY-MM-DD: …`, approved by the
+  owner with the `approved` label, and published on their date. Follow it
+  step by step before preparing, merging or posting anything.
+
 ## Placeholders to swap before real launch
 
 - `public/og-default.png`, `public/og-article-fallback.png`, `public/logo.png`

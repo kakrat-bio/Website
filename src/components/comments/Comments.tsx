@@ -247,7 +247,7 @@ export function Comments({ slug }: { slug: string }) {
 
       {state !== "unavailable" && (
         <div className="mt-10">
-          <h3 className="mb-4 text-sm font-medium uppercase tracking-wide text-ink-muted">Leave a comment</h3>
+          <h3 className="mb-4 text-sm font-medium uppercase tracking-wide text-ink-muted">Add your caw</h3>
           <CommentForm slug={slug} parentId={null} onDone={() => undefined} />
         </div>
       )}
