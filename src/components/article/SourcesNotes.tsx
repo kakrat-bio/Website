@@ -13,7 +13,7 @@ function ReferenceList({ references, compact = false }: { references: Reference[
       }
     >
       {references.map((ref, i) => (
-        <li key={ref.url} id={`ref-${i + 1}`} className={compact ? "text-ink-muted" : "text-sm text-ink-muted"}>
+        <li key={ref.url} id={`ref-${i + 1}`} className={`[overflow-wrap:anywhere] ${compact ? "text-ink-muted" : "text-sm text-ink-muted"}`}>
           <a
             href={ref.url}
             target="_blank"

@@ -103,6 +103,90 @@
     ],
     "fallback": "/images/generated/2026/problems-id-like-india-to-have-in-2050/cover/fallback.jpg"
   },
+  "2026/the-diwali-sale-is-over/cover": {
+    "key": "2026/the-diwali-sale-is-over/cover",
+    "width": 1931,
+    "height": 1086,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-diwali-sale-is-over/cover/fallback.jpg"
+  },
+  "2026/the-diwali-sale-is-over/emi-cost": {
+    "key": "2026/the-diwali-sale-is-over/emi-cost",
+    "width": 1440,
+    "height": 1508,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/emi-cost/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/emi-cost/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/emi-cost/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-diwali-sale-is-over/emi-cost/fallback.png"
+  },
+  "2026/the-diwali-sale-is-over/late-fee": {
+    "key": "2026/the-diwali-sale-is-over/late-fee",
+    "width": 1440,
+    "height": 1552,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/late-fee/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/late-fee/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/late-fee/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-diwali-sale-is-over/late-fee/fallback.png"
+  },
+  "2026/the-diwali-sale-is-over/who-lends": {
+    "key": "2026/the-diwali-sale-is-over/who-lends",
+    "width": 1440,
+    "height": 1828,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/who-lends/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/who-lends/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/the-diwali-sale-is-over/who-lends/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/the-diwali-sale-is-over/who-lends/fallback.png"
+  },
   "2026/the-hallmarks-of-ageing/cover": {
     "key": "2026/the-hallmarks-of-ageing/cover",
     "width": 1536,

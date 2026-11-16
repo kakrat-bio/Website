@@ -6,6 +6,7 @@ import { getAuthorById } from "@/lib/content/authors";
 import { TOPIC_META } from "@/lib/content/topics";
 import { ArticleContent } from "@/lib/mdx/compile";
 import { AuthorByline } from "@/components/article/AuthorByline";
+import { AuthorBox } from "@/components/article/AuthorBox";
 import { Comments } from "@/components/comments/Comments";
 import { SourcesNotes } from "@/components/article/SourcesNotes";
 import { Corrections } from "@/components/article/Corrections";
@@ -110,6 +111,8 @@ export default async function ArticlePage({
       </article>
 
       <Corrections corrections={article.corrections} />
+
+      <AuthorBox authors={authors} />
 
       {article.tags.length > 0 && (
         <nav aria-label="Tags" className="mt-8 flex flex-wrap gap-2">
