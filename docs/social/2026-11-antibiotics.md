@@ -37,7 +37,7 @@ My new essay on Kakrat, told as a love story with a bad ending:
 https://kakrat.com/articles/antibiotics-a-love-story
 
 ## Alt text
-01: Title slide on yellow: "The uncle who stopped his antibiotics on day three is not the villain." Below, an illustration of an open steel dabba holding cough syrups, a tablet strip and a thermometer, beside a gold photo frame holding an azithromycin strip garlanded with marigolds. Article title: Antibiotics: A Love Story With a Bad Ending.
+01: Title slide on pink: "The uncle who stopped his antibiotics on day three is not the villain." Below, a wedding cake with a capsule bride in a veil and a tablet-strip groom in a tuxedo on top, a crack down the cake, a green bacterium climbing the icing and a broken heart above. Article title: Antibiotics: A Love Story With a Bad Ending.
 02: "Before antibiotics, a rose thorn could kill you." Fleming found penicillin in 1928. In his 1945 Nobel lecture he warned that too little penicillin makes microbes resistant. "Everyone clapped and went for dinner."
 03: Three petri dishes: many bacteria with a few resistant ones; the drug kills the rest; the resistant survivors fill the dish. Headline: "Every course runs the selection again."
 04: Illustration of an antibiotic strip with a red vertical line, meaning prescription only, from a 2016 Health Ministry campaign. Headline: "Ask ten people what the red line is for. We'll wait."

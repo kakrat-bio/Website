@@ -2,7 +2,7 @@
 
 ## Cover (`cover.jpg`)
 
-- Image: Flat illustration of an open steel dabba holding two expired cough syrups, a paracetamol strip and a thermometer, beside a gold photo frame holding an azithromycin strip garlanded with marigolds
+- Image: Flat illustration of a wedding cake topper: a capsule bride in a veil and a tablet-strip groom in a tuxedo on a cracking three-tier cake, with a bacterium climbing the icing
 - Source: Drawn for this article by Kakrat (Claude, under the editor's direction) as SVG and exported at 1920×1080
 - Added: 2026-11-19
 
