@@ -6,6 +6,8 @@ images: public/social/2026-11-antibiotics/ (01.jpg to 07.jpg)
 ## Instagram
 time: 19:30
 caption:
+It's World AMR Awareness Week (18–24 November).
+
 Every Indian family has one antibiotic it trusts more than the doctor. Ours is azithromycin. She lives in the steel dabba, next to two expired cough syrups and a thermometer nobody trusts.
 
 This is the story of that marriage: how it began in a messy lab in 1928, how we took her for granted, and why the uncle who stopped on day three is not the real villain.
@@ -32,7 +34,7 @@ In much of India an antibiotic is cheaper than the auto fare to the clinic and t
 
 The fix is not one more poster. It is making the right thing as easy as the wrong one: a quick, cheap test that says "viral, go home", a chemist who can say no without losing the customer, and farms that cannot buy hospital drugs by the sack.
 
-My new essay on Kakrat, told as a love story with a bad ending:
+For World AMR Awareness Week (18–24 November), my new essay on Kakrat, told as a love story with a bad ending:
 
 https://kakrat.com/articles/antibiotics-a-love-story
 
