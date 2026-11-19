@@ -12,7 +12,7 @@ This is the story of that marriage: how it began in a messy lab in 1928, how we 
 
 (Not advice about your own tablets. Take what your doctor prescribed, for as long as your doctor said.)
 
-What lives in your family's dabba? Confess below.
+What lives in your family's medicine dabba? Confess below.
 
 Read it at kakrat.com (link in bio)
 
