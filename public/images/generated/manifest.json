@@ -1,4 +1,68 @@
 {
+  "2026/antibiotics-a-love-story/cover": {
+    "key": "2026/antibiotics-a-love-story/cover",
+    "width": 1920,
+    "height": 1080,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/antibiotics-a-love-story/cover/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/antibiotics-a-love-story/cover/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/antibiotics-a-love-story/cover/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/antibiotics-a-love-story/cover/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/antibiotics-a-love-story/cover/fallback.jpg"
+  },
+  "2026/antibiotics-a-love-story/red-line": {
+    "key": "2026/antibiotics-a-love-story/red-line",
+    "width": 1440,
+    "height": 1100,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/antibiotics-a-love-story/red-line/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/antibiotics-a-love-story/red-line/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/antibiotics-a-love-story/red-line/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/antibiotics-a-love-story/red-line/fallback.png"
+  },
+  "2026/antibiotics-a-love-story/selection": {
+    "key": "2026/antibiotics-a-love-story/selection",
+    "width": 1440,
+    "height": 980,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/antibiotics-a-love-story/selection/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/antibiotics-a-love-story/selection/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/antibiotics-a-love-story/selection/1200.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/antibiotics-a-love-story/selection/fallback.png"
+  },
   "2026/indian-biotech-startup-circus/cover": {
     "key": "2026/indian-biotech-startup-circus/cover",
     "width": 1672,
