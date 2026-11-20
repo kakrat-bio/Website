@@ -95,9 +95,11 @@ All alerts go to **kakratkosh@gmail.com**.
   (created automatically on first pitch). Review at
   `kakrat.com/admin/pitches`, same password as `/admin/comments`.
 - Pitchers' names, emails and outlines live only in D1, never in the repo.
-- No email alert yet. Don't point it at the Apps Script `doPost` without adding
-  a `type=pitch` branch there first: anything that isn't `type=comment` is
-  treated as a newsletter sign-up and would be added to the subscribers Sheet.
+- Email alert: each pitch is sent to the Apps Script as `type=comment` (with
+  `COMMENTS_WEBHOOK_TOKEN`), so it arrives at kakratkosh@gmail.com as "New
+  comment on Kakrat: NEW PITCH: <title>" with the outline in the body. Never
+  send it without `type=comment`: the script treats any other POST as a
+  newsletter sign-up and adds it to the subscribers Sheet.
 
 ## Google Search Console
 

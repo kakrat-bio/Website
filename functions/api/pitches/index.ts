@@ -21,8 +21,77 @@ export type D1Statement = {
 };
 export type D1Like = { prepare(sql: string): D1Statement };
 
-type Env = { COMMENTS_DB?: D1Like };
-type PagesContext = { request: Request; env: Env };
+type Env = {
+  COMMENTS_DB?: D1Like;
+  COMMENTS_WEBHOOK_TOKEN?: string;
+  COMMENTS_WEBHOOK_URL?: string;
+};
+type PagesContext = { request: Request; env: Env; waitUntil?: (promise: Promise<unknown>) => void };
+
+// The same Apps Script web app (account kakratkosh) that emails comment
+// alerts. Pitch alerts reuse its existing `type=comment` branch, so no change
+// to the Apps Script is needed: the email arrives at kakratkosh@gmail.com with
+// a subject like "New comment on Kakrat: NEW PITCH: <title>". Don't send
+// anything here without type=comment: the script treats every other POST as a
+// newsletter sign-up.
+const DEFAULT_WEBHOOK_URL =
+  "https://script.google.com/macros/s/AKfycbybscPtWujVIva3bs5W5eymVH9Zb9OHlD_GGi-4HnpIbELacgqiph5JSmvQZ00i4XVP/exec";
+
+const TRACK_LABEL: Record<string, string> = {
+  voices: "Kakrat Voices",
+  guest: "Guest contributor",
+  student: "Student Corner",
+};
+
+type StoredPitch = {
+  track: string; name: string; byline: string; email: string; section: string;
+  title: string; outline: string; whyMe: string; details: Record<string, unknown>;
+};
+
+export function pitchAlertBody(p: StoredPitch): string {
+  const d = p.details;
+  const who =
+    p.track === "student"
+      ? `${d.courseYear ?? ""}, ${d.institution ?? ""}`
+      : `${d.role ?? ""} (${d.experience ?? "?"} years)`;
+  return [
+    `Track: ${TRACK_LABEL[p.track] ?? p.track}`,
+    `Section: ${p.section}`,
+    `From: ${p.name} <${p.email}>, ${who}`,
+    `Profile: ${d.profileUrl ?? ""}`,
+    `Follows on: ${Array.isArray(d.platforms) ? d.platforms.join(", ") : ""} as ${d.handle ?? ""}`,
+    "",
+    `Title: ${p.title}`,
+    "",
+    p.outline,
+    "",
+    `Why them: ${p.whyMe}`,
+    "",
+    "(This is a new PITCH, not a comment.) Read and sort it at kakrat.com/admin/pitches",
+  ].join("\n");
+}
+
+async function notifyPitch(env: Env, p: StoredPitch): Promise<void> {
+  if (!env.COMMENTS_WEBHOOK_TOKEN) return;
+  try {
+    const res = await fetch(env.COMMENTS_WEBHOOK_URL || DEFAULT_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        type: "comment",
+        token: env.COMMENTS_WEBHOOK_TOKEN,
+        slug: `NEW PITCH: ${p.title}`.slice(0, 120),
+        name: `${p.name} (${TRACK_LABEL[p.track] ?? p.track})`.slice(0, 80),
+        body: pitchAlertBody(p).slice(0, 3000),
+        isReply: "false",
+      }).toString(),
+      redirect: "manual",
+    });
+    if (res.status >= 400) console.error(JSON.stringify({ message: "pitch alert failed", status: res.status }));
+  } catch (error) {
+    console.error(JSON.stringify({ message: "pitch alert error", error: String(error) }));
+  }
+}
 
 export const PITCHES_SCHEMA = `CREATE TABLE IF NOT EXISTS pitches (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -177,7 +246,7 @@ export function validatePitch(p: Record<string, unknown>): { ok: true; pitch: Re
   };
 }
 
-export async function onRequestPost({ request, env }: PagesContext): Promise<Response> {
+export async function onRequestPost({ request, env, waitUntil }: PagesContext): Promise<Response> {
   if (!env.COMMENTS_DB) return json({ ok: false, error: "The pitch form isn't available right now." }, 503);
   const db = env.COMMENTS_DB;
 
@@ -193,10 +262,7 @@ export async function onRequestPost({ request, env }: PagesContext): Promise<Res
 
   const result = validatePitch(payload);
   if (!result.ok) return json({ ok: false, field: result.fail.field, error: result.fail.error }, 400);
-  const p = result.pitch as {
-    track: string; name: string; byline: string; email: string; section: string;
-    title: string; outline: string; whyMe: string; details: Record<string, unknown>;
-  };
+  const p = result.pitch as StoredPitch;
 
   await ensurePitchesTable(db);
 
@@ -221,6 +287,10 @@ export async function onRequestPost({ request, env }: PagesContext): Promise<Res
     )
     .bind(p.track, p.name, p.byline, p.email, p.section, p.title, p.outline, p.whyMe, JSON.stringify(p.details), ipHash)
     .run();
+
+  const alert = notifyPitch(env, p);
+  if (waitUntil) waitUntil(alert);
+  else await alert;
 
   return json({ ok: true });
 }

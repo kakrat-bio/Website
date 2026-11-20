@@ -35,7 +35,9 @@ live in the owner's Claude Project notes.
   application, honorarium is discretionary, will share and tag @kakratian, read
   the terms). Students also confirm they are 18+ and give proof of enrolment.
   There is a honeypot field and a limit of 3 pitches per hour per address.
-- There is no email alert for new pitches yet. Check `/admin/pitches`.
+- Each new pitch emails kakratkosh@gmail.com through the Apps Script's existing
+  comment-alert branch (subject "New comment on Kakrat: NEW PITCH: <title>").
+  It needs the Cloudflare secret `COMMENTS_WEBHOOK_TOKEN`, which is already set.
 
 ## The offer (three tracks, from 21 Nov 2026)
 

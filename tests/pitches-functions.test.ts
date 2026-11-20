@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { onRequestPost } from "../functions/api/pitches/index";
 import { onRequestGet as adminGet, onRequestPost as adminPost } from "../functions/api/pitches/admin";
@@ -143,4 +143,34 @@ describe("pitches API", () => {
     const after = await (await adminGet({ request: admin("GET", "?status=shortlisted"), env } as never)).json();
     expect(after.pitches).toHaveLength(0);
   });
+
+  it("emails a pitch alert through the comment webhook when the token is set", async () => {
+    const calls: { url: string; body: string }[] = [];
+    vi.stubGlobal("fetch", async (url: string, init: RequestInit) => {
+      calls.push({ url, body: String(init.body) });
+      return new Response("ok");
+    });
+    env.COMMENTS_WEBHOOK_TOKEN = "tok";
+    await onRequestPost({ request: post(validPitch()), env } as never);
+    expect(calls).toHaveLength(1);
+    const sent = new URLSearchParams(calls[0].body);
+    expect(sent.get("type")).toBe("comment");
+    expect(sent.get("token")).toBe("tok");
+    expect(sent.get("slug")).toBe("NEW PITCH: Why lab mice keep lying to us");
+    expect(sent.get("body")).toContain("kakrat.com/admin/pitches");
+  });
+
+  it("sends no alert without the token", async () => {
+    let called = false;
+    vi.stubGlobal("fetch", async () => {
+      called = true;
+      return new Response("ok");
+    });
+    await onRequestPost({ request: post(validPitch()), env } as never);
+    expect(called).toBe(false);
+  });
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
