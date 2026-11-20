@@ -5,7 +5,7 @@ aren't obvious from the code. **Read this before changing anything to do with
 subscribers, comments, notifications, Google, Cloudflare or publishing.**
 Update it whenever one of these changes.
 
-Last updated: 11 Nov 2026.
+Last updated: 21 Nov 2026.
 
 ## Accounts
 
@@ -87,6 +87,19 @@ All alerts go to **kakratkosh@gmail.com**.
 - New-comment alert: the comments Pages Function calls the Apps Script when
   `COMMENTS_WEBHOOK_TOKEN` is set (Resend path is a fallback that isn't
   configured).
+
+## Guest-writer pitches
+
+- Form on `/write-for-us` and `/student-corner` → Pages Function
+  `functions/api/pitches` → table `pitches` in the D1 database `COMMENTS_DB`
+  (created automatically on first pitch). Review at
+  `kakrat.com/admin/pitches`, same password as `/admin/comments`.
+- Pitchers' names, emails and outlines live only in D1, never in the repo.
+- Email alert: each pitch is sent to the Apps Script as `type=comment` (with
+  `COMMENTS_WEBHOOK_TOKEN`), so it arrives at kakratkosh@gmail.com as "New
+  comment on Kakrat: NEW PITCH: <title>" with the outline in the body. Never
+  send it without `type=comment`: the script treats any other POST as a
+  newsletter sign-up and adds it to the subscribers Sheet.
 
 ## Google Search Console
 
