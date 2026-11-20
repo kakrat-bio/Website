@@ -5,7 +5,7 @@ judged and checked, and what is still undecided. **Read this before changing
 the `/write-for-us` page, replying to a pitch, or commissioning a guest
 article.** Update it whenever a rule changes.
 
-Last updated: 12 Nov 2026. Launched 8 Nov 2026.
+Last updated: 21 Nov 2026. Launched 8 Nov 2026. Pitch form and tracks added 21 Nov 2026.
 
 This file is public (the repo is public), so it holds the rules only. It never
 holds applicants' names, emails, outlines or decisions. Those are private and
@@ -19,17 +19,40 @@ live in the owner's Claude Project notes.
 - The public page is the **canonical text** of the guidelines and terms. This
   file summarises them, so if the two ever disagree, the page wins; then fix
   this file.
-- Pitches arrive by email. The "Email your pitch" button is a `mailto:` link to
-  `CONTACT_EMAIL` (`src/lib/seo/constants.ts`, currently `mail@kakrat.com`)
-  with the questions pre-filled (`PITCH_BODY` in the page file). There is no
-  web form and no database; that is deliberate for the pilot.
+- Student Corner: `https://kakrat.com/student-corner`
+  (`src/app/student-corner/page.tsx`), linked from the footer. Same form,
+  with the Student Corner track pre-selected.
+- Pitches arrive through the on-page form (`src/components/pitch/PitchForm.tsx`),
+  which posts to the Pages Function `functions/api/pitches/index.ts`. It stores
+  each pitch in the `pitches` table of the D1 database bound as `COMMENTS_DB`
+  (the table creates itself on first use; schema in `migrations/pitches/`).
+  Read and sort them at `kakrat.com/admin/pitches` (same password as
+  comments). Email pitches are no longer reviewed; the page says so.
+- The form checks: required fields, a profile link, at least one platform where
+  they follow Kakrat plus their handle, a link to a kakrat.com article they read
+  with 10 to 60 words on it, title up to 12 words, outline 60 to 150 words,
+  "why me" 15 to 60 words, AI use, and five declarations (own work, not a job
+  application, honorarium is discretionary, will share and tag @kakratian, read
+  the terms). Students also confirm they are 18+ and give proof of enrolment.
+  There is a honeypot field and a limit of 3 pitches per hour per address.
+- There is no email alert for new pitches yet. Check `/admin/pitches`.
 
-## The offer
+## The offer (three tracks, from 21 Nov 2026)
 
-- Byline and a short author box linking to the writer's work.
-- ₹2,000 honorarium per published article, paid within 15 days of publication.
-- A Kakrat T-shirt per published article. Not sold anywhere; only published
-  writers get one. Posted within India only.
+| Track | Who | Length | What they get |
+| --- | --- | --- | --- |
+| Kakrat Voices | Experienced professionals with a track record | 800 to 1,500 words | Byline, author box, T-shirt, ₹2,000 honorarium at the editor's discretion |
+| Guest contributor | Professionals, PhD scholars, writers with first-hand knowledge | 800 to 1,500 words | Byline and author box |
+| Student Corner | College/university students 18+, undergraduate to PhD | 500 to 900 words | Byline and T-shirt, no honorarium |
+
+- PhD scholars may pitch as guest contributors or to Student Corner.
+- The honorarium is never automatic: the editor decides at acceptance and
+  confirms it in writing. Fees aren't discussed before acceptance.
+- T-shirt and honorarium are sent within 15 days of publication, once the
+  writer has shared the piece and tagged @kakratian. T-shirts are not sold;
+  posted within India only.
+- School students are not accepted (under-18s would need parental consent).
+- The page is for pitches only, not job, internship or freelance applications.
 - Selecting an outline is not a promise to publish: a draft that does not meet
   the guidelines after two rounds of edits may be declined. The terms mention no
   kill fee, so none is offered.
@@ -59,8 +82,9 @@ site's only topics (see `CLAUDE.md`: adding one is an editorial decision).
 
 ## Process and deadlines
 
-1. Pitch arrives by email. Log it with the date.
-2. Reply within 7 days: selected or declined.
+1. Pitch arrives through the form and waits under "New" at `/admin/pitches`.
+2. Reply within 14 days to shortlisted pitches. The page says not every pitch
+   gets an individual reply.
 3. Selected writer confirms the terms by reply.
 4. Draft (800 to 1,500 words, every figure and claim linked to a source) due
    within 7 days of selection. Edits and questions back within 5 days. One or
@@ -190,7 +214,6 @@ change the plan, or stop. (Not yet written down; see open decisions.)
 
 - Whether every guest piece is promised newsletter and social promotion. The
   public page does not say so yet.
-- A web form instead of `mailto:`, and where the pitch log lives.
 - Who edits and approves guest pieces if the owner is away.
 - The continue / change / stop rule for the pilot.
 - The owner's CA should confirm the TDS wording ("we deduct tax at source where
