@@ -100,6 +100,11 @@ All alerts go to **kakratkosh@gmail.com**.
   comment on Kakrat: NEW PITCH: <title>" with the outline in the body. Never
   send it without `type=comment`: the script treats any other POST as a
   newsletter sign-up and adds it to the subscribers Sheet.
+- Sheet copy: each pitch is also sent as `type=pitch` (same token), and the
+  Apps Script's `pitchRow_` adds a row to a **Pitches** tab in the "Kakrat
+  subscribers" spreadsheet (created on first use, after the Sign-ups tab). The
+  applicant's address travels as `applicantEmail`, never `email`, so a script
+  without the pitch branch ignores it instead of filing a sign-up.
 
 ## Google Search Console
 

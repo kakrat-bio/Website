@@ -34,6 +34,7 @@ function safe_(v) {
 function doPost(e) {
   const p = (e && e.parameter) || {};
   if (p.type === 'comment') return commentAlert_(p);
+  if (p.type === 'pitch') return pitchRow_(p);
   const email = String(p.email || '').trim().toLowerCase();
   if (p.website || email.length > 200 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return ContentService.createTextOutput('ignored');
@@ -70,6 +71,44 @@ function commentAlert_(p) {
       '<blockquote style="border-left:3px solid #ccc;padding-left:12px;white-space:pre-wrap">' + esc_(body) + '</blockquote>' +
       '<p>It is waiting for your approval: <a href="https://kakrat.com/admin/comments">kakrat.com/admin/comments</a></p>',
   });
+  return ContentService.createTextOutput('ok');
+}
+
+// ---- Pitches from kakrat.com/write-for-us and /student-corner -> "Pitches" tab ----
+// Called by kakrat.com's pitches function with the same token as comment alerts.
+const PITCH_COLUMNS = [
+  ['Date (IST)', null],
+  ['Track', 'track'], ['Name', 'name'], ['Byline', 'byline'], ['Email', 'applicantEmail'],
+  ['Section', 'section'], ['Working title', 'title'], ['Outline', 'outline'], ['Why them', 'whyMe'],
+  ['Role / course', 'roleOrCourse'], ['Institution / experience', 'institutionOrExperience'],
+  ['Student proof', 'studentProof'], ['Writing samples', 'samples'], ['Profiles', 'profiles'],
+  ['Follows Kakrat on', 'followsOn'], ['Handle', 'handle'], ['Kakrat article read', 'articleRead'],
+  ['Thoughts on it', 'articleThoughts'], ['AI use', 'aiUse'], ['Status', null],
+];
+
+function pitchRow_(p) {
+  if (p.token !== COMMENT_TOKEN) return ContentService.createTextOutput('ignored');
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    let sh = ss.getSheetByName('Pitches');
+    if (!sh) {
+      sh = ss.insertSheet('Pitches', ss.getSheets().length); // keep Sign-ups as the first tab
+      sh.getRange(1, 1, 1, PITCH_COLUMNS.length)
+        .setValues([PITCH_COLUMNS.map(function (c) { return c[0]; })])
+        .setFontWeight('bold');
+      sh.setFrozenRows(1);
+    }
+    const date = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyy-MM-dd HH:mm');
+    sh.appendRow(PITCH_COLUMNS.map(function (c, i) {
+      if (i === 0) return date;
+      if (!c[1]) return 'new';
+      return safe_(String(p[c[1]] || '').slice(0, 3000));
+    }));
+  } finally {
+    lock.releaseLock();
+  }
   return ContentService.createTextOutput('ok');
 }
 

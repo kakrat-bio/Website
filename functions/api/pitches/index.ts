@@ -29,11 +29,11 @@ type Env = {
 type PagesContext = { request: Request; env: Env; waitUntil?: (promise: Promise<unknown>) => void };
 
 // The same Apps Script web app (account kakratkosh) that emails comment
-// alerts. Pitch alerts reuse its existing `type=comment` branch, so no change
-// to the Apps Script is needed: the email arrives at kakratkosh@gmail.com with
-// a subject like "New comment on Kakrat: NEW PITCH: <title>". Don't send
-// anything here without type=comment: the script treats every other POST as a
-// newsletter sign-up.
+// alerts. Pitch alerts reuse its `type=comment` branch, so the email arrives at
+// kakratkosh@gmail.com as "New comment on Kakrat: NEW PITCH: <title>". Each
+// pitch is also sent as `type=pitch`, which adds a row to the "Pitches" tab of
+// the Kakrat Google Sheet. Never send an `email` field here: the script treats
+// any other POST with an email as a newsletter sign-up.
 const DEFAULT_WEBHOOK_URL =
   "https://script.google.com/macros/s/AKfycbybscPtWujVIva3bs5W5eymVH9Zb9OHlD_GGi-4HnpIbELacgqiph5JSmvQZ00i4XVP/exec";
 
@@ -71,6 +71,50 @@ export function pitchAlertBody(p: StoredPitch): string {
     "",
     "(This is a new PITCH, not a comment.) Read and sort it at kakrat.com/admin/pitches",
   ].join("\n");
+}
+
+// The fields written as one row in the "Pitches" tab of the Kakrat Google
+// Sheet (Apps Script branch type=pitch). The applicant's address is sent as
+// `applicantEmail`, never `email`: an Apps Script that predates the pitch
+// branch would otherwise read the POST as a newsletter sign-up.
+export function pitchSheetFields(p: StoredPitch): Record<string, string> {
+  const d = p.details;
+  const str = (v: unknown) => (Array.isArray(v) ? v.join(", ") : v == null ? "" : String(v));
+  return {
+    track: TRACK_LABEL[p.track] ?? p.track,
+    name: p.name,
+    byline: p.byline,
+    applicantEmail: p.email,
+    section: p.section,
+    title: p.title,
+    outline: p.outline,
+    whyMe: p.whyMe,
+    roleOrCourse: str(p.track === "student" ? d.courseYear : d.role),
+    institutionOrExperience: str(p.track === "student" ? d.institution : d.experience),
+    studentProof: str(d.enrolment),
+    samples: str(d.samples),
+    profiles: str(d.profiles ?? d.profileUrl),
+    followsOn: str(d.platforms),
+    handle: str(d.handle),
+    articleRead: str(d.articleTitle ?? d.articleUrl),
+    articleThoughts: str(d.articleThoughts),
+    aiUse: str(d.aiUse),
+  };
+}
+
+async function savePitchToSheet(env: Env, p: StoredPitch): Promise<void> {
+  if (!env.COMMENTS_WEBHOOK_TOKEN) return;
+  try {
+    const res = await fetch(env.COMMENTS_WEBHOOK_URL || DEFAULT_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ type: "pitch", token: env.COMMENTS_WEBHOOK_TOKEN, ...pitchSheetFields(p) }).toString(),
+      redirect: "manual",
+    });
+    if (res.status >= 400) console.error(JSON.stringify({ message: "pitch sheet failed", status: res.status }));
+  } catch (error) {
+    console.error(JSON.stringify({ message: "pitch sheet error", error: String(error) }));
+  }
 }
 
 async function notifyPitch(env: Env, p: StoredPitch): Promise<void> {
@@ -277,7 +321,7 @@ export async function onRequestPost({ request, env, waitUntil }: PagesContext): 
     .bind(p.track, p.name, p.byline, p.email, p.section, p.title, p.outline, p.whyMe, JSON.stringify(p.details), ipHash)
     .run();
 
-  const alert = notifyPitch(env, p);
+  const alert = Promise.all([notifyPitch(env, p), savePitchToSheet(env, p)]);
   if (waitUntil) waitUntil(alert);
   else await alert;
 
