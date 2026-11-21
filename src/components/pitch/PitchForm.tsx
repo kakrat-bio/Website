@@ -45,6 +45,14 @@ const DECLARATIONS: { value: string; label: string }[] = [
   { value: "read-terms", label: "I've read the guidelines and terms on this page." },
 ];
 
+const STEPS = ["About you", "You and Kakrat", "Your idea", "Confirm"];
+const STEP_FIELDS: string[][] = [
+  ["track", "name", "byline", "email", "age18", "institution", "courseYear", "enrolment", "role", "experience", "profileUrl"],
+  ["platforms", "handle", "articleUrl", "articleThoughts"],
+  ["section", "title", "outline", "whyMe", "aiUse"],
+  ["declarations"],
+];
+
 function Field({
   id,
   label,
@@ -104,6 +112,7 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
   const [formError, setFormError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [step, setStep] = useState(0);
 
   const set = (key: string) => (e: { target: { value: string } }) => setV((s) => ({ ...s, [key]: e.target.value }));
   const val = (key: string) => v[key] ?? "";
@@ -148,15 +157,43 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
     return e;
   }
 
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function stepErrors(i: number): Record<string, string> {
+    const all = check();
+    return Object.fromEntries(Object.entries(all).filter(([k]) => STEP_FIELDS[i].includes(k)));
+  }
+
+  function goTo(i: number) {
+    setStep(i);
     setFormError(null);
-    const found = check();
+    document.getElementById("pitch")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function next() {
+    const found = stepErrors(step);
     setErrors(found);
     if (Object.keys(found).length > 0) {
       setFormError("A few answers need another look. They're marked below.");
-      const first = document.getElementById(`pitch-${Object.keys(found)[0]}`);
-      first?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document.getElementById(`pitch-${Object.keys(found)[0]}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    goTo(step + 1);
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError(null);
+    if (step < STEPS.length - 1) {
+      next();
+      return;
+    }
+    const found = check();
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      const firstKey = Object.keys(found)[0];
+      const at = STEP_FIELDS.findIndex((f) => f.includes(firstKey));
+      if (at >= 0 && at !== step) setStep(at);
+      setFormError("A few answers need another look. They're marked below.");
+      setTimeout(() => document.getElementById(`pitch-${firstKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
       return;
     }
     setSending(true);
@@ -205,7 +242,30 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
         <input id="pitch-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <Section title="1. Your track">
+      <ol className="flex gap-2 text-xs" aria-label="Steps">
+        {STEPS.map((label, i) => (
+          <li key={label} className="flex-1">
+            <span className={`block h-1.5 rounded-full ${i <= step ? "bg-accent" : "bg-line"}`} />
+            <span className={`mt-1.5 block ${i === step ? "font-medium text-ink" : "text-ink-muted"}`}>
+              <span className="sr-only">{i === step ? "Current step: " : ""}</span>
+              {label}
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p className="-mt-4 text-xs text-ink-muted">
+        Step {step + 1} of {STEPS.length}
+      </p>
+
+      {step === 0 && defaultTrack === "student" && (
+        <p className="text-sm text-ink-muted">
+          You&apos;re pitching for <span className="font-medium text-ink">Student Corner</span>. Working, not studying?{" "}
+          <a className="underline underline-offset-2" href="/write-for-us#pitch">Pitch as a guest contributor</a>.
+        </p>
+      )}
+
+      {step === 0 && !defaultTrack && (
+      <Section title="Your track">
         <div id="pitch-track" className="space-y-3" role="radiogroup" aria-label="Track">
           {TRACKS.map((t) => (
             <label
@@ -234,8 +294,10 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           {errors.track && <p className="text-xs text-accent">{errors.track}</p>}
         </div>
       </Section>
+      )}
 
-      <Section title="2. About you">
+      {step === 0 && (
+      <Section title="About you">
         <Field id="pitch-name" label="Full name *" hint="As on your ID." error={errors.name}>
           <input id="pitch-name" className={inputClass} autoComplete="name" value={val("name")} onChange={set("name")} />
         </Field>
@@ -302,8 +364,10 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           <input id="pitch-profileUrl" type="url" inputMode="url" placeholder="https://" className={inputClass} value={val("profileUrl")} onChange={set("profileUrl")} />
         </Field>
       </Section>
+      )}
 
-      <Section title="3. You and Kakrat" intro="We love hearing from people who already read Kakrat. These questions help us get to know you.">
+      {step === 1 && (
+      <Section title="You and Kakrat" intro="We love hearing from people who already read Kakrat.">
         <div id="pitch-platforms">
           <p className="text-sm font-medium text-ink">Where do you follow Kakrat? *</p>
           <p className="mt-0.5 text-xs text-ink-muted">Not following yet? It takes a second, and it&apos;s where we share themes and open calls first.</p>
@@ -337,8 +401,10 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           <Counter text={val("articleThoughts")} min={10} max={60} />
         </Field>
       </Section>
+      )}
 
-      <Section title="4. Your idea" intro="An outline is all we need. Please don't write the full article yet.">
+      {step === 2 && (
+      <Section title="Your idea" intro="An outline is all we need. Please don't write the full article yet.">
         <Field id="pitch-section" label="Section *" error={errors.section}>
           <select id="pitch-section" className={inputClass} value={val("section")} onChange={set("section")}>
             <option value="">Choose one</option>
@@ -369,8 +435,10 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           </select>
         </Field>
       </Section>
+      )}
 
-      <Section title="5. Almost done">
+      {step === 3 && (
+      <Section title="Almost done">
         <div id="pitch-declarations" className="space-y-2 text-sm text-ink">
           {DECLARATIONS.map((d) => (
             <label key={d.value} className="flex gap-2">
@@ -386,19 +454,31 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           {errors.declarations && <p className="text-xs text-accent">{errors.declarations}</p>}
         </div>
       </Section>
+      )}
 
       {formError && (
         <p role="alert" className="text-sm text-accent">
           {formError}
         </p>
       )}
-      <button
-        type="submit"
-        disabled={sending}
-        className="rounded-sm bg-accent px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-      >
-        {sending ? "Sending…" : "Send my pitch"}
-      </button>
+      <div className="flex items-center gap-4">
+        {step > 0 && (
+          <button
+            type="button"
+            onClick={() => goTo(step - 1)}
+            className="rounded-sm border border-line px-5 py-2.5 text-sm font-medium text-ink hover:border-accent"
+          >
+            Back
+          </button>
+        )}
+        <button
+          type="submit"
+          disabled={sending}
+          className="rounded-sm bg-accent px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+        >
+          {step < STEPS.length - 1 ? "Next" : sending ? "Sending…" : "Send my pitch"}
+        </button>
+      </div>
     </form>
   );
 }
