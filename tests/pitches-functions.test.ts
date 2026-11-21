@@ -44,10 +44,10 @@ function validPitch(overrides: Record<string, unknown> = {}) {
     email: "asha@example.org",
     role: "Scientist, XYZ Institute",
     experience: "5-10",
-    profileUrl: "https://www.linkedin.com/in/asha",
+    profiles: "https://www.linkedin.com/in/asha",
     platforms: ["instagram"],
     handle: "@asha",
-    articleUrl: "https://kakrat.com/articles/antibiotics-a-love-story",
+    articleTitle: "Antibiotics: A Love Story With a Bad Ending",
     articleThoughts: words(20),
     section: "science-technology",
     title: "Why lab mice keep lying to us",
@@ -105,11 +105,19 @@ describe("pitches API", () => {
     expect(ok.status).toBe(200);
   });
 
-  it("rejects outlines outside 60-150 words and non-Kakrat article links", async () => {
+  it("rejects outlines outside 60-150 words and a missing article", async () => {
     const short = await onRequestPost({ request: post(validPitch({ outline: words(20) })), env } as never);
     expect((await short.json()).field).toBe("outline");
-    const link = await onRequestPost({ request: post(validPitch({ articleUrl: "https://example.com/a" })), env } as never);
-    expect((await link.json()).field).toBe("articleUrl");
+    const none = await onRequestPost({ request: post(validPitch({ articleTitle: "" })), env } as never);
+    expect((await none.json()).field).toBe("articleTitle");
+  });
+
+  it("treats profile links, byline and student proof as optional", async () => {
+    const ok = await onRequestPost({ request: post(validPitch({ profiles: "", byline: "" })), env } as never);
+    expect(ok.status).toBe(200);
+    const student = validPitch({ track: "student", role: undefined, experience: undefined, age18: true, institution: "IISc", courseYear: "B.Sc., 2nd year" });
+    const st = await onRequestPost({ request: post(student), env } as never);
+    expect(st.status).toBe(200);
   });
 
   it("needs every declaration and at least one followed platform", async () => {

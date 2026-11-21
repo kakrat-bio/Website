@@ -64,7 +64,7 @@ export default function StudentCornerPage() {
           Share your pitch
         </h2>
         <p className="mt-2 text-sm text-ink-muted">
-          Four short steps, about ten minutes. An outline is all we need.
+          About ten minutes. An outline is all we need.
         </p>
         <div className="mt-6">
           <PitchForm defaultTrack="student" />

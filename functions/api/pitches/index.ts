@@ -58,8 +58,10 @@ export function pitchAlertBody(p: StoredPitch): string {
     `Track: ${TRACK_LABEL[p.track] ?? p.track}`,
     `Section: ${p.section}`,
     `From: ${p.name} <${p.email}>, ${who}`,
-    `Profile: ${d.profileUrl ?? ""}`,
+    `Profiles: ${d.profiles ?? d.profileUrl ?? "(none given)"}`,
     `Follows on: ${Array.isArray(d.platforms) ? d.platforms.join(", ") : ""} as ${d.handle ?? ""}`,
+    "",
+    `Read: ${d.articleTitle ?? d.articleUrl ?? ""}`,
     "",
     `Title: ${p.title}`,
     "",
@@ -128,7 +130,6 @@ const PLATFORMS = ["instagram", "x", "linkedin"] as const;
 const DECLARATIONS = ["original", "not-a-job", "honorarium", "share", "read-terms"] as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const KAKRAT_ARTICLE_RE = /^https?:\/\/(www\.)?kakrat\.com\/articles\/[a-z0-9-]+\/?([?#].*)?$/i;
 const RATE_WINDOW_MINUTES = 60;
 const RATE_MAX = 3;
 
@@ -154,15 +155,6 @@ export function wordCount(text: string): number {
   return t ? t.split(/\s+/).length : 0;
 }
 
-function isUrl(value: string): boolean {
-  try {
-    const u = new URL(value);
-    return u.protocol === "https:" || u.protocol === "http:";
-  } catch {
-    return false;
-  }
-}
-
 function oneOf<T extends readonly string[]>(list: T, value: string): value is T[number] {
   return (list as readonly string[]).includes(value);
 }
@@ -176,10 +168,9 @@ export function validatePitch(p: Record<string, unknown>): { ok: true; pitch: Re
   if (!oneOf(TRACKS, track)) return f("track", "Please choose a track.");
 
   const name = clean(p.name, 100).replace(/\s+/g, " ");
-  const byline = clean(p.byline, 100).replace(/\s+/g, " ");
+  const byline = clean(p.byline, 100).replace(/\s+/g, " ") || name;
   const email = clean(p.email, 200).toLowerCase();
   if (name.length < 2) return f("name", "Please enter your full name.");
-  if (byline.length < 2) return f("byline", "Please enter your byline name.");
   if (!EMAIL_RE.test(email)) return f("email", "Please enter a valid email address.");
 
   const details: Record<string, unknown> = {};
@@ -191,9 +182,7 @@ export function validatePitch(p: Record<string, unknown>): { ok: true; pitch: Re
     const enrolment = clean(p.enrolment, 300);
     if (institution.length < 2) return f("institution", "Please enter your college or university.");
     if (courseYear.length < 2) return f("courseYear", "Please enter your course and year.");
-    if (!EMAIL_RE.test(enrolment) && !isUrl(enrolment))
-      return f("enrolment", "Please give your institutional email, or a link to a photo of your college ID.");
-    Object.assign(details, { institution, courseYear, enrolment, faculty: clean(p.faculty, 300) });
+    Object.assign(details, { institution, courseYear, enrolment });
   } else {
     const role = clean(p.role, 200);
     const experience = clean(p.experience, 20);
@@ -202,9 +191,9 @@ export function validatePitch(p: Record<string, unknown>): { ok: true; pitch: Re
     Object.assign(details, { role, experience, samples: clean(p.samples, 1000) });
   }
 
-  const profileUrl = clean(p.profileUrl, 500);
-  if (!isUrl(profileUrl)) return f("profileUrl", "Please paste a full profile link, starting with https://");
-  details.profileUrl = profileUrl;
+  // Optional: one or more profile links (LinkedIn, Instagram, X, Facebook, a website...).
+  const profiles = clean(p.profiles ?? p.profileUrl, 1000);
+  if (profiles) details.profiles = profiles;
 
   const platforms = Array.isArray(p.platforms) ? p.platforms.filter((x): x is string => typeof x === "string") : [];
   const followed = PLATFORMS.filter((x) => platforms.includes(x));
@@ -213,13 +202,13 @@ export function validatePitch(p: Record<string, unknown>): { ok: true; pitch: Re
   if (handle.length < 2) return f("handle", "Please give your handle, so we can find you.");
   Object.assign(details, { platforms: followed, handle });
 
-  const articleUrl = clean(p.articleUrl, 500);
-  if (!KAKRAT_ARTICLE_RE.test(articleUrl))
-    return f("articleUrl", "Please paste the link to a Kakrat article, like https://kakrat.com/articles/…");
+  // The title (or link) of a Kakrat article they've read, and what they made of it.
+  const articleTitle = clean(p.articleTitle ?? p.articleUrl, 300);
+  if (articleTitle.length < 3) return f("articleTitle", "Please name a Kakrat article you've read.");
   const articleThoughts = clean(p.articleThoughts, 1000);
   const tw = wordCount(articleThoughts);
   if (tw < 10 || tw > 60) return f("articleThoughts", "Please write 10 to 60 words about the article.");
-  Object.assign(details, { articleUrl, articleThoughts });
+  Object.assign(details, { articleTitle, articleThoughts });
 
   const section = clean(p.section, 40);
   if (!oneOf(SECTIONS, section)) return f("section", "Please choose a section.");

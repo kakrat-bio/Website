@@ -40,10 +40,12 @@ const DETAIL_LABEL: Record<string, string> = {
   enrolment: "Proof of enrolment",
   faculty: "Faculty reference",
   profileUrl: "Profile",
+  profiles: "Profiles",
   samples: "Samples",
   platforms: "Follows Kakrat on",
   handle: "Handle",
   articleUrl: "Kakrat article read",
+  articleTitle: "Kakrat article read",
   articleThoughts: "Thoughts on it",
   aiUse: "AI use",
 };

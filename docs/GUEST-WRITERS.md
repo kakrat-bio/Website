@@ -28,12 +28,15 @@ live in the owner's Claude Project notes.
   (the table creates itself on first use; schema in `migrations/pitches/`).
   Read and sort them at `kakrat.com/admin/pitches` (same password as
   comments). Email pitches are no longer reviewed; the page says so.
-- The form checks: required fields, a profile link, at least one platform where
-  they follow Kakrat plus their handle, a link to a kakrat.com article they read
-  with 10 to 60 words on it, title up to 12 words, outline 60 to 150 words,
-  "why me" 15 to 60 words, AI use, and five declarations (own work, not a job
+- The form checks: name and email (byline optional, defaults to the name), at
+  least one platform where they follow Kakrat plus their handle, the title of a
+  Kakrat article they read (no link needed) with 10 to 60 words on it, title up
+  to 12 words, outline 60 to 150 words, "why me" 15 to 60 words, AI use, and one
+  confirmation box covering the five declarations (own work, not a job
   application, honorarium is discretionary, will share and tag @kakratian, read
-  the terms). Students also confirm they are 18+ and give proof of enrolment.
+  the terms). Profile links are optional and can be several. Students also
+  confirm they are 18+ and give college and course; proof of enrolment is
+  optional.
   There is a honeypot field and a limit of 3 pitches per hour per address.
 - Each new pitch emails kakratkosh@gmail.com through the Apps Script's existing
   comment-alert branch (subject "New comment on Kakrat: NEW PITCH: <title>").
