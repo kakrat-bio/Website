@@ -33,78 +33,27 @@ export default function StudentCornerPage() {
       </p>
       <h1 className="font-display text-4xl text-ink">Student Corner</h1>
       <p className="mt-3 font-display text-xl text-ink-muted">Your first byline could start here.</p>
-      <div className="prose prose-lg mt-8 max-w-none font-sans">
-        <p>
-          Studying something that fascinates you? Worked on a project, a field
-          trip or an experiment you can&apos;t stop talking about? We&apos;d
-          love to help you share it with curious readers.
-        </p>
+      <p className="mt-6 text-lg text-ink">
+        Studying something that fascinates you? Tell curious readers about it.
+      </p>
 
-        <h2>Who can write</h2>
-        <p>
-          Students at a college or university in India, aged 18 and over. That
-          includes undergraduates, postgraduates and PhD scholars. PhD scholars
-          can pitch here or as{" "}
-          <Link href="/write-for-us">guest contributors</Link>, whichever fits
-          the piece. We aren&apos;t able to accept pieces from school students
-          just yet.
-        </p>
-
-        <h2>What we&apos;re looking for</h2>
-        <p>
-          500 to 900 words. An explainer on something you&apos;re studying, the
-          story of a project or field trip, or a well-argued opinion. One clear
-          idea, told in your own words, for readers outside your field. The
-          sections are the same as the rest of Kakrat:{" "}
-          <Link href="/topics/science-technology">Science &amp; Technology</Link>,{" "}
-          <Link href="/topics/business-innovation">Business &amp; Innovation</Link>{" "}
-          and <Link href="/topics/culture-ideas">Culture &amp; Ideas</Link>.
-        </p>
-
-        <h2>What you get</h2>
-        <p>
-          Your byline on Student Corner, careful editing from our team, and a
-          Kakrat T-shirt (delivery within India). We send it once your piece is
-          live and you&apos;ve shared it on social media, tagging @kakratian.
-          Student Corner pieces don&apos;t carry an honorarium.
-        </p>
-
-        <h2>What the form will ask for</h2>
-        <p>To keep things fair and genuine, we&apos;ll ask for:</p>
-        <ul>
-          <li>Your institutional email address, or a photo of your college ID.</li>
-          <li>Your course and year.</li>
-          <li>
-            A social media handle, and where you follow Kakrat:{" "}
-            <a href="https://www.instagram.com/kakratian">Instagram</a>,{" "}
-            <a href="https://x.com/kakratian">X</a> or{" "}
-            <a href="https://www.linkedin.com/company/kakrat">LinkedIn</a>.
-          </li>
-          <li>A link to a Kakrat article you&apos;ve read, and what you made of it.</li>
-          <li>Optional: a faculty member who can vouch for you.</li>
-        </ul>
-
-        <h2>A few ground rules</h2>
-        <ul>
-          <li>
-            Your piece should be your own work and not published anywhere else,
-            including your blog.
-          </li>
-          <li>
-            AI tools can help you research or check grammar, but the writing
-            should be yours, and we&apos;ll ask how you used them.
-          </li>
-          <li>
-            You&apos;re welcome to build on coursework, as long as you rework it
-            for general readers.
-          </li>
-          <li>
-            The full <Link href="/write-for-us#guidelines">guidelines</Link> and{" "}
-            <Link href="/write-for-us#terms">terms</Link> apply to Student
-            Corner too.
-          </li>
-        </ul>
-      </div>
+      <dl className="mt-6 divide-y divide-line rounded-sm border border-line text-sm">
+        {[
+          ["Who", "College and university students in India, 18 and over: undergraduate to PhD."],
+          ["What", "500 to 900 words. An explainer, a project or field-trip story, or an argued opinion, for readers outside your field."],
+          ["You get", "Your byline, careful editing and a Kakrat T-shirt once you share the piece. No honorarium."],
+          ["Rules", "Your own writing, not published anywhere else. AI only for research or grammar."],
+        ].map(([k, d]) => (
+          <div key={k} className="flex gap-4 px-4 py-3">
+            <dt className="w-20 shrink-0 font-medium text-ink">{k}</dt>
+            <dd className="text-ink-muted">{d}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-3 text-sm text-ink-muted">
+        The full <Link className="underline underline-offset-2" href="/write-for-us#guidelines">guidelines</Link> and{" "}
+        <Link className="underline underline-offset-2" href="/write-for-us#terms">terms</Link> apply.
+      </p>
 
       <section
         id="pitch"
@@ -115,8 +64,7 @@ export default function StudentCornerPage() {
           Share your pitch
         </h2>
         <p className="mt-2 text-sm text-ink-muted">
-          It takes about ten minutes, and an outline is all we need. We
-          can&apos;t wait to read it.
+          About ten minutes. An outline is all we need.
         </p>
         <div className="mt-6">
           <PitchForm defaultTrack="student" />

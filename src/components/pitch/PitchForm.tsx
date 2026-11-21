@@ -38,11 +38,11 @@ const TRACKS: { value: Track; label: string; note: string }[] = [
 ];
 
 const DECLARATIONS: { value: string; label: string }[] = [
-  { value: "original", label: "This pitch is my own work and hasn't been published anywhere, including on my blog." },
-  { value: "not-a-job", label: "I understand this is a pitch for an article, not a job, internship or freelance application." },
-  { value: "honorarium", label: "I understand the honorarium is offered only for selected Kakrat Voices pieces, at the editor's discretion." },
-  { value: "share", label: "If my piece is published, I'll share it on my social media and tag @kakratian." },
-  { value: "read-terms", label: "I've read the guidelines and terms on this page." },
+  { value: "original", label: "It's my own work and not published anywhere else." },
+  { value: "not-a-job", label: "It's a pitch for an article, not a job application." },
+  { value: "honorarium", label: "The honorarium is only for selected Kakrat Voices pieces, at the editor's discretion." },
+  { value: "share", label: "If it's published, I'll share it and tag @kakratian." },
+  { value: "read-terms", label: "I've read the guidelines and terms." },
 ];
 
 function Field({
@@ -121,30 +121,25 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
     };
     if (!track) e.track = "Please choose a track.";
     req("name", "Please enter your full name.");
-    req("byline", "Please enter your byline name.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email").trim())) e.email = "Please enter a valid email address.";
     if (track === "student") {
       if (!age18) e.age18 = "Student Corner is open to students aged 18 and over.";
       req("institution", "Please enter your college or university.");
       req("courseYear", "Please enter your course and year.");
-      req("enrolment", "Please give your institutional email, or a link to a photo of your college ID.");
     } else if (track) {
       req("role", "Please enter your current role and organisation.");
       if (!val("experience")) e.experience = "Please choose your years of experience.";
     }
-    if (!/^https?:\/\/\S+\.\S+/.test(val("profileUrl").trim()))
-      e.profileUrl = "Please paste a full profile link, starting with https://";
     if (platforms.length === 0) e.platforms = "Please tell us where you follow Kakrat.";
     req("handle", "Please give your handle, so we can find you.");
-    if (!/^https?:\/\/(www\.)?kakrat\.com\/articles\/[a-z0-9-]+/i.test(val("articleUrl").trim()))
-      e.articleUrl = "Please paste the link to a Kakrat article, like https://kakrat.com/articles/…";
+    if (val("articleTitle").trim().length < 3) e.articleTitle = "Please name a Kakrat article you've read.";
     range("articleThoughts", 10, 60, "Please write 10 to 60 words about the article.");
     if (!val("section")) e.section = "Please choose a section.";
     range("title", 2, 12, "Please keep the working title to 12 words or fewer.");
     range("outline", 60, 150, "Please write an outline of 60 to 150 words.");
     range("whyMe", 15, 60, "Please write 15 to 60 words.");
     if (!val("aiUse")) e.aiUse = "Please tell us how you'll use AI tools.";
-    if (declarations.length < DECLARATIONS.length) e.declarations = "Please tick all the boxes to submit.";
+    if (declarations.length < DECLARATIONS.length) e.declarations = "Please tick the box to submit.";
     return e;
   }
 
@@ -205,7 +200,13 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
         <input id="pitch-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <Section title="1. Your track">
+      {defaultTrack === "student" ? (
+        <p className="text-sm text-ink-muted">
+          You&apos;re pitching for <span className="font-medium text-ink">Student Corner</span>. Not a student?{" "}
+          <a className="underline underline-offset-2" href="/write-for-us#pitch">Pitch as a guest contributor</a>.
+        </p>
+      ) : (
+      <Section title="Your track">
         <div id="pitch-track" className="space-y-3" role="radiogroup" aria-label="Track">
           {TRACKS.map((t) => (
             <label
@@ -234,15 +235,16 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           {errors.track && <p className="text-xs text-accent">{errors.track}</p>}
         </div>
       </Section>
+      )}
 
-      <Section title="2. About you">
-        <Field id="pitch-name" label="Full name *" hint="As on your ID." error={errors.name}>
+      <Section title="About you">
+        <Field id="pitch-name" label="Full name *" error={errors.name}>
           <input id="pitch-name" className={inputClass} autoComplete="name" value={val("name")} onChange={set("name")} />
         </Field>
-        <Field id="pitch-byline" label="Byline name *" hint="The name you'd like printed on the article." error={errors.byline}>
+        <Field id="pitch-byline" label="Byline name (optional)" hint="Only if you'd like a different name printed on the article." error={errors.byline}>
           <input id="pitch-byline" className={inputClass} value={val("byline")} onChange={set("byline")} />
         </Field>
-        <Field id="pitch-email" label="Email *" hint="We'll reply here." error={errors.email}>
+        <Field id="pitch-email" label="Email *" error={errors.email}>
           <input id="pitch-email" type="email" className={inputClass} autoComplete="email" value={val("email")} onChange={set("email")} />
         </Field>
 
@@ -258,19 +260,16 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
             <Field id="pitch-institution" label="College or university *" error={errors.institution}>
               <input id="pitch-institution" className={inputClass} value={val("institution")} onChange={set("institution")} />
             </Field>
-            <Field id="pitch-courseYear" label="Course and year *" hint="For example, B.Sc. Biotechnology, 2nd year, or PhD, 3rd year." error={errors.courseYear}>
+            <Field id="pitch-courseYear" label="Course and year *" hint="For example, B.Sc. Biotechnology, 2nd year." error={errors.courseYear}>
               <input id="pitch-courseYear" className={inputClass} value={val("courseYear")} onChange={set("courseYear")} />
             </Field>
             <Field
               id="pitch-enrolment"
-              label="Proof that you're a student *"
-              hint='Your institutional email address, or a Google Drive link (shared as "Anyone with the link") to a photo of your college ID.'
+              label="Proof that you're a student (optional)"
+              hint="Your college email address, or a link to a photo of your college ID."
               error={errors.enrolment}
             >
               <input id="pitch-enrolment" className={inputClass} value={val("enrolment")} onChange={set("enrolment")} />
-            </Field>
-            <Field id="pitch-faculty" label="A faculty member who can vouch for you (optional)" hint="Name, department and email.">
-              <input id="pitch-faculty" className={inputClass} value={val("faculty")} onChange={set("faculty")} />
             </Field>
           </>
         ) : (
@@ -294,19 +293,19 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
         )}
 
         <Field
-          id="pitch-profileUrl"
-          label="Profile link *"
-          hint="LinkedIn, an institution or company page, a personal site, or a byline elsewhere. It helps us see the real person behind each pitch."
-          error={errors.profileUrl}
+          id="pitch-profiles"
+          label="Your profiles (optional)"
+          hint="Links to one or more: LinkedIn, Instagram, X, Facebook, a website. We'd love to follow you."
+          error={errors.profiles}
         >
-          <input id="pitch-profileUrl" type="url" inputMode="url" placeholder="https://" className={inputClass} value={val("profileUrl")} onChange={set("profileUrl")} />
+          <textarea id="pitch-profiles" rows={2} placeholder="https://" className={inputClass} value={val("profiles")} onChange={set("profiles")} />
         </Field>
       </Section>
 
-      <Section title="3. You and Kakrat" intro="We love hearing from people who already read Kakrat. These questions help us get to know you.">
+      <Section title="You and Kakrat">
         <div id="pitch-platforms">
-          <p className="text-sm font-medium text-ink">Where do you follow Kakrat? *</p>
-          <p className="mt-0.5 text-xs text-ink-muted">Not following yet? It takes a second, and it&apos;s where we share themes and open calls first.</p>
+          <p className="text-sm font-medium text-ink">Follow Kakrat on at least one of these *</p>
+          <p className="mt-0.5 text-xs text-ink-muted">Tap a name to open our page, then tick where you follow us.</p>
           <div className="mt-2 space-y-2 text-sm text-ink">
             {[
               { value: "instagram", label: "Instagram", href: "https://www.instagram.com/kakratian", handle: "@kakratian" },
@@ -326,19 +325,19 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           </div>
           {errors.platforms && <p className="mt-1 text-xs text-accent">{errors.platforms}</p>}
         </div>
-        <Field id="pitch-handle" label="Your handle on that platform *" hint="So we can say hello, for example @yourname." error={errors.handle}>
+        <Field id="pitch-handle" label="Your handle there *" hint="For example, @yourname." error={errors.handle}>
           <input id="pitch-handle" className={inputClass} value={val("handle")} onChange={set("handle")} />
         </Field>
-        <Field id="pitch-articleUrl" label="Link to a Kakrat article you've read *" hint="Copy it from your browser's address bar." error={errors.articleUrl}>
-          <input id="pitch-articleUrl" type="url" inputMode="url" placeholder="https://kakrat.com/articles/…" className={inputClass} value={val("articleUrl")} onChange={set("articleUrl")} />
+        <Field id="pitch-articleTitle" label="A Kakrat article you've read *" hint="The title is enough." error={errors.articleTitle}>
+          <input id="pitch-articleTitle" className={inputClass} value={val("articleTitle")} onChange={set("articleTitle")} />
         </Field>
-        <Field id="pitch-articleThoughts" label="What did you make of it? *" hint="A sentence or three." error={errors.articleThoughts}>
+        <Field id="pitch-articleThoughts" label="What did you take from it? *" hint="A sentence or three, in your own words." error={errors.articleThoughts}>
           <textarea id="pitch-articleThoughts" rows={3} className={inputClass} value={val("articleThoughts")} onChange={set("articleThoughts")} />
           <Counter text={val("articleThoughts")} min={10} max={60} />
         </Field>
       </Section>
 
-      <Section title="4. Your idea" intro="An outline is all we need. Please don't write the full article yet.">
+      <Section title="Your idea" intro="An outline is all we need, not the full article.">
         <Field id="pitch-section" label="Section *" error={errors.section}>
           <select id="pitch-section" className={inputClass} value={val("section")} onChange={set("section")}>
             <option value="">Choose one</option>
@@ -351,15 +350,15 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           <input id="pitch-title" className={inputClass} value={val("title")} onChange={set("title")} />
           <Counter text={val("title")} min={2} max={12} />
         </Field>
-        <Field id="pitch-outline" label="Outline *" hint="Your main point, the three or four things you'll cover, and how it ends." error={errors.outline}>
+        <Field id="pitch-outline" label="Outline *" hint="Your main point, what you'll cover, and how it ends." error={errors.outline}>
           <textarea id="pitch-outline" rows={7} className={inputClass} value={val("outline")} onChange={set("outline")} />
           <Counter text={val("outline")} min={60} max={150} />
         </Field>
-        <Field id="pitch-whyMe" label="Why are you the right person to write this? *" hint="What you know about it first-hand." error={errors.whyMe}>
+        <Field id="pitch-whyMe" label="Why you? *" hint="What you know about this first-hand." error={errors.whyMe}>
           <textarea id="pitch-whyMe" rows={3} className={inputClass} value={val("whyMe")} onChange={set("whyMe")} />
           <Counter text={val("whyMe")} min={15} max={60} />
         </Field>
-        <Field id="pitch-aiUse" label="How will you use AI tools for this piece? *" hint="AI can help you research or tidy up, but the ideas, writing and voice should be yours." error={errors.aiUse}>
+        <Field id="pitch-aiUse" label="How will you use AI tools? *" hint="The ideas and writing should be yours." error={errors.aiUse}>
           <select id="pitch-aiUse" className={inputClass} value={val("aiUse")} onChange={set("aiUse")}>
             <option value="">Choose one</option>
             <option value="none">Not at all</option>
@@ -370,22 +369,25 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
         </Field>
       </Section>
 
-      <Section title="5. Almost done">
-        <div id="pitch-declarations" className="space-y-2 text-sm text-ink">
-          {DECLARATIONS.map((d) => (
-            <label key={d.value} className="flex gap-2">
-              <input
-                type="checkbox"
-                className="mt-0.5 shrink-0"
-                checked={declarations.includes(d.value)}
-                onChange={() => toggle(declarations, setDeclarations, d.value)}
-              />
-              <span>{d.label}</span>
-            </label>
-          ))}
-          {errors.declarations && <p className="text-xs text-accent">{errors.declarations}</p>}
-        </div>
-      </Section>
+      <div id="pitch-declarations" className="border-t border-line pt-6 text-sm text-ink">
+        <label className="flex items-start gap-2">
+          <input
+            type="checkbox"
+            className="mt-1 shrink-0 self-start"
+            checked={declarations.length === DECLARATIONS.length}
+            onChange={(e) => setDeclarations(e.target.checked ? DECLARATIONS.map((d) => d.value) : [])}
+          />
+          <span>
+            I confirm that:
+            <ul className="mt-1 list-disc space-y-0.5 pl-5 text-ink-muted">
+              {DECLARATIONS.filter((d) => track !== "student" || d.value !== "honorarium").map((d) => (
+                <li key={d.value}>{d.label}</li>
+              ))}
+            </ul>
+          </span>
+        </label>
+        {errors.declarations && <p className="mt-1 text-xs text-accent">{errors.declarations}</p>}
+      </div>
 
       {formError && (
         <p role="alert" className="text-sm text-accent">

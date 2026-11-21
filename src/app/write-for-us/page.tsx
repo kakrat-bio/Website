@@ -176,8 +176,8 @@ export default function WriteForUsPage() {
             on <a href="https://www.instagram.com/kakratian">Instagram</a>,{" "}
             <a href="https://x.com/kakratian">X</a> or{" "}
             <a href="https://www.linkedin.com/company/kakrat">LinkedIn</a>. We
-            share monthly themes and open calls there first, and we do look for
-            it when shortlisting.
+            share monthly themes and open calls there first. Following us on at
+            least one is required to pitch.
           </li>
           <li>
             <strong>Read a Kakrat piece or two.</strong> You&apos;ll get a feel
@@ -186,10 +186,10 @@ export default function WriteForUsPage() {
             place to start.
           </li>
           <li>
-            <strong>Keep a profile link handy.</strong> LinkedIn, a university
-            or company page, a personal site, or a byline elsewhere. We receive
-            many automated submissions, and this helps us see the real person
-            behind each pitch.
+            <strong>Share your profiles if you like.</strong> Links to your
+            LinkedIn, Instagram, X, Facebook or website are optional, but they
+            help us see the real person behind each pitch, and we&apos;d love to
+            follow you.
           </li>
         </ol>
 
