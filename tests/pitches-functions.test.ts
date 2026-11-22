@@ -160,12 +160,18 @@ describe("pitches API", () => {
     });
     env.COMMENTS_WEBHOOK_TOKEN = "tok";
     await onRequestPost({ request: post(validPitch()), env } as never);
-    expect(calls).toHaveLength(1);
-    const sent = new URLSearchParams(calls[0].body);
-    expect(sent.get("type")).toBe("comment");
-    expect(sent.get("token")).toBe("tok");
-    expect(sent.get("slug")).toBe("NEW PITCH: Why lab mice keep lying to us");
-    expect(sent.get("body")).toContain("kakrat.com/admin/pitches");
+    expect(calls).toHaveLength(2);
+    const sent = calls.map((c) => new URLSearchParams(c.body));
+    const mail = sent.find((x) => x.get("type") === "comment")!;
+    expect(mail.get("token")).toBe("tok");
+    expect(mail.get("slug")).toBe("NEW PITCH: Why lab mice keep lying to us");
+    expect(mail.get("body")).toContain("kakrat.com/admin/pitches");
+    const row = sent.find((x) => x.get("type") === "pitch")!;
+    expect(row.get("token")).toBe("tok");
+    expect(row.get("applicantEmail")).toBe("asha@example.org");
+    expect(row.get("articleRead")).toBe("Antibiotics: A Love Story With a Bad Ending");
+    // Never an `email` field: an older Apps Script would file it as a newsletter sign-up.
+    expect(row.has("email")).toBe(false);
   });
 
   it("sends no alert without the token", async () => {
