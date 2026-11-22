@@ -9,7 +9,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
  * the server's checks are the ones that count.
  */
 
-type Track = "voices" | "guest" | "student";
+type Track = "guest" | "student";
 
 const inputClass =
   "w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none";
@@ -21,26 +21,21 @@ function words(text: string): number {
 
 const TRACKS: { value: Track; label: string; note: string }[] = [
   {
-    value: "voices",
-    label: "Kakrat Voices",
-    note: "Experienced professionals with a track record in their field. Byline, T-shirt, and a ₹2,000 honorarium at the editor's discretion.",
-  },
-  {
     value: "guest",
-    label: "Guest contributor",
-    note: "Professionals, PhD scholars and writers with first-hand knowledge of their topic. Byline and author box.",
+    label: "Guest writer",
+    note: "Researchers, professionals, PhD scholars and writers with first-hand knowledge of their topic. ₹1,000 per published article, or ₹2,000 with significant professional experience.",
   },
   {
     value: "student",
-    label: "Student Corner",
-    note: "College and university students aged 18 and over, from undergraduates to PhD scholars. Byline and T-shirt.",
+    label: "Student writer",
+    note: "College and university students aged 18 and over, from undergraduates to PhD scholars. ₹500 per published article and a certificate of publication.",
   },
 ];
 
 const DECLARATIONS: { value: string; label: string }[] = [
   { value: "original", label: "It's my own work and not published anywhere else." },
   { value: "not-a-job", label: "It's a pitch for an article, not a job application." },
-  { value: "honorarium", label: "The honorarium is only for selected Kakrat Voices pieces, at the editor's discretion." },
+  { value: "honorarium", label: "Payment is at the fixed rate for my track, sent after publication once I share the piece, and paid slots each month are limited." },
   { value: "share", label: "If it's published, I'll share it and tag @kakratian." },
   { value: "read-terms", label: "I've read the guidelines and terms." },
 ];
@@ -202,8 +197,8 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
 
       {defaultTrack === "student" ? (
         <p className="text-sm text-ink-muted">
-          You&apos;re pitching for <span className="font-medium text-ink">Student Corner</span>. Not a student?{" "}
-          <a className="underline underline-offset-2" href="/write-for-us#pitch">Pitch as a guest contributor</a>.
+          You&apos;re pitching as a <span className="font-medium text-ink">student writer</span>. Not a student?{" "}
+          <a className="underline underline-offset-2" href="/write-for-us#pitch">Pitch as a guest writer</a>.
         </p>
       ) : (
       <Section title="Your track">
@@ -230,7 +225,7 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
             </label>
           ))}
           <p className="text-xs text-ink-muted">
-            Not sure? Pick the closest one. Our editors will suggest another track if it suits your piece better.
+            PhD scholars can choose either track. We confirm the track and amount when we accept your pitch.
           </p>
           {errors.track && <p className="text-xs text-accent">{errors.track}</p>}
         </div>
@@ -380,7 +375,7 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
           <span>
             I confirm that:
             <ul className="mt-1 list-disc space-y-0.5 pl-5 text-ink-muted">
-              {DECLARATIONS.filter((d) => track !== "student" || d.value !== "honorarium").map((d) => (
+              {DECLARATIONS.map((d) => (
                 <li key={d.value}>{d.label}</li>
               ))}
             </ul>

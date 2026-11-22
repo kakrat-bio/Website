@@ -39,8 +39,8 @@ const DEFAULT_WEBHOOK_URL =
 
 const TRACK_LABEL: Record<string, string> = {
   voices: "Kakrat Voices",
-  guest: "Guest contributor",
-  student: "Student Corner",
+  guest: "Guest writer",
+  student: "Student writer",
 };
 
 type StoredPitch = {

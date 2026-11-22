@@ -21,7 +21,7 @@ live in the owner's Claude Project notes.
   this file.
 - Student Corner: `https://kakrat.com/student-corner`
   (`src/app/student-corner/page.tsx`), linked from the footer. Same form,
-  with the Student Corner track pre-selected.
+  with the student track pre-selected.
 - Pitches arrive through the on-page form (`src/components/pitch/PitchForm.tsx`),
   which posts to the Pages Function `functions/api/pitches/index.ts`. It stores
   each pitch in the `pitches` table of the D1 database bound as `COMMENTS_DB`
@@ -33,7 +33,7 @@ live in the owner's Claude Project notes.
   Kakrat article they read (no link needed) with 10 to 60 words on it, title up
   to 12 words, outline 60 to 150 words, "why me" 15 to 60 words, AI use, and one
   confirmation box covering the five declarations (own work, not a job
-  application, honorarium is discretionary, will share and tag @kakratian, read
+  application, payment is at the fixed rate and slots are limited, will share and tag @kakratian, read
   the terms). Profile links are optional and can be several. Students also
   confirm they are 18+ and give college and course; proof of enrolment is
   optional.
@@ -42,20 +42,25 @@ live in the owner's Claude Project notes.
   comment-alert branch (subject "New comment on Kakrat: NEW PITCH: <title>").
   It needs the Cloudflare secret `COMMENTS_WEBHOOK_TOKEN`, which is already set.
 
-## The offer (three tracks, from 21 Nov 2026)
+## The offer (two tracks, from 22 Nov 2026)
 
 | Track | Who | Length | What they get |
 | --- | --- | --- | --- |
-| Kakrat Voices | Experienced professionals with a track record | 800 to 1,500 words | Byline, author box, T-shirt, ₹2,000 honorarium at the editor's discretion |
-| Guest contributor | Professionals, PhD scholars, writers with first-hand knowledge | 800 to 1,500 words | Byline and author box |
-| Student Corner | College/university students 18+, undergraduate to PhD | 500 to 900 words | Byline and T-shirt, no honorarium |
+| Guest writers | Researchers, professionals, PhD scholars, writers with first-hand knowledge | 800 to 1,500 words | Byline, author box, ₹1,000 per published article, or ₹2,000 with significant professional experience |
+| Student writers | College/university students 18+, undergraduate to PhD | 500 to 900 words | Byline on Student Corner, ₹500 per published article, certificate of publication |
 
-- PhD scholars may pitch as guest contributors or to Student Corner.
-- The honorarium is never automatic: the editor decides at acceptance and
-  confirms it in writing. Fees aren't discussed before acceptance.
-- T-shirt and honorarium are sent within 15 days of publication, once the
-  writer has shared the piece and tagged @kakratian. T-shirts are not sold;
-  posted within India only.
+- Budget: ₹4,000 a month at most. Working plan: up to 2 guest pieces at
+  ₹1,000 (or 1 at ₹2,000) plus up to 4 student pieces at ₹500. The page says
+  paid slots are limited each month; it doesn't publish the numbers.
+- When a month's slots are full, accepted pieces move to the next month; tell
+  the writer the expected date.
+- PhD scholars may choose either track.
+- The amount (₹1,000 or ₹2,000 for guests) is decided at acceptance and
+  confirmed in writing. Fees aren't discussed before acceptance.
+- Payment is sent within 15 days of publication, once the writer has shared
+  the piece and tagged @kakratian.
+- T-shirts are no longer promised on the site (owner still deciding, 22 Nov
+  2026). They may be sent occasionally as a surprise thank-you.
 - School students are not accepted (under-18s would need parental consent).
 - The page is for pitches only, not job, internship or freelance applications.
 - Selecting an outline is not a promise to publish: a draft that does not meet
@@ -96,8 +101,8 @@ site's only topics (see `CLAUDE.md`: adding one is an editorial decision).
    two revision rounds.
 5. Agree final text and title, then tell the writer the publication date.
 6. Publish, post to newsletter and social channels, and tag the writer.
-7. After acceptance for publication, collect PAN, bank details, T-shirt size
-   and postal address. Pay and post the shirt.
+7. After acceptance for publication, collect PAN and bank details. Pay after
+   the writer shares the piece; email student writers their certificate.
 
 Pace for the pilot: about one guest piece a fortnight.
 
@@ -119,7 +124,7 @@ selection email then says exactly what to sharpen.
 
 ## Checking that writers are who they say
 
-Proportionate checks for a ₹2,000 honorarium; none proves identity alone.
+Proportionate checks for a ₹500 to ₹2,000 payment; none proves identity alone.
 
 - The required profile link: does the name, photo and history fit the claim, and
   is the account more than brand new?
@@ -174,9 +179,9 @@ Adapt each one with specific feedback on the outline. Dates in brackets are
 >   (kakrat.com/write-for-us). Please reply to say you are happy to go ahead.
 > - Send your draft (800 to 1,500 words) by [date], with a link for every
 >   figure, study or claim you cite.
-> - If the piece is published, you get a ₹2,000 honorarium and a Kakrat T-shirt
->   (delivery within India). We ask for your PAN, bank details, size and postal
->   address only once it is accepted for publication.
+> - If the piece is published, you get ₹[1,000 / 2,000 / 500] (and, for student
+>   writers, a certificate of publication). We ask for your PAN and bank
+>   details only once it is accepted for publication.
 >
 > [Specific points to sharpen: a clear position, one concrete example, exact
 > facts, Kakrat's voice. For sensitive topics, add the privacy and care points.]
