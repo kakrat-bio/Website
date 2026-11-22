@@ -19,7 +19,8 @@
   --color-surface: #18181a;
 }
 
-@media (prefers-color-scheme: dark) {
+/* No-JS fallback for the default in public/theme-init.js: dark on phones. */
+@media (max-width: 767px) {
   :root:not([data-theme="light"]) {
     --color-paper: #121213;
     --color-ink: #ede9e3;

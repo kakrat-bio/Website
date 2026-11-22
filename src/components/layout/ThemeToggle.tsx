@@ -22,12 +22,11 @@ export function ThemeToggle() {
     // available on the server, and can't be the useState initializer for
     // the same reason.
     const stored = document.documentElement.getAttribute("data-theme") as Theme | null;
-    // No explicit user choice yet: reflect the OS/browser preference
-    // (which is also what globals.css's `prefers-color-scheme` media query
-    // is already rendering) instead of defaulting to "light" regardless.
-    const systemPrefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+    // No explicit user choice yet: same default as theme-init.js and
+    // globals.css — dark on phones (< 768px), light on larger screens.
+    const isPhone = window.matchMedia?.("(max-width: 767px)").matches;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(stored ?? (systemPrefersDark ? "dark" : "light"));
+    setTheme(stored ?? (isPhone ? "dark" : "light"));
   }, []);
 
   if (!theme) return <span className="w-9" aria-hidden />;
