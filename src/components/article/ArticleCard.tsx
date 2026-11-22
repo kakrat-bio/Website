@@ -64,7 +64,7 @@ export function ArticleCard({
             {article.title}
           </h3>
           <p
-            className={`mt-2 line-clamp-2 text-sm text-ink-muted ${compact ? "md:hidden lg:block" : ""}`}
+            className={`mt-2 line-clamp-2 text-sm text-ink-muted ${compact ? "md:hidden lg:line-clamp-2" : ""}`}
           >
             {article.description}
           </p>
