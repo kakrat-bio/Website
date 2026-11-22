@@ -7,8 +7,8 @@ import { NewsletterSignup } from "@/components/article/NewsletterSignup";
 export default function HomePage() {
   const articles = getAllArticles();
   const [featured, ...rest] = articles;
-  const secondary = rest.slice(0, 2);
-  const latest = rest.slice(2, 8);
+  const secondary = rest.slice(0, 3);
+  const latest = rest.slice(3, 9);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
@@ -42,18 +42,21 @@ export default function HomePage() {
       </section>
       {featured && (
         <section aria-labelledby="featured-heading">
-          <h2
-            id="featured-heading"
-            className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-ink-muted"
-          >
+          {/* No visible heading: the lead story speaks for itself, and a visible
+              "Latest" here read as a duplicate of "More stories" below. */}
+          <h2 id="featured-heading" className="sr-only">
             Latest stories
           </h2>
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <ArticleCard article={featured} size="large" priority />
+          <div className="grid gap-10 md:grid-cols-5 md:items-start">
+            <div className="md:col-span-3">
+              <ArticleCard article={featured} size="large" priority />
+            </div>
             {secondary.length > 0 && (
-              <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-1">
+              <div className="grid gap-8 md:col-span-2 md:grid-cols-1 md:gap-0 md:divide-y md:divide-line">
                 {secondary.map((a) => (
-                  <ArticleCard key={a.slug} article={a} />
+                  <div key={a.slug} className="md:py-6 md:first:pt-0 md:last:pb-0">
+                    <ArticleCard article={a} size="compact" />
+                  </div>
                 ))}
               </div>
             )}
@@ -64,7 +67,7 @@ export default function HomePage() {
       {latest.length > 0 && (
         <section className="mt-20 border-t border-line pt-12" aria-labelledby="latest-heading">
           <h2 id="latest-heading" className="font-display text-2xl text-ink">
-            Latest
+            More stories
           </h2>
           <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {latest.map((a) => (
