@@ -134,7 +134,7 @@ premature abstractions for them, but don't block them either:
 
 ## Placeholders to swap before real launch
 
-- **Brand mark (done):** the crow. Masters live in `scripts/brand/`
+- **Brand mark (done):** the crow. Masters and a README live in `scripts/brand/` (read it first)
   (`kakrat-crow-mark.png` = ringed circle, `kakrat-crow-square.png` = ringless,
   for the iOS icon). `node scripts/generate-brand-assets.mjs` builds from them
   `favicon.ico`, `icon.png`, `apple-icon.png` (in `src/app/`), `public/logo.png`,
