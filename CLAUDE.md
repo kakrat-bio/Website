@@ -134,10 +134,12 @@ premature abstractions for them, but don't block them either:
 
 ## Placeholders to swap before real launch
 
-- `public/og-default.png`, `public/og-article-fallback.png`, `public/logo.png`
-  are programmatically generated (`scripts/generate-brand-assets.mjs`), not
-  designed assets — real ones, correctly sized for OG/Twitter (1200×630) and
-  Organization logo (512×512), should replace them before launch.
+- **Brand mark (done):** the crow. Masters live in `scripts/brand/`
+  (`kakrat-crow-mark.png` = ringed circle, `kakrat-crow-square.png` = ringless,
+  for the iOS icon). `node scripts/generate-brand-assets.mjs` builds from them
+  `favicon.ico`, `icon.png`, `apple-icon.png` (in `src/app/`), `public/logo.png`,
+  the header mark `public/brand/kakrat-mark-64.png`, and the two OG images.
+  Never hand-edit those outputs; change a master and re-run the script.
 - `public/images/covers/*.svg` (the current article cover images) are
   placeholders too. They work fine as-is (SVGs are resolution-independent,
   so there's no responsive-variant concern for them specifically) — but
