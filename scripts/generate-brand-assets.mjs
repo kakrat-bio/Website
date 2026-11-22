@@ -71,19 +71,19 @@ async function main() {
   await og("Science &amp; Technology · Business &amp; Innovation · Culture &amp; Ideas", "og-default.png");
   await og("An independent publication", "og-article-fallback.png");
 
-  await sharp(MARK).resize(512, 512).png().toFile(path.join(PUBLIC, "logo.png"));
+  await sharp(MARK).resize(512, 512).png({ palette: true, quality: 90 }).toFile(path.join(PUBLIC, "logo.png"));
   console.log("Wrote public/logo.png");
 
   fs.mkdirSync(path.join(PUBLIC, "brand"), { recursive: true });
-  await sharp(MARK).resize(64, 64).png().toFile(path.join(PUBLIC, "brand", "kakrat-mark-64.png"));
+  await sharp(MARK).resize(64, 64).png({ palette: true, quality: 90 }).toFile(path.join(PUBLIC, "brand", "kakrat-mark-64.png"));
   console.log("Wrote public/brand/kakrat-mark-64.png");
 
-  await sharp(MARK).resize(512, 512).png().toFile(path.join(APP, "icon.png"));
+  await sharp(MARK).resize(512, 512).png({ palette: true, quality: 90 }).toFile(path.join(APP, "icon.png"));
   console.log("Wrote src/app/icon.png");
 
   // iOS draws the home-screen icon on an opaque square and rounds the corners
   // itself, so it gets the ringless, full-bleed version.
-  await sharp(SQUARE).resize(180, 180).png().toFile(path.join(APP, "apple-icon.png"));
+  await sharp(SQUARE).resize(180, 180).png({ palette: true, quality: 90 }).toFile(path.join(APP, "apple-icon.png"));
   console.log("Wrote src/app/apple-icon.png");
 
   const sizes = [16, 32, 48];
