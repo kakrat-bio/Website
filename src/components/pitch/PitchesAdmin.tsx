@@ -24,8 +24,8 @@ const TABS: Status[] = ["new", "shortlisted", "declined"];
 
 const TRACK_LABEL: Record<Pitch["track"], string> = {
   voices: "Kakrat Voices",
-  guest: "Guest contributor",
-  student: "Student Corner",
+  guest: "Guest writer",
+  student: "Student writer",
 };
 const SECTION_LABEL: Record<string, string> = {
   "science-technology": "Science & Technology",

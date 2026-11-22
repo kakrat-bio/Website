@@ -41,7 +41,7 @@ export default function StudentCornerPage() {
         {[
           ["Who", "College and university students in India, 18 and over: undergraduate to PhD."],
           ["What", "500 to 900 words. An explainer, a project or field-trip story, or an argued opinion, for readers outside your field."],
-          ["You get", "Your byline, careful editing and a Kakrat T-shirt once you share the piece. No honorarium."],
+          ["You get", "Your byline, careful editing, ₹500 per published article and a certificate of publication, sent once you share the piece and tag @kakratian."],
           ["Rules", "Your own writing, not published anywhere else. AI only for research or grammar."],
         ].map(([k, d]) => (
           <div key={k} className="flex gap-4 px-4 py-3">

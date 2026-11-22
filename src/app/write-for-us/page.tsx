@@ -60,9 +60,9 @@ export default function WriteForUsPage() {
             applications here.
           </li>
           <li>
-            <strong>The honorarium is offered for selected Kakrat Voices
-            pieces,</strong> at the editor&apos;s discretion. We aren&apos;t
-            able to discuss fees before a pitch is accepted.
+            <strong>Every published piece is paid,</strong> at the fixed
+            rates below. We aren&apos;t able to discuss fees before a pitch is
+            accepted.
           </li>
           <li>
             <strong>Students are very welcome.</strong>{" "}
@@ -71,11 +71,11 @@ export default function WriteForUsPage() {
           </li>
         </ul>
 
-        <h2>Three ways to write for us</h2>
+        <h2>Two ways to write for us</h2>
         <p>
           Wherever you are in your career, there&apos;s a place for your writing
-          here. Choose the track that fits you best in the form. If another
-          track suits your piece better, our editors will suggest it.
+          here, and every published piece is paid. Choose the track that fits
+          you in the form.
         </p>
         <table>
           <thead>
@@ -88,36 +88,26 @@ export default function WriteForUsPage() {
           <tbody>
             <tr>
               <td>
-                <strong>Kakrat Voices</strong>
+                <strong>Guest writers</strong>
                 <br />
                 800 to 1,500 words
               </td>
               <td>
-                Experienced professionals with a track record in their field:
-                researchers, doctors, engineers, founders and senior
-                practitioners.
+                Researchers, doctors, engineers, founders, PhD scholars,
+                practitioners and writers with first-hand knowledge of their
+                topic.
               </td>
               <td>
-                Byline and author box, a Kakrat T-shirt, and a ₹2,000
-                honorarium at the editor&apos;s discretion.
+                Byline, an author box linking to your work, and{" "}
+                <strong>₹1,000</strong> per published article, or{" "}
+                <strong>₹2,000</strong> if you have significant professional
+                experience in the field.
               </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Guest contributor</strong>
-                <br />
-                800 to 1,500 words
-              </td>
-              <td>
-                Professionals, PhD scholars and writers with first-hand
-                knowledge of their topic.
-              </td>
-              <td>Byline and an author box linking to your work.</td>
             </tr>
             <tr>
               <td>
                 <strong>
-                  <Link href="/student-corner">Student Corner</Link>
+                  <Link href="/student-corner">Student writers</Link>
                 </strong>
                 <br />
                 500 to 900 words
@@ -126,20 +116,26 @@ export default function WriteForUsPage() {
                 College and university students aged 18 and over, from
                 undergraduates to PhD scholars.
               </td>
-              <td>Byline on Student Corner and a Kakrat T-shirt.</td>
+              <td>
+                Byline on Student Corner, <strong>₹500</strong> per published
+                article, and a certificate of publication.
+              </td>
             </tr>
           </tbody>
         </table>
         <p>
-          The editor decides on the honorarium once a pitch is accepted, based
-          on your experience and the piece. Choosing Kakrat Voices tells us
-          about your background, but doesn&apos;t guarantee it. We&apos;ll
-          confirm everything in writing when we say yes.
+          We confirm your track and the amount in writing when we accept your
+          pitch. PhD scholars can choose either track.
         </p>
         <p>
-          Once your article is live, we&apos;ll ask you to share it on your
-          social media and tag @kakratian. It helps your work reach more
-          readers, and it&apos;s when we send your T-shirt and any honorarium.
+          We publish a limited number of paid pieces each month. If this
+          month&apos;s slots are full, an accepted piece moves to the next
+          month, and we&apos;ll tell you when it will appear.
+        </p>
+        <p>
+          Once your article is live, share it on your social media and tag
+          @kakratian. It helps your work reach more readers, and it&apos;s when
+          we send your payment.
         </p>
 
         <h2>Pick a section</h2>
@@ -215,8 +211,7 @@ export default function WriteForUsPage() {
           <li>
             <strong>Celebrate and share.</strong> We publish your piece and tag
             you. Share it with your network and tag @kakratian, and we&apos;ll
-            send your T-shirt (and the honorarium, for Kakrat Voices) within 15
-            days.
+            send your payment within 15 days.
           </li>
         </ol>
       </div>
@@ -343,19 +338,26 @@ export default function WriteForUsPage() {
             <tr>
               <td>Honorarium</td>
               <td>
-                ₹2,000 for selected Kakrat Voices articles, at the editor&apos;s
-                discretion and confirmed in writing when we accept your pitch.
-                Paid within 15 days of publication, once you&apos;ve shared the
-                piece and tagged @kakratian. Guest contributor and Student
-                Corner pieces don&apos;t carry an honorarium.
+                Guest writers: ₹1,000 per published article, or ₹2,000 for
+                writers with significant professional experience in the field.
+                Student writers: ₹500 per published article. The amount is
+                confirmed in writing when we accept your pitch. Paid within 15
+                days of publication, once you&apos;ve shared the piece and
+                tagged @kakratian.
               </td>
             </tr>
             <tr>
-              <td>T-shirt</td>
+              <td>Paid slots</td>
               <td>
-                One Kakrat T-shirt per published Kakrat Voices or Student
-                Corner article. It isn&apos;t sold anywhere, and isn&apos;t
-                given for pitches that aren&apos;t published.
+                We publish a limited number of paid pieces each month. When a
+                month is full, accepted pieces move to the next month.
+              </td>
+            </tr>
+            <tr>
+              <td>Certificate</td>
+              <td>
+                Student writers receive a certificate of publication by email
+                once their article is live.
               </td>
             </tr>
             <tr>
@@ -414,14 +416,6 @@ export default function WriteForUsPage() {
               <td>
                 We need your full name, PAN and bank details to pay you, and we
                 deduct tax at source where the law requires it.
-              </td>
-            </tr>
-            <tr>
-              <td>T-shirt delivery</td>
-              <td>
-                We ask for your size and postal address only after your article
-                is accepted for publication. We post it within India, within
-                15 days of publication, once you&apos;ve shared the piece.
               </td>
             </tr>
           </tbody>
