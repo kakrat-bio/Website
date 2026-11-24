@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TRACKS, RULES, words, payLine } from "@/lib/contributors/rules";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PitchForm } from "@/components/pitch/PitchForm";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
@@ -39,10 +40,10 @@ export default function StudentCornerPage() {
 
       <dl className="mt-6 divide-y divide-line rounded-sm border border-line text-sm">
         {[
-          ["Who", "College and university students in India, 18 and over: undergraduate to PhD."],
-          ["What", "500 to 900 words. An explainer, a project or field-trip story, or an argued opinion, for readers outside your field."],
-          ["You get", "Your byline, careful editing, ₹500 per published article and a certificate of publication, sent once you share the piece and tag @kakratian."],
-          ["Rules", "Your own writing, not published anywhere else. AI only for research or grammar."],
+          ["Who", `${TRACKS.student.who} Payment is for students based in ${RULES.paidCountry}.`],
+          ["What", `${words(TRACKS.student)}. An explainer, a project or field-trip story, or an argued opinion, for readers outside your field.`],
+          ["You get", `Your byline, careful editing, ${payLine(TRACKS.student)} and ${TRACKS.student.extras}, sent ${RULES.paymentCondition.replace("you've shared", "you share").replace("tagged", "tag")}.`],
+          ["Rules", `${RULES.original} ${RULES.ai}`],
         ].map(([k, d]) => (
           <div key={k} className="flex gap-4 px-4 py-3">
             <dt className="w-20 shrink-0 font-medium text-ink">{k}</dt>

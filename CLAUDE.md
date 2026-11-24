@@ -121,6 +121,10 @@ premature abstractions for them, but don't block them either:
 - `docs/OPERATIONS.md` — accounts, newsletter, comment alerts, Apps Script,
   Search Console, trademark. Read before touching subscribers, comments,
   notifications, Google, Cloudflare or publishing.
+- **Contributor rules have one home:** `src/lib/contributors/rules.ts` (the rule
+  book). Never type an amount, word count or eligibility rule into a page or
+  the form; change the rule book, its `RULE_CHANGES` log and the change log in
+  `docs/GUEST-WRITERS.md`. `tests/contributor-rules.test.ts` enforces this.
 - `docs/GUEST-WRITERS.md` — the guest-writer programme behind `/write-for-us`:
   the offer, pitch rules, selection rubric, writer checks, sensitive-topic
   rules, email templates, pilot plan and open decisions. Read before changing

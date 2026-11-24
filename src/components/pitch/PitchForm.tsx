@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
+import { TRACKS as RULE_TRACKS, RULES, payLine } from "@/lib/contributors/rules";
 
 /**
  * The pitch form on /write-for-us and /student-corner. Posts JSON to the
@@ -19,23 +20,16 @@ function words(text: string): number {
   return t ? t.split(/\s+/).length : 0;
 }
 
-const TRACKS: { value: Track; label: string; note: string }[] = [
-  {
-    value: "guest",
-    label: "Guest writer",
-    note: "Researchers, professionals, PhD scholars and writers with first-hand knowledge of their topic. ₹1,000 per published article, or ₹2,000 with significant professional experience.",
-  },
-  {
-    value: "student",
-    label: "Student writer",
-    note: "College and university students aged 18 and over, from undergraduates to PhD scholars. ₹500 per published article and a certificate of publication.",
-  },
-];
+const TRACKS: { value: Track; label: string; note: string }[] = (["guest", "student"] as const).map((id) => ({
+  value: id,
+  label: RULE_TRACKS[id].label,
+  note: `${RULE_TRACKS[id].who} ${payLine(RULE_TRACKS[id])}${RULE_TRACKS[id].extras ? ` and ${RULE_TRACKS[id].extras}` : ""}.`,
+}));
 
 const DECLARATIONS: { value: string; label: string }[] = [
   { value: "original", label: "It's my own work and not published anywhere else." },
   { value: "not-a-job", label: "It's a pitch for an article, not a job application." },
-  { value: "honorarium", label: "Payment is at the fixed rate for my track, sent after publication once I share the piece, and paid slots each month are limited." },
+  { value: "honorarium", label: `Payment is at the fixed rate for my track, only for writers based in ${RULES.paidCountry}, sent after publication once I share the piece, and paid slots each month are limited.` },
   { value: "share", label: "If it's published, I'll share it and tag @kakratian." },
   { value: "read-terms", label: "I've read the guidelines and terms." },
 ];
@@ -118,7 +112,7 @@ export function PitchForm({ defaultTrack }: { defaultTrack?: Track }) {
     req("name", "Please enter your full name.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email").trim())) e.email = "Please enter a valid email address.";
     if (track === "student") {
-      if (!age18) e.age18 = "Student Corner is open to students aged 18 and over.";
+      if (!age18) e.age18 = `Student Corner is open to students aged ${RULES.minAge} and over.`;
       req("institution", "Please enter your college or university.");
       req("courseYear", "Please enter your course and year.");
     } else if (track) {

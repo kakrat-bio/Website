@@ -42,6 +42,27 @@ live in the owner's Claude Project notes.
   comment-alert branch (subject "New comment on Kakrat: NEW PITCH: <title>").
   It needs the Cloudflare secret `COMMENTS_WEBHOOK_TOKEN`, which is already set.
 
+## Rule book (read this first)
+
+The rules for writing for Kakrat live in **`src/lib/contributors/rules.ts`**.
+/write-for-us, /student-corner and the pitch form all read their tracks, word
+counts, amounts and eligibility from it, so a rule changes in one place and
+every page follows. A test fails if a rupee amount or track word count is typed
+anywhere else in the site.
+
+**Whenever a new rule is decided:** edit `rules.ts`, add a dated line to
+`RULE_CHANGES` there and to the change log below, update the sections of this
+file that describe it, then open a PR.
+
+### Change log (newest first)
+
+- 2026-11-23: Writers based outside India get a byline and author box, no
+  payment. Rule book created; all pages read from it.
+- 2026-11-22: Two paid tracks: guest writers ₹1,000 or ₹2,000, student writers
+  ₹500 plus a certificate. Kakrat Voices and T-shirts dropped.
+- 2026-11-21: Pitch form launched; email pitches no longer reviewed. Profile
+  links, byline and student proof optional.
+
 ## The offer (two tracks, from 22 Nov 2026)
 
 | Track | Who | Length | What they get |
@@ -55,6 +76,8 @@ live in the owner's Claude Project notes.
 - When a month's slots are full, accepted pieces move to the next month; tell
   the writer the expected date.
 - PhD scholars may choose either track.
+- Payment is only for writers based in India. Writers elsewhere are welcome
+  with a byline and author box, no payment (decided 23 Nov 2026).
 - The amount (₹1,000 or ₹2,000 for guests) is decided at acceptance and
   confirmed in writing. Fees aren't discussed before acceptance.
 - Payment is sent within 15 days of publication, once the writer has shared

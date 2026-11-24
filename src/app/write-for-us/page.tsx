@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TRACKS, RULES, words, payLine } from "@/lib/contributors/rules";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PitchForm } from "@/components/pitch/PitchForm";
 import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
@@ -60,9 +61,8 @@ export default function WriteForUsPage() {
             applications here.
           </li>
           <li>
-            <strong>Every published piece is paid,</strong> at the fixed
-            rates below. We aren&apos;t able to discuss fees before a pitch is
-            accepted.
+            <strong>Every published piece by a writer based in India is paid,</strong>{" "}
+            at the fixed rates below. {RULES.feesDiscussed}
           </li>
           <li>
             <strong>Students are very welcome.</strong>{" "}
@@ -74,8 +74,7 @@ export default function WriteForUsPage() {
         <h2>Two ways to write for us</h2>
         <p>
           Wherever you are in your career, there&apos;s a place for your writing
-          here, and every published piece is paid. Choose the track that fits
-          you in the form.
+          here. Choose the track that fits you in the form.
         </p>
         <table>
           <thead>
@@ -88,38 +87,23 @@ export default function WriteForUsPage() {
           <tbody>
             <tr>
               <td>
-                <strong>Guest writers</strong>
+                <strong>{TRACKS.guest.label}s</strong>
                 <br />
-                800 to 1,500 words
+                {words(TRACKS.guest)}
               </td>
-              <td>
-                Researchers, doctors, engineers, founders, PhD scholars,
-                practitioners and writers with first-hand knowledge of their
-                topic.
-              </td>
-              <td>
-                Byline, an author box linking to your work, and{" "}
-                <strong>₹1,000</strong> per published article, or{" "}
-                <strong>₹2,000</strong> if you have significant professional
-                experience in the field.
-              </td>
+              <td>{TRACKS.guest.who}</td>
+              <td>{TRACKS.guest.offer}</td>
             </tr>
             <tr>
               <td>
                 <strong>
-                  <Link href="/student-corner">Student writers</Link>
+                  <Link href="/student-corner">{TRACKS.student.label}s</Link>
                 </strong>
                 <br />
-                500 to 900 words
+                {words(TRACKS.student)}
               </td>
-              <td>
-                College and university students aged 18 and over, from
-                undergraduates to PhD scholars.
-              </td>
-              <td>
-                Byline on Student Corner, <strong>₹500</strong> per published
-                article, and a certificate of publication.
-              </td>
+              <td>{TRACKS.student.who}</td>
+              <td>{TRACKS.student.offer}</td>
             </tr>
           </tbody>
         </table>
@@ -128,9 +112,8 @@ export default function WriteForUsPage() {
           pitch. PhD scholars can choose either track.
         </p>
         <p>
-          We publish a limited number of paid pieces each month. If this
-          month&apos;s slots are full, an accepted piece moves to the next
-          month, and we&apos;ll tell you when it will appear.
+          {RULES.outsideIndia} {RULES.paidSlots} We&apos;ll tell you when an
+          accepted piece will appear.
         </p>
         <p>
           Once your article is live, share it on your social media and tag
@@ -252,8 +235,8 @@ export default function WriteForUsPage() {
         <h3>Length and shape</h3>
         <ul>
           <li>
-            800 to 1,500 words (500 to 900 for Student Corner). Shorter is
-            welcome if the idea is complete.
+            {words(TRACKS.guest)} ({words(TRACKS.student)} for Student
+            Corner). Shorter is welcome if the idea is complete.
           </li>
           <li>
             A title of up to 12 words and a one-sentence standfirst that says
@@ -338,20 +321,17 @@ export default function WriteForUsPage() {
             <tr>
               <td>Honorarium</td>
               <td>
-                Guest writers: ₹1,000 per published article, or ₹2,000 for
-                writers with significant professional experience in the field.
-                Student writers: ₹500 per published article. The amount is
-                confirmed in writing when we accept your pitch. Paid within 15
-                days of publication, once you&apos;ve shared the piece and
-                tagged @kakratian.
+                {TRACKS.guest.label}s: {payLine(TRACKS.guest)}.{" "}
+                {TRACKS.student.label}s: {payLine(TRACKS.student)}. The amount
+                is confirmed in writing when we accept your pitch. Paid within{" "}
+                {RULES.paidWithinDays} days of publication,{" "}
+                {RULES.paymentCondition}. Payment is only for writers based in{" "}
+                {RULES.paidCountry}; {RULES.outsideIndia.charAt(0).toLowerCase() + RULES.outsideIndia.slice(1)}
               </td>
             </tr>
             <tr>
               <td>Paid slots</td>
-              <td>
-                We publish a limited number of paid pieces each month. When a
-                month is full, accepted pieces move to the next month.
-              </td>
+              <td>{RULES.paidSlots}</td>
             </tr>
             <tr>
               <td>Certificate</td>
