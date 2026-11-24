@@ -35,7 +35,7 @@ export default function StudentCornerPage() {
       <h1 className="font-display text-4xl text-ink">Student Corner</h1>
       <p className="mt-3 font-display text-xl text-ink-muted">Your first byline could start here.</p>
       <p className="mt-6 text-lg text-ink">
-        Studying something that fascinates you? Tell curious readers about it.
+        Studying something that fascinates you? Win a T-shirt!
       </p>
 
       <dl className="mt-6 divide-y divide-line rounded-sm border border-line text-sm">
