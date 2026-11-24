@@ -1,0 +1,56 @@
+# Flags contradictions in the contributor rules (tracks, pay, eligibility).
+# It never blocks publishing: Cloudflare builds the site whatever this says.
+# On a pull request it fails the check and comments on the PR; on a change to
+# main it opens (or updates) an issue, so the owner gets an email either way.
+name: Rule book check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  rulebook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - id: check
+        run: npx vitest run tests/contributor-rules.test.ts 2>&1 | tee rulebook.log; exit ${PIPESTATUS[0]}
+        shell: bash
+      - name: Raise a flag
+        if: failure() && steps.check.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const log = fs.readFileSync('rulebook.log', 'utf8').split('\n')
+              .filter((l) => /×|Received|\+ |expected|src\//.test(l)).slice(0, 30).join('\n');
+            const body = [
+              '**Contributor rules may contradict each other.**',
+              '',
+              'A page or the pitch form has a payment amount, track word count, "T-shirt" or "Kakrat Voices" typed outside the rule book (`src/lib/contributors/rules.ts`), or the rule book change log is out of step with `docs/GUEST-WRITERS.md`.',
+              '',
+              'The site was not blocked. Ask Claude to "fix the rule book flag".',
+              '',
+              '```', log || '(see the run log)', '```',
+              `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].join('\n');
+            if (context.eventName === 'pull_request') {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+              return;
+            }
+            const title = 'Rule book flag: contributor rules may contradict each other';
+            const open = await github.rest.issues.listForRepo({ ...context.repo, state: 'open', per_page: 100 });
+            const existing = open.data.find((i) => i.title === title);
+            if (existing) await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body });
+            else await github.rest.issues.create({ ...context.repo, title, body });
