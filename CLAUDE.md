@@ -124,7 +124,10 @@ premature abstractions for them, but don't block them either:
 - **Contributor rules have one home:** `src/lib/contributors/rules.ts` (the rule
   book). Never type an amount, word count or eligibility rule into a page or
   the form; change the rule book, its `RULE_CHANGES` log and the change log in
-  `docs/GUEST-WRITERS.md`. `tests/contributor-rules.test.ts` enforces this.
+  `docs/GUEST-WRITERS.md`. `tests/contributor-rules.test.ts` checks this, and
+  the GitHub workflow `.github/workflows/rulebook-check.yml` runs it on every PR
+  and push to main. It flags (PR comment or a "Rule book flag" issue) but never
+  blocks publishing. Treat an open "Rule book flag" issue as urgent.
 - `docs/GUEST-WRITERS.md` — the guest-writer programme behind `/write-for-us`:
   the offer, pitch rules, selection rubric, writer checks, sensitive-topic
   rules, email templates, pilot plan and open decisions. Read before changing

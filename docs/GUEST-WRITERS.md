@@ -48,7 +48,9 @@ The rules for writing for Kakrat live in **`src/lib/contributors/rules.ts`**.
 /write-for-us, /student-corner and the pitch form all read their tracks, word
 counts, amounts and eligibility from it, so a rule changes in one place and
 every page follows. A test fails if a rupee amount or track word count is typed
-anywhere else in the site.
+anywhere else in the site. A GitHub check runs this on every PR and every
+change to main; it never blocks the site, but on a problem it comments on the PR
+or opens a "Rule book flag" issue, and GitHub emails the owner.
 
 **Whenever a new rule is decided:** edit `rules.ts`, add a dated line to
 `RULE_CHANGES` there and to the change log below, update the sections of this
