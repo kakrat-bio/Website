@@ -43,6 +43,7 @@ export function personJsonLd(author: Author) {
     description: author.bio,
     url: `${SITE_URL}/authors/${author.id}`,
     ...(author.title ? { jobTitle: author.title } : {}),
+    ...(author.avatar ? { image: `${SITE_URL}${author.avatar}` } : {}),
     ...(author.sameAs.length || author.website
       ? { sameAs: [...(author.website ? [author.website] : []), ...author.sameAs] }
       : {}),

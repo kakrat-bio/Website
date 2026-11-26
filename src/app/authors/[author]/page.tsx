@@ -47,6 +47,16 @@ export default async function AuthorPage({
           { name: author.name, url: `${SITE_URL}/authors/${author.id}` },
         ])}
       />
+      {author.avatar && (
+        // eslint-disable-next-line @next/next/no-img-element -- static export; small pre-sized headshot
+        <img
+          src={author.avatar}
+          alt={`Photo of ${author.name}`}
+          width={96}
+          height={96}
+          className="mb-5 h-24 w-24 rounded-full object-cover"
+        />
+      )}
       <h1 className="font-display text-4xl text-ink">{author.name}</h1>
       {author.title && <p className="mt-1 text-ink-muted">{author.title}</p>}
       <p className="mt-4 max-w-xl text-ink-muted">{author.bio}</p>

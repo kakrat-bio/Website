@@ -52,7 +52,8 @@ export const authorSchema = z.object({
   name: z.string(),
   title: z.string().optional(), // e.g. "Founder, Kakrat" / "Contributing Writer"
   bio: z.string(),
-  avatar: z.string().optional(),
+  /** Square headshot under public/, e.g. "/images/authors/<id>.jpg" (320×320). */
+  avatar: z.string().regex(/^\/images\/authors\/[a-z0-9-]+\.(jpg|png|webp)$/).optional(),
   /** Canonical profile links for Person JSON-LD `sameAs`. */
   sameAs: z.array(z.url()).default([]),
   website: z.url().optional(),
