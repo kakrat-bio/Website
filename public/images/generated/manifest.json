@@ -23,6 +23,78 @@
     ],
     "fallback": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/cover/fallback.jpg"
   },
+  "2026/a-prayer-beneath-the-navratri-sky/found": {
+    "key": "2026/a-prayer-beneath-the-navratri-sky/found",
+    "width": 1600,
+    "height": 1000,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/found/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/found/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/found/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/found/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/found/fallback.jpg"
+  },
+  "2026/a-prayer-beneath-the-navratri-sky/garba": {
+    "key": "2026/a-prayer-beneath-the-navratri-sky/garba",
+    "width": 1600,
+    "height": 1000,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/garba/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/garba/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/garba/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/garba/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/garba/fallback.jpg"
+  },
+  "2026/a-prayer-beneath-the-navratri-sky/waiting": {
+    "key": "2026/a-prayer-beneath-the-navratri-sky/waiting",
+    "width": 1600,
+    "height": 1000,
+    "variants": [
+      {
+        "width": 480,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/waiting/480.webp"
+      },
+      {
+        "width": 768,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/waiting/768.webp"
+      },
+      {
+        "width": 1200,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/waiting/1200.webp"
+      },
+      {
+        "width": 1600,
+        "path": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/waiting/1600.webp"
+      }
+    ],
+    "fallback": "/images/generated/2026/a-prayer-beneath-the-navratri-sky/waiting/fallback.jpg"
+  },
   "2026/antibiotics-a-love-story/cover": {
     "key": "2026/antibiotics-a-love-story/cover",
     "width": 1920,

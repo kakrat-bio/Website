@@ -20,11 +20,24 @@ export function AuthorBox({ authors }: { authors: Author[] }) {
         return (
           <div key={a.id} className="rounded-sm border border-line p-6">
             <p className="text-xs uppercase tracking-wider text-ink-muted">About the author</p>
-            <p className="mt-2 font-display text-xl text-ink">
-              <Link href={`/authors/${a.id}`} className="hover:text-accent">
-                {a.name}
-              </Link>
-            </p>
+            <div className="mt-3 flex items-center gap-4">
+              {a.avatar && (
+                // eslint-disable-next-line @next/next/no-img-element -- static export; small pre-sized headshot
+                <img
+                  src={a.avatar}
+                  alt={`Photo of ${a.name}`}
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                  className="h-16 w-16 shrink-0 rounded-full object-cover"
+                />
+              )}
+              <p className="font-display text-xl text-ink">
+                <Link href={`/authors/${a.id}`} className="hover:text-accent">
+                  {a.name}
+                </Link>
+              </p>
+            </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">{a.bio}</p>
             <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
               <li>
