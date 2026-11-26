@@ -1,7 +1,7 @@
 # Social: A Prayer beneath the Navratri Sky
 
 article: https://kakrat.com/articles/a-prayer-beneath-the-navratri-sky
-images: public/social/2026-12-navratri/ (01.jpg to 06.jpg)
+images: public/social/2026-11-navratri/ (01.jpg to 06.jpg)
 author: Foram Trivedi (tag her: LinkedIn https://www.linkedin.com/in/foram-trivedi-1a04071b3/)
 
 ## Instagram
